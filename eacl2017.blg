@@ -1,8 +1,94 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: eacl2017.aux
-I couldn't open style file eacl2017.bst
----line 23 of file eacl2017.aux
- : \bibstyle{eacl2017
- :                   }
-I'm skipping whatever remains of this command
-I found no style file---while reading file eacl2017.aux
-(There were 2 error messages)
+The style file: eacl2017.bst
+Database file #1: mybib.bib
+You're missing a field name---line 1751 of file mybib.bib
+ : 
+ : %pages = {269--270},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2776 of file mybib.bib
+ :  
+ :  %address = {Madrid, Spain},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2801 of file mybib.bib
+ : 
+ : %address = {Athens, Greece},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2817 of file mybib.bib
+ :  
+ :  %address = {Los Angeles, California},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2826 of file mybib.bib
+ :  
+ :  %address = {Ann Arbor, Michigan},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2835 of file mybib.bib
+ :  
+ :  %address = {Philadelphia, Pennsylvania},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 2846 of file mybib.bib
+ :   
+ :   %pages = {427--432},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 2917 of file mybib.bib
+ : 
+ : @inproceedings{Brooke12d,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 3514 of file mybib.bib
+ :          
+ :          % address = {Atlanta},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 3868 of file mybib.bib
+ : 
+ : % address = {Edinburgh, United Kingdom},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 3922 of file mybib.bib
+ :  
+ :  %location = {Uppsala, Sweden},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4029 of file mybib.bib
+ :  
+ :  %location = {Madrid, Spain},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4095 of file mybib.bib
+ :  
+ :  %location = {Seattle, WA, USA},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4175 of file mybib.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4435 of file mybib.bib
+ :  
+ :  %publisher = {Association for Computational Linguistics},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 4482 of file mybib.bib
+ :  
+ :  %address = {Reykjav\'{i}k, Iceland},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4491 of file mybib.bib
+ :   
+ :   %month     = {July},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 4643 of file mybib.bib
+ : 
+ : %address = {New York},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+(There were 18 error messages)

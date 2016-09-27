@@ -1,0 +1,175 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Araujo \bgroup et al.\egroup }2011]{DeAraujo11}
+Vitor~De Araujo, Carlos Ramisch, and Aline Villavicencio.
+\newblock 2011.
+\newblock Fast and flexible {MWE} candidate generation with the mwetoolkit.
+\newblock In {\em Proceedings of the Multiword Expression Workshop at ACL 2011
+  (MWE 2011)}.
+
+\bibitem[\protect\citename{Baldwin and Kim}2010]{Baldwin10}
+Timothy Baldwin and Su~Nam Kim.
+\newblock 2010.
+\newblock Multiword expressions.
+\newblock In Nitin Indurkhya and Fred~J. Damerau, editors, {\em Handbook of
+  Natural Language Processing, Second Edition}. CRC Press, Taylor and Francis
+  Group, Boca Raton, FL.
+
+\bibitem[\protect\citename{Brooke \bgroup et al.\egroup }2014]{Brooke14a}
+Julian Brooke, Vivian Tsang, Graeme Hirst, and Fraser Shein.
+\newblock 2014.
+\newblock Unsupervised multiword segmentation of large corpora using
+  prediction-driven decomposition of n-grams.
+\newblock In {\em Proceedings of The 25th International Conference on
+  Computational Linguistics (COLING 2014)}, pages 753--761, Dublin.
+
+\bibitem[\protect\citename{Brooke \bgroup et al.\egroup }2015]{Brooke15b}
+Julian Brooke, Adam Hammond, David Jacob, Vivian Tsang, Graeme Hirst, and
+  Fraser Shein.
+\newblock 2015.
+\newblock Building a lexicon of formulaic language for language learners.
+\newblock In {\em Proceedings of the NAACL ’15 Workshop on Multiword
+  Expressions}, pages pp. 96--104, Denver.
+
+\bibitem[\protect\citename{Burnard}2000]{BNC}
+Lou Burnard.
+\newblock 2000.
+\newblock User reference guide for {B}ritish {N}ational {C}orpus.
+\newblock Technical report, Oxford University.
+
+\bibitem[\protect\citename{Burton \bgroup et al.\egroup }2009]{ICWSM}
+Kevin Burton, Akshay Java, and Ian Soboroff.
+\newblock 2009.
+\newblock The {ICWSM} 2009 {S}pinn3r {D}ataset.
+\newblock In {\em Proceedings of the Third Annual Conference on Weblogs and
+  Social Media (ICWSM '09)}, San Jose, CA.
+
+\bibitem[\protect\citename{Church and Hanks}1990]{Church90}
+Kenneth~Ward Church and Patrick Hanks.
+\newblock 1990.
+\newblock Word association norms, mutual information, and lexicography.
+\newblock {\em Computational Linguistics}, 16(1):22--29.
+
+\bibitem[\protect\citename{Dias \bgroup et al.\egroup }1999]{Dias99}
+Ga\"{e}l Dias, Sylvie Guillor\'{e}, and Jos\'{e} Gabriel~Pereira Lopes.
+\newblock 1999.
+\newblock Language independent automatic acquisition of rigid multiword units
+  from unrestricted text corpora.
+\newblock In {\em Proceedings of Conf\'{e}rence Traitement Automatique des
+  Langues Naturelles (TALN) 1999}.
+
+\bibitem[\protect\citename{Evert}2004]{Evert04}
+Stefan Evert.
+\newblock 2004.
+\newblock {\em The statistics of word cooccurrences--word pairs and
+  collocations}.
+\newblock {Ph.D.} thesis, University of Stuttgart.
+
+\bibitem[\protect\citename{Fazly \bgroup et al.\egroup }2009]{Fazly09}
+Afsaneh Fazly, Paul Cook, and Suzanne Stevenson.
+\newblock 2009.
+\newblock Unsupervised type and token identification of idiomatic expressions.
+\newblock {\em Computational Linguistics}, 35(1):61--103.
+
+\bibitem[\protect\citename{Frantzi \bgroup et al.\egroup }2000]{Frantzi00}
+Katerina Frantzi, Sophia Ananiadou, and Hideki Mima.
+\newblock 2000.
+\newblock Automatic recognition of multi-word terms: the c-value/nc-value
+  method.
+\newblock {\em International Journal on Digital Libraries}, 3:115--130.
+
+\bibitem[\protect\citename{Gimpel and Smith}2011]{Gimpel11}
+Kevin Gimpel and Noah~A. Smith.
+\newblock 2011.
+\newblock Generative models of monolingual and bilingual gappy patterns.
+\newblock In {\em Proceedings of the Sixth Workshop on Statistical Machine
+  Translation}.
+
+\bibitem[\protect\citename{Kulkarni and Finlayson}2011]{Kulkarni11}
+Nidhi Kulkarni and Mark Finlayson.
+\newblock 2011.
+\newblock j{MWE}: A {J}ava toolkit for detecting multi-word expressions.
+\newblock In {\em Proceedings of the Multiword Expression Workshop at ACL 2011
+  (MWE 2011)}.
+
+\bibitem[\protect\citename{Newman \bgroup et al.\egroup }2012]{Newman12}
+David Newman, Nagendra Koilada, Jey~Han Lau, and Timothy Baldwin.
+\newblock 2012.
+\newblock Bayesian text segmentation for index term identification and
+  keyphrase extraction.
+\newblock In {\em Proceedings of the 24th International Conference on
+  Computational Linguistics (COLING '12)}.
+
+\bibitem[\protect\citename{Pecina}2010]{Pecina10}
+Pavel Pecina.
+\newblock 2010.
+\newblock Lexical association measures and collocation extraction.
+\newblock {\em Language Resources and Evaluation}, 44:137--158.
+
+\bibitem[\protect\citename{Riedl and Biemann}2015]{Riedl15}
+Martin Riedl and Chris Biemann.
+\newblock 2015.
+\newblock A single word is not enough: Ranking multiword expressions using
+  distributional semantics.
+\newblock In {\em Proceedings of the 2015 Conference on Empirical Methods in
+  Natural Language Processing}.
+
+\bibitem[\protect\citename{Riedl and Biemann}2016]{Riedl16}
+Martin Riedl and Chris Biemann.
+\newblock 2016.
+\newblock Impact of mwe resources on multiword recognition.
+\newblock In {\em Proceedings of the 12th Workshop on Multiword Expressions}.
+
+\bibitem[\protect\citename{Schmid}1995]{Schmid95}
+Helmut Schmid.
+\newblock 1995.
+\newblock Improvements in part-of-speech tagging with an application to
+  {G}erman.
+\newblock In {\em Proceedings of the ACL SIGDAT Workshop}, pages 47--50.
+
+\bibitem[\protect\citename{Schneider \bgroup et al.\egroup
+  }2014a]{Schneider14b}
+Nathan Schneider, Emily Danchik, Chris Dyer, and Noah~A. Smith.
+\newblock 2014a.
+\newblock Discriminative lexical semantic segmentation with gaps: running the
+  {MWE} gamut.
+\newblock {\em Transactions of the Association for Computational Linguistics},
+  2:193--206, April.
+
+\bibitem[\protect\citename{Schneider \bgroup et al.\egroup
+  }2014b]{Schneider14a}
+Nathan Schneider, Spencer Onuffer, Nora Kazour, Emily Danchik, Michael~T.
+  Mordowanec, Henrietta Conrad, and Noah~A. Smith.
+\newblock 2014b.
+\newblock Comprehensive annotation of multiword expressions in a social web
+  corpus.
+\newblock In {\em Proceedings of the Ninth International Conference on Language
+  Resources and Evaluation}, pages 455--461.
+
+\bibitem[\protect\citename{Schone and Jurafsky}2001]{Schone01}
+Patrick Schone and Dan Jurafsky.
+\newblock 2001.
+\newblock Is knowledge-free induction of multiword unit dictionary headwords a
+  solved problem?
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP '01)}.
+
+\bibitem[\protect\citename{Seretan}2011]{Seretan11}
+Violeta Seretan.
+\newblock 2011.
+\newblock {\em Syntax-Based Collocation Extraction}.
+\newblock Springer.
+
+\bibitem[\protect\citename{Wray}2002]{Wray02}
+Alison Wray.
+\newblock 2002.
+\newblock {\em Formulaic Language and the Lexicon}.
+\newblock Cambridge University Press, Cambridge.
+
+\bibitem[\protect\citename{Wray}2008]{Wray08}
+Alison Wray.
+\newblock 2008.
+\newblock {\em Formulaic Language: Pushing the Boundaries}.
+\newblock Oxford University Press, Oxford.
+
+\end{thebibliography}

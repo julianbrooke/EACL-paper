@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.5.5)  23 SEP 2016 00:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2016.5.5)  28 SEP 2016 00:54
 entering extended mode
 **eacl2017.tex
 (eacl2017.tex
@@ -78,19 +78,19 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen106
 \Gin@req@width=\dimen107
 ) (eacl2017.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 56.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 57.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -110,49 +110,29 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 \everyMPtoPDFconversion=\toks16
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 57.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 58.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 57.
+(Font)              <14.4> on input line 58.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 57.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 57.
+(Font)              <7> on input line 58.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 58.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 57.
+(Font)              <12> on input line 58.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 57.
+(Font)              <8> on input line 58.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 57.
+(Font)              <6> on input line 58.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 57.
-
-! Undefined control sequence.
-<argument> ...s more important than ever to\ldotz 
-                                                  
-l.66 ...h{it is more important than ever to\ldotz}
-                                                  , \emph{\ldotsdo not know ...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 58.
 
 ! Undefined control sequence.
 <recently read> \ldotsdo 
                          
-l.66 ...ldotsdo not know what it is like to\ldots}
+l.67 ...ldotsdo not know what it is like to\ldots}
                                                   ,\emph{it would be great i...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.66 ... \emph{now is not the time to\ldots}, \etc
-                                                   as well as tens of thousa...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -162,10 +142,10 @@ and I'll forget about whatever was undefined.
 <FS_diagram_1.png, id=1, 106.89937pt x 114.4275pt>
 File: FS_diagram_1.png Graphic file (type png)
  <use FS_diagram_1.png>
-Package pdftex.def Info: FS_diagram_1.png used on input line 69.
+Package pdftex.def Info: FS_diagram_1.png used on input line 70.
 (pdftex.def)             Requested size: 106.8991pt x 114.42722pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 75.
+(Font)              <10.95> on input line 76.
  [1{C:/Users/jabrooke/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
@@ -175,41 +155,23 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 108.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
  [3]
-! Extra }, or forgotten $.
-l.144 ...(t)}{c(min)}}{\log\frac{c(max)}{c(min)}}}
-                                                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
 <FS_diagram_2.png, id=25, 489.027pt x 181.478pt>
 File: FS_diagram_2.png Graphic file (type png)
  <use FS_diagram_2.png>
-Package pdftex.def Info: FS_diagram_2.png used on input line 150.
+Package pdftex.def Info: FS_diagram_2.png used on input line 151.
 (pdftex.def)             Requested size: 489.02579pt x 181.47754pt.
 
-Overfull \hbox (33.78171pt too wide) in paragraph at lines 150--151
+Overfull \hbox (33.78171pt too wide) in paragraph at lines 151--152
  [] 
  []
-
-! Undefined control sequence.
-l.158 ...nce}, \emph{keep it under your hat}, \etc
-                                                  ), but if \emph{keep * und...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
 [4]
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.162 
+l.163 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -217,7 +179,7 @@ you left one out. Proceed, with fingers crossed.
 ! Display math should end with $$.
 <to be read again> 
                    \par 
-l.162 
+l.163 
       
 The `$' that I just saw supposedly matches a previous `$$'.
 So I shall assume that you typed `$$' both times.
@@ -229,48 +191,92 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.163 \end{displaymath}
+l.164 \end{displaymath}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 2343) in paragraph at lines 168--169
+Underfull \hbox (badness 2343) in paragraph at lines 169--170
 \OT1/ptm/m/n/10.95 cov-er-ing $\OML/cmm/m/it/10.95 n$\OT1/ptm/m/n/10.95 -grams since do-ing so low-ers the
  []
 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.173 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-Underfull \hbox (badness 1509) in paragraph at lines 172--173
+! Display math should end with $$.
+<to be read again> 
+                   \par 
+l.173 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.174 \end{displaymath}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 1509) in paragraph at lines 178--179
 \OT1/ptm/m/n/10.95 volves $\OML/cmm/m/it/10.95 n$\OT1/ptm/m/n/10.95 -grams which over-lap in the cor-pus.
  []
 
 [5 <./FS_diagram_2.png>]
-! Extra }, or forgotten $.
-l.175 ...(t)}{c(t) - \sum{oc(o_1)\ldots oc(o_m)}}}
-                                                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 192.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 198.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsptm.fd"
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 192.
- (eacl2017.bbl) [6] (eacl2017.aux) )
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 198.
+ [6]
+Underfull \vbox (badness 6047) has occurred while \output is active []
+
+ (eacl2017.bbl
+Missing character: There is no â in font ptmri7t!
+Missing character: There is no € in font ptmri7t!
+Missing character: There is no ™ in font ptmri7t!
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 60.
+ [7]
+Underfull \hbox (badness 3690) in paragraph at lines 62--67
+[]\OT1/ptm/m/n/10 Stefan Ev-ert.  2004.  \OT1/ptm/m/it/10 The statis-tics of word
+ []
+
+
+Underfull \hbox (badness 2951) in paragraph at lines 75--80
+[]\OT1/ptm/m/n/10 Katerina Frantzi, Sophia Ana-ni-adou, and Hideki
+ []
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 141--148
+[]\OT1/ptm/m/n/10 Nathan Schnei-der, Spencer Onuffer, Nora Ka-zour,
+ []
+
+) [8] (eacl2017.aux) )
 (\end occurred when \iffalse on line 331 was incomplete) 
 Here is how much of TeX's memory you used:
- 1433 strings out of 493673
- 19014 string characters out of 3141522
- 84942 words of memory out of 3000000
- 4786 multiletter control sequences out of 15000+200000
- 19756 words of font info for 50 fonts, out of 3000000 for 9000
+ 1445 strings out of 493673
+ 19123 string characters out of 3141522
+ 92005 words of memory out of 3000000
+ 4795 multiletter control sequences out of 15000+200000
+ 23131 words of font info for 55 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 31i,9n,23p,2106b,228s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,9n,24p,2100b,259s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.e
 nc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Pr
@@ -281,9 +287,9 @@ m/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a
 .pfb>
-Output written on eacl2017.pdf (6 pages, 204280 bytes).
+Output written on eacl2017.pdf (8 pages, 220509 bytes).
 PDF statistics:
- 79 PDF objects out of 1000 (max. 8388607)
+ 87 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

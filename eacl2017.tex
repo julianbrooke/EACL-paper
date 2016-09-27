@@ -26,6 +26,7 @@
 \def \eg {e.g.,\@ }
 \def \ie {i.e.,\@ }
 \def \al {al.\@ }
+\def \etc {etc.\@ }
 
 %\eaclfinalcopy % Uncomment this line for the final submission
 %\def\eaclpaperid{***} %  Enter the acl Paper ID here
@@ -63,7 +64,7 @@
 
 \section{Background and Related work}
 
-In this paper we are attempting to identify \textit{formulaic sequences}, following the terminology of Wray \shortcite{Wray02,Wray08}, who defines a formulaic sequence (FS) as ``a sequence, continuous or discontinuous, of words or other elements, which is, or appears to be, prefabricated: that is, stored and retrieved whole from memory at the time of use, rather than being subject to generation or analysis by the language grammar.'' In other words, a formulaic sequence shows signs of being lexicalized. In computational linguistics, the most common term used to describe multiword lexical units is \textit{multiword expression} or MWE \cite{Baldwin10}, but here we wish to make a principled distinction between at least somewhat non-compositional, strongly lexicalized MWEs and FS, a superset which includes MWEs but also (apparently) compositional linguistic formulas. This distinction is not a new one, for instance it exists to some extent in the MWE annotation of Schneider \cite{Schneider14a}, who distinguishes between weak (collocational) and strong (non-compositional) MWEs, but it is our contention is that separate, precise terminology is useful for research targeted at either class: we need not strain the concept of MWE to include items which do not require special semantics, nor are we included to disregard or minimize the larger formulaticity of language simply because it is not the dominant focus of MWE research. Many MWE researchers would defensibly balk at including in their MWE lexicons and corpus annotations (English) formulaic sequences such as \emph{there is something going on}, \emph{it is more important than ever to\ldotz}, \emph{\ldotsdo not know what it is like to\ldots},\emph{it would be great if * could}, \emph{there is no shortage of\ldots}, \emph{the rise and fall of\ldots}, \emph{now is not the time to\ldots}, \etc as well as tens of thousands of other such phrases which, along with less compositional, clearly MWE formulas like \textit{be worth * weight in gold}, are identified by the FS-extraction system presented here.
+In this paper we are attempting to identify \emph{formulaic sequences}, following the terminology of Wray \shortcite{Wray02,Wray08}, who defines a formulaic sequence (FS) as ``a sequence, continuous or discontinuous, of words or other elements, which is, or appears to be, prefabricated: that is, stored and retrieved whole from memory at the time of use, rather than being subject to generation or analysis by the language grammar.'' In other words, a formulaic sequence shows signs of being lexicalized. In computational linguistics, the most common term used to describe multiword lexical units is \emph{multiword expression} or MWE \cite{Baldwin10}, but here we wish to make a principled distinction between at least somewhat non-compositional, strongly lexicalized MWEs and FS, a superset which includes MWEs but also (apparently) compositional linguistic formulas. This distinction is not a new one, for instance it exists to some extent in the MWE annotation of Schneider \cite{Schneider14a}, who distinguishes between weak (collocational) and strong (non-compositional) MWEs, but it is our contention is that separate, precise terminology is useful for research targeted at either class: we need not strain the concept of MWE to include items which do not require special semantics, nor are we included to disregard or minimize the larger formulaticity of language simply because it is not the dominant focus of MWE research. Many MWE researchers would defensibly balk at including in their MWE lexicons and corpus annotations (English) formulaic sequences such as \emph{there is something going on}, \emph{it is more important than ever to\ldots}, \emph{\ldotsdo not know what it is like to\ldots},\emph{it would be great if * could}, \emph{there is no shortage of\ldots}, \emph{the rise and fall of\ldots}, \emph{now is not the time to\ldots}, \etc as well as tens of thousands of other such phrases which, along with less compositional, clearly MWE formulas like \emph{be worth * weight in gold}, are identified by the FS-extraction system presented here.
 
 \begin{figure}[!tb]
 \center{\includegraphics{FS_diagram_1.png}}
@@ -115,7 +116,7 @@ Once a set of relevant $n$-grams is identified (and counted), other statistics r
 LPR(w_i,w_{0,n}) = \max_{0 \leq j < k < n }{\frac{p(w_i|w_{j,k})}{p(w_i|t_{j,k})}}
 \end{displaymath}
 
-These conditional probabilities can be derived in the standard way from $n$-gram and POS $n$-gram counts. We can use the same equation for gap $n$-grams, with the caveat that quantities involving sequences which include the location where the gap occurs are derived from special gap $n$-gram statistics, not regular $n$-gram statistics.  
+These conditional probabilities can be derived in the standard way from $n$-gram and POS $n$-gram counts. We can use the same equation for gap $n$-grams, with the caveat that quantities involving sequences which include the location where the gap occurs are derived from special gapped $n$-gram statistics, not regular $n$-gram statistics.  
 
 In Brooke et \al \shortcite{Brooke15b}, LPR for an entire span is calculated as a product of the individual LPRs, but this is not an appropriate choice here: instead, the base ``off'' cost for a node in our lattice is the minimum LPR across the words in the sequence (minLPR):
 
@@ -132,7 +133,7 @@ degree to which an $n$-gram holds together, instead it focuses on the word which
 
 For each node, there are two cost functions, one which is used if the node on ($C_{1}$), and the other if the node is off ($C_{0}$). The base value of $C_{0}$ is the minLPR metric discussed above. The base value of $C_{1}$ is a parameter to the model which, for nodes not influenced by one of the other factors discussed below, is equivalent to an initial threshold for building a vocabulary using the minLPR association measure. The lower bound on both costs is 1. There is no necessary upper bound on $C_{1}$, but we note here that there is a fairly small range of good choices for $C_{1}$; we have found that setting it too high ($>5$, corresponding to being five times more likely than predicted by POS context alone) will restrict the model primarily to sequences with only open-class words, while setting it too low ($<3$) will allow in too much random noise.
 
-In general, we will be expanding these cost functions by adding exponential terms, reflecting the fact we do not want to override the association measure, but rather modulate it. Most of these modulations we use here are related to the node interactions discussed below, but we begin by introducing a simple example of a modulation which uses the $n$-gram count. First, lets define $C_0$ as the minLPR based taken to the power of some as yet undefined function $d$:
+In general, we will be expanding these cost functions by adding exponential terms, reflecting the fact we do not want to override the association measure, but rather modulate it. Most of these modulations we use here are related to the node interactions discussed below, but we begin by introducing a simple example of a modulation which uses the $n$-gram count. First, lets define $C_0$ as the minLPR based taken to the power of some as yet undefined function $d_0$:
 
 \begin{displaymath}
 C_0(t) = minLPR(t)^{d_0(t)}
@@ -141,10 +142,10 @@ C_0(t) = minLPR(t)^{d_0(t)}
 LPR is a association measure based on conditional probability, and therefore tends to underestimate the importance of marginal probability, missing common expression formed using high frequency words. As such, it is common for more complex association measures to include multiplication by the count, or logarithm of the count. In the context of this model, multiplying our cost by even the logarithm of the count would be far too extreme, but we can give apply a more restricted increase to $C_0$, forcing the model to give more weight to relatively common expressions, as follows: Let $c(\dot)$ be the count function, and $c(min)$ and $c(max)$ refer to the lowest and highest count $n$-gram in the lattice (not including unigrams). 
 
 \begin{displaymath}
-d_0(t) = 1 + \frac{\log\frac{c(t)}{c(min)}}{\log\frac{c(max)}{c(min)}}}
+d_0(t) = 1 + \frac{\log\frac{c(t)}{c(min)}}{\log\frac{c(max)}{c(min)}}
 \end{displaymath}
 
-This logarithmically scales the count into the range of 0 and 1; the $C_0$ of $n$-grams at the cutoff will be unaffected ($mod(t) = 1$) , while the maximum value of $d$ results in a squaring of the initial LPR-ratio.
+This logarithmically scales the count into the range of 0 and 1; the $C_0$ of $n$-grams at the cutoff will be unaffected ($mod(t) = 1$) , while the maximum value of $d_0$ results in a squaring of the initial LPR-ratio.
 
 \begin{figure*}[!tb]
 \center{\includegraphics{FS_diagram_2.png}}
@@ -155,32 +156,37 @@ This logarithmically scales the count into the range of 0 and 1; the $C_0$ of $n
 
 The most important node interaction is \textit{covering}, which corresponds to discounting or entirely excluding a node based on the presence of a node higher in the lattice. Our model includes two types of covering: hard and soft. Hard covering is based on the idea that, due to very similar counts, we can reasonably conclude that the presence of $n$-gram in our statistics is a direct result of the other: if we have 143 counts of \emph{keep * under wraps} and 152 counts of \emph{under wraps}, the presence of \emph{keep * under wraps} almost completely explains \emph{under wraps}, and it is better if we collapse these two decisions into one. We do this by permanently disabling any covered node, and giving the covering node the maximum minLPR among all the nodes it covers; this means that longer $n$-grams with function words (which often have lower minLPR) can benefit from the strong statistical relationships between open-class lexical features in $n$-grams that they cover. This is done as a preprocessing step, and besides being effective it also greatly improves the tractability of the iterative optimization of the lattice. Of course, a threshold for hard covering must be chosen: empirically, we have found that a ratio of $2/3$ (corresponding to a significant but not overwhelming majority of the counts of a lower node corresponding to the higher node) works well. Finally, we also use hard covering to partially address the rather challenging problem of pronouns, which, due to pragmatic biases in particular corpora, often have higher than desirable LPR ratios, but cannot reasonably be excluded either since many common FS contain them. In our model, $n$-grams with pronouns are considered covered (inactive) unless they cover at least one other node which does not have a pronoun.
 
-Soft covering is used in cases when a single $n$-gram does not entirely account for another, but a turned-on $n$-gram to some extent may explain some of the statistical irregularity of one lower in the lattice. For instance, \emph{keep * under} is not hard-covered by \emph{keep * under wraps} (since there are FS such as \emph{keep * under surveillance}, \emph{keep it under your hat}, \etc), but if \emph{keep * under wraps} is tagged as an FS, we nevertheless want to discount the portion of the \emph{keep * under} counts that correspond to \emph{keep * under wraps}. We accomplish this by lowering the turned-off cost function of {keep * under} (and thus making turning on less desirable) in the following manner: let $t$ be the target node, and $s_1\ldots_m$ be any turned-on nodes which are above $t$ in the lattice. Then, then the new $d_0$, $d_0'$ for a node $t$ is:
+Soft covering is used in cases when a single $n$-gram does not entirely account for another, but a turned-on $n$-gram to some extent may explain some of the statistical irregularity of one lower in the lattice. For instance, \emph{keep * under} is not hard-covered by \emph{keep * under wraps} (since there are FS such as \emph{keep * under surveillance}, \emph{keep it under your hat}, \etc), but if \emph{keep * under wraps} is tagged as an FS, we nevertheless want to discount the portion of the \emph{keep * under} counts that correspond to \emph{keep * under wraps}. We accomplish this by lowering the turned-off cost function of \emph{keep * under} (and thus making turning on less desirable) in the following manner: let $t$ be the target node, and $s_1\ldots_m$ be any turned-on nodes which are above $t$ in the lattice. Then, then the new $d_0$, $d_0'$ for a node $t$ is:
 
 \begin{displaymath}
-d_{0}'(t) = \frac{c(t) - \sum{c(s_1)\ldots c(s_m)}}{c(t))} d_0(t)
+d_{0}'(t) = \frac{c(t) - \sum{c(s_1)\ldots c(s_m)}}{c(t)} d_0(t)
 
 \end{displaymath}
 
 \noindent
 This equation is intended as a simple, quick-to-calculate approximation of the result of recalculating minLPR with the counts corresponding to the covering nodes actually removed.
 
-In general, covering prefers turning on longer, covering $n$-grams since doing so lowers the turned-off cost function of nodes lower in the lattice. Not surprisingly, it is important to have a mechanism working in opposition, \ie one which generally prefers shorter $n$-grams. \textit{Clearing} does this by changing the $C_0$ of nodes higher in the lattice when a lower node is turned-on. The basic mechanism is the same as covering, except that we cannot make direct make use of counts in the same way; whereas it makes sense to discount the turned-off cost of covered nodes in proportion to the (lower) relative counts of their covering nodes, in the reverse direction this logic entirely fails. A simple but effective solution is to use the minLPR value: a turned-on node will clear any node higher in the lattice which has a minLPR that is lower than it. We refer to this mechanism as clearing because it tends to clear away a variety of trivial uses of common FS which many have higher LPR due to the lexical and syntactic specificity of the FS.
-
-To give an example of its effect, if the node \emph{keep * under wraps} is turned on, then, assuming that their minLPR is lower, the $C_0$ of nodes such as \emph{be keep * under wraps} and \emph{keep * under wraps for} will be lowered to zero. This dissuades (but does not prevent) the model from turning on these nodes. Note that the effect of both covering and clearing is to lower the cost function for covered/clears nodes, which encourages the model to turn \emph{keep * under wraps} on, even potentially in cases where its minLPR is relatively low.
-
-The third mechanism of node interaction involves $n$-grams which overlap in the corpus. Though there are some token-level exceptions (\eg coordinated compound nouns), it is generally the case that independent formulaic sequences do not overlap. For example, given that \emph{be keep * under} and \emph{keep * under wraps} often appear together, overlapping on the tokens \emph{keep * under}, we do not want both being selected as an FS, even in the case where both had high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than lowering the off-cost, we raise the on-cost. Let $oc(x,y)$ refer to number of times nodes $x$ and $y$ overlapped in the corpus, and $o_1\ldots o_m$ refer to \emph{turned-on} nodes which overlap with our target node $t$. With analogy to $m_0$ above, we define an $m_1$ exponential term for our target node $t$ as:
+In general, covering prefers turning on longer, covering $n$-grams since doing so lowers the turned-off cost function of nodes lower in the lattice. Not surprisingly, it is important to have a mechanism working in opposition, \ie one which generally prefers shorter $n$-grams. \textit{Clearing} does this by changing the $C_0$ of nodes higher in the lattice when a lower node is turned-on. The basic mechanism is the same as covering, except that we cannot make direct make use of counts in the same way; whereas it makes sense to discount the turned-off cost of covered nodes in proportion to the (lower) relative counts of their covering nodes, in the reverse direction this logic entirely fails. A simple but effective solution is make use of the minLPR value: in this paper, we consider two options: a hard clearing where any turned-on node will clear (set $C_{0}$ to 0 for) any node higher in the lattice which has a minLPR that is lower than it; and a soft clearing which lowers  $C_{0}(t)$ based on the ratio between the minLPR for the two relevant nodes, \ie
 
 \begin{displaymath}
-m_{1}(t) = \frac{c(t)}{c(t) - \sum{oc(o_1)\ldots oc(o_m)}}}
+C_{0}'(t) = max(1, C_{0}(t) \prod{\frac{minLPR(t)}{minLPR(s_i)})}
+
+\end{displaymath}
+\noindent
+where $s_i$ is the $i$th clearing node. We refer to this mechanism as clearing because it tends to clear away a variety of trivial uses of common FS which many have higher LPR due to the lexical and syntactic specificity of the FS. To give an example of its effect, if the node \emph{keep * under wraps} is turned on, then, assuming that their minLPR is lower, under hard clearing the $C_0$ of nodes such as \emph{be keep * under wraps} and \emph{keep * under wraps for} will be set to 1. This dissuades (but does not prevent) the model from turning on these nodes. Note that the effect of both covering and clearing is to lower the cost function for covered/clears nodes, which encourages the model to turn an $n$-gram like \emph{keep * under wraps} on, even supposing its minLPR were relatively low.
+
+The third mechanism of node interaction involves $n$-grams which overlap in the corpus. Though there are some token-level exceptions (\eg coordinated compound nouns), it is generally the case that independent formulaic sequences do not overlap. For example, given that \emph{be keep * under} and \emph{keep * under wraps} often appear together, overlapping on the tokens \emph{keep * under}, we do not want both being selected as an FS, even in the case where both had high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than lowering the off-cost, we raise the on-cost. Let $oc(x,y)$ refer to number of times nodes $x$ and $y$ overlapped in the corpus, and $o_1\ldots o_m$ refer to \emph{turned-on} nodes which overlap with our target node $t$. With analogy to $d_0$ above, we define an $d_1$ exponential term for our target node $t$ as:
+
+\begin{displaymath}
+d_{1}(t) = \frac{c(t)}{c(t) - \sum{oc(o_1)\ldots oc(o_m)}}
 \end{displaymath}
 
-The effect of overlaps on the cost is hyperbolic: small amounts of overlapping have little effect, but as the amount of overlapping approaches the total count of the node, the cost becomes prohibitive, effectively forcing one of nodes to turn off. The idea behind lowering the cost when covering and clearing is to encourage the model to turn on nodes which effectively explain the presence of nodes above and/or below it in the lattice, but we do not want to encourage nodes which overlap at all, so instead we apply a penalty which increases the cost of turning on pairs of nodes which overlap.
+The effect of overlaps on the cost is hyperbolic: small amounts of overlapping has little effect, but with significant overlap the cost becomes prohibitive, effectively forcing one of nodes to turn off. The idea behind lowering the cost when covering and clearing is to encourage the model to turn on nodes which effectively explain the presence of nodes above and/or below it in the lattice, but we do not want to encourage nodes that just happen to overlap with others; a penalty is a more appropriate mechanism.
 
  
 \subsection{Optimization}
 
-The complex interaction between nodes discussed in the preceding section prohibit a global optimization of the lattice. Fortunately, though a majority of nodes in the lattice are connected to each other though some path, most of the effects of nodes on each other are relatively local, and effective local optimizations can be made tractable by applying some simple restrictions. The main optimization loop consists of iterations over the lattice until complete convergence (no changes in the final iteration). For each iteration over the main loop, each potentially active node is examined in order to evaluate whether its current status is optimal given the current state of the lattice. The order that we do this has a significant effect on the result: among the obvious options, we have found that we get the best results by ordering our nodes by frequency, which gives an implicit advantage to relatively common $n$-grams, since they will tend to be turned on first.
+The interaction between nodes discussed in the preceding section prohibit a global optimization of the lattice. Fortunately, though a majority of nodes in the lattice are connected to each other though some path, most of the effects of nodes on each other are relatively local, and effective local optimizations can be made tractable by applying some simple restrictions. The main optimization loop consists of iterations over the lattice until complete convergence (no changes in the final iteration). For each iteration over the main loop, each potentially active node is examined in order to evaluate whether its current status is optimal given the current state of the lattice. The order that we do this has an effect on the result: among the obvious options, we have found that we get the best results by ordering our nodes by frequency, which gives an implicit advantage to relatively common $n$-grams, since they will tend to be turned on first.
 
 %The algorithm for optimization procedure is given in Figure X (???). 
 
@@ -189,10 +195,64 @@ Given the relationships between nodes that we have defined above, it is obviousl
 In practice, we apply the following restrictions which significantly reduce the runtime of the algorithm without sacrificing the quality of the output lexicon:
 
 \begin{itemize}
-\item The complexity of the algorithm increases exponentially with the number of ``relevant'' nodes, so we limit the total number to 5. When there are more than 5 nodes turned on the in the vicinity of the target node, they are selected by ranking in terms of the relative influence on each other given by the relative change in cost functions as defined in preceding section.
+\item The complexity of the algorithm increases exponentially with the number of ``relevant'' nodes, so we limit the total number to 5. When there are more than 5 nodes turned on in the vicinity of the target node, they are selected by ranking in terms of the relative influence on each other given by the relative change in cost functions as defined in preceding section.
 \item The total number of pairwise $n$-gram overlaps in a large corpus is too big too effectively store or search, and so we exclude overlaps with a count of less than 5 from our lattice.
 \item Many nodes have a minLPR which is a little larger than 1. There is very little chance these nodes will be activated by the algorithm, and so to save time we simply do not consider activating nodes with a minLPR of less than 2.
 \end{itemize}
+
+\section{Evaluation}
+
+We evaluate our approach across three different languages including evaluation sets derived from five different corpora. In English, we follow Brooke et \al \shortcite{Brooke15b} in using a 890M token filtered portion of the ICWSM social media corpus \cite{ICWSM} tagged with the Tree Tagger \cite{Schmid95}. To facilitate a comparison with Newman et \al \shortcite{Newman12}, which does not scale up to a corpus as large as the ICWSM, we also build a lexicon and test set using the 100M token BNC \cite{BNC}, using the standard CLAWS-derived POS tags for the corpus. Lemmatization included removing all inflectional marking from both words and POS tags. For English, we took the same gap definition as used in Brooke et \al \shortcite{Brooke15b}, which includes simple nouns and portions thereof.
+
+The other two languages evaluated are Croatian and Japanese: these two languages were selected in part because of their difference from English, and in particular their reputation for being relatively free-word order; we were interested in the challenges associated with using an $n$-gram approach in such a context. For Croatian, .... Japanese
+
+Brooke et \al \shortcite{Brooke15b} introduced a method for evaluating formulaic sequence extraction without a reference lexicon or direct annotation of the output of a model: instead, $n$-grams are sampled after applying the frequency threshold and annotated as being either an FS or not, allowing for calculation of a proper F-score for any model. We use the earlier test set built for the ICWSM corpus, and applied the same methodology (a majority annotation from 3 trained annotators) to build a new tests sets for the BNC, and for the Japanese and Croatian corpora; our new test sets consist of 500 contiguous $n$-grams and another of 500 gapped $n$-grams for each corpus. We keep the two types separate because, although rarer, gapped FS are often excluded in relevant work, and, we think, deserve special attention.  For these test sets, we report (in Table 1) inter-annotator agreement in terms of average $f$-score across annotators, which is appropriate for highly-imbalanced class situations such as this (formulaic is considered the positive class for this and other calculations), and also provides a human upper bound. In addition, we also test the ICWSM-derived lexicon against the ``MWE'' test set from Brooke et \al \shortcite{Brooke15b} whose $n$-gram annotations (both gappy and non-gappy) are derived from the MWE annotation of Schneider \shortcite{Schneider14b}.
+
+Our primary comparison is with the heuristic LPR model from Brooke et \al \shortcite{Brooke15b} and, for the BNC, the DP-seg model from Newman et \al \shortcite{Newman12}, though the latter only handles sequential output. Both these models have been compared against a wide range of co-occurrence measures; we do not repeat all all comparisons here, but we do consider a lexicon built from ranking $n$-grams according to our primarily measure (minLPR) as well as the standard PMI. For both association measures we choose a threshold which maximizes $f$-score. All comparisons here are subject to the same $n$-gram frequency cutoff as the main model; since the content of our test sets are linked to this $n$-gram cutoff, it is not trivial to change it.
+
+We created small development sets for each corpus and used them to do a thorough testing of a variety of parameter settings and other options, some of which we have excluded from our  discussion here. We found that we were always able to get at least near-optimal results using a $C_1$ (the on-cost) of 4, and we do not present variations on this, nor on the use of covering, which we take as fundamental to the model. Parameters that we considered in the final comparison include modulation of the off-cost using counts \emph{+cnt}, the use of hard clearing (\emph{+hcl}) or soft clearing (\emph{+scl}), and the application of penalties for overlaps \emph{+ovr}.
+
+\section{Results}
+
+ \begin{table*}[!bt]
+ 
+ \begin{center}
+  \caption{ F-score for formulaic sequence identification in various test sets; LLR = log-likelihood ratio C = contiguous $n$-grams, G = gapped $n$-grams. Bold is best in column.}
+ \begin{tabular}{lcccccccccccccc}
+
+       \hline
+        \hline
+				& \multicolumn{8}{c}{\bf{English}} & & \multicolumn{2}{c}{\bf{Croatian}} & & \multicolumn{2}{c}{\bf{Japanese}} \\
+       \cline{2-9}			
+       & \multicolumn{2}{c}{\bf{ICWSM}} & &  \multicolumn{2}{c}{\bf{MWE}} & &  \multicolumn{2}{c}{\bf{BNC}} & & &  && & \\
+       \cline{2-3} \cline{5-6} \cline{8-9} \cline{11-12} \cline{14-15}
+           \multicolumn{1}{c}{\bf{Source}}    & C & G &   & C & G &   & C & G &  & C & G & & C & G  \\
+            \hline
+           \hline     
+           
+Human agreement & & & & & & & & & & & & & &\\
+ 
+ \hline
+LLR ranking & & & & & & & & & & & & & &\\ 
+LPR ranking & & & & & & & & & & & & & &\\ 
+Newman al \al (2012)  & & & & & & & & & & & & & &\\ 
+Brooke et \al (2015)  & & & & & & & & & & & & & &\\ 
+  \hline
+	Lattice\emph{+cnt+hcl+ovr} & & & & & & & & & & & & & & \\  
+
+	Lattice \emph{+hcl+ovr} & & & & & & & & & & & & & & \\  	
+		Lattice \emph{+cnt+ovr} & & & & & & & & & & & & & & \\  
+			Lattice \emph{+cnt+scl+ovr} & & & & & & & & & & & & & & \\  
+				Lattice \emph{+cnt+hcl} & & & & & & & & & & & & & & \\  
+			
+		
+            \hline
+           \hline                  
+
+ \end{tabular}
+
+ \end{center}
+ \end{table*}
 
 %One more restriction is necessary to make the use of overlaps feasible: without any restrictions, the number of connections resulting from overlaps is too large. We resolved this problem by excluding as possible active nodes. 
 

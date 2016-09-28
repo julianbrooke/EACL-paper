@@ -1,4 +1,6 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: eacl2017.aux
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: eacl2017.aux
 The style file: eacl2017.bst
 Database file #1: mybib.bib
 You're missing a field name---line 1751 of file mybib.bib
@@ -91,4 +93,45 @@ You're missing a field name---line 4643 of file mybib.bib
  : %address = {New York},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
+You've used 24 entries,
+            2490 wiz_defined-function locations,
+            713 strings with 9193 characters,
+and the built_in function-call counts, 9515 in all, are:
+= -- 976
+> -- 378
+< -- 4
++ -- 128
+- -- 124
+* -- 656
+:= -- 1529
+add.period$ -- 97
+call.type$ -- 24
+change.case$ -- 154
+chr.to.int$ -- 23
+cite$ -- 24
+duplicate$ -- 441
+empty$ -- 763
+format.name$ -- 155
+if$ -- 2004
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 25
+newline$ -- 147
+num.names$ -- 74
+pop$ -- 205
+preamble$ -- 1
+purify$ -- 181
+quote$ -- 0
+skip$ -- 313
+stack$ -- 0
+substring$ -- 374
+swap$ -- 97
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 180
+warning$ -- 0
+while$ -- 71
+width$ -- 28
+write$ -- 333
 (There were 18 error messages)

@@ -29,15 +29,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="4.92923"
-     inkscape:cx="75.727774"
+     inkscape:cx="45.398493"
      inkscape:cy="64.634039"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1056"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-height="1058"
+     inkscape:window-x="1358"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -132,8 +132,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="36.395889"
-       y="76.554848"
+       x="34.395889"
+       y="68.554848"
        id="text4220"
        sodipodi:linespacing="125%"
        inkscape:export-xdpi="90"
@@ -141,8 +141,8 @@
        inkscape:export-filename="FS_diagram_1.png"><tspan
          sodipodi:role="line"
          id="tspan4222"
-         x="36.395889"
-         y="76.554848">Formulaic Sequences</tspan></text>
+         x="34.395889"
+         y="68.554848">Formulaic Sequences</tspan></text>
     <g
        id="g4165">
       <ellipse
@@ -152,8 +152,8 @@
          transform="matrix(0.99994872,-0.01012747,0.05745129,0.99834831,0,0)"
          ry="27.780924"
          rx="65.40519"
-         cy="109.50089"
-         cx="128.74548"
+         cy="109.23725"
+         cx="102.75926"
          id="path3336-7-4"
          style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.02315259px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <text
@@ -162,23 +162,24 @@
          inkscape:export-xdpi="90"
          sodipodi:linespacing="125%"
          id="text4224"
-         y="103.2066"
-         x="135.11835"
+         y="97.206596"
+         x="109.11835"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
-           y="103.2066"
-           x="135.11835"
+           y="97.206596"
+           x="109.11835"
            id="tspan4226"
            sodipodi:role="line">Multiword</tspan><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
            id="tspan4161"
-           y="118.8316"
-           x="135.11835"
+           y="112.8316"
+           x="109.11835"
            sodipodi:role="line">Expressions</tspan></text>
     </g>
     <g
-       id="g4174">
+       id="g4174"
+       transform="matrix(1.0007178,0,0,0.86215801,-0.05784177,23.072381)">
       <ellipse
          inkscape:export-filename="FS_diagram_1.png"
          inkscape:export-ydpi="90"
@@ -189,21 +190,20 @@
          cx="80.579964"
          id="path4228"
          style="opacity:0.5;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.37725723;stroke-opacity:1" />
-      <text
-         inkscape:export-filename="FS_diagram_1.png"
-         inkscape:export-ydpi="90"
-         inkscape:export-xdpi="90"
-         sodipodi:linespacing="125%"
-         id="text4230"
-         y="147.3528"
-         x="42.194954"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;writing-mode:lr-tb;text-anchor:start"
-           y="147.3528"
-           x="42.194954"
-           id="tspan4232"
-           sodipodi:role="line">Named Entities</tspan></text>
     </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="39.986645"
+       y="150.81073"
+       id="text4220-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png"><tspan
+         sodipodi:role="line"
+         id="tspan4222-3"
+         x="39.986645"
+         y="150.81073">Named Entitites</tspan></text>
   </g>
 </svg>

@@ -1,28 +1,29 @@
 %
-% File eacl2017.tex
+% File acl2012.tex
 %
-%% Based on the style files for ACL-2016
-%% Based on the style files for ACL-2015, with some improvements
-%%  taken from the NAACL-2016 style
-%% Based on the style files for ACL-2014, which were, in turn,
-%% Based on the style files for ACL-2013, which were, in turn,
-%% Based on the style files for ACL-2012, which were, in turn,
-%% based on the style files for ACL-2011, which were, in turn, 
-%% based on the style files for ACL-2010, which were, in turn, 
-%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
+% Contact: Maggie Li (cswjli@comp.polyu.edu.hk), Michael White (mwhite@ling.osu.edu)
+%%
+%% Based on the style files for ACL2008 by Joakim Nivre and Noah Smith
+%% and that of ACL2010 by Jing-Shin Chang and Philipp Koehn
 
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
 
-\documentclass[11pt]{article}
-\usepackage{eacl2017}
+\documentclass[11pt,letterpaper]{article}
+\usepackage[letterpaper]{geometry}
+\usepackage{acl2012}
 \usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{multirow}
 \usepackage{url}
 \usepackage{xspace}
-\usepackage{latexsym}
 \usepackage[pdftex]{graphicx}
+\makeatletter
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage[hidelinks]{hyperref}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\setlength\titlebox{6.5cm}    % Expanding the titlebox
 
 \def \eg {e.g.,\@ }
 \def \ie {i.e.,\@ }
@@ -72,13 +73,21 @@
 \maketitle
 \begin{abstract}
 
+We present a new model for acquiring unrestricted multiword lexicons from large corpora based on  competition among $n$-gram candidates. In contrast to the standard approach of simple ranking by association measure, in our model $n$-grams are arranged in a lattice structure based on subsumption and overlap relationships, with nodes inhibiting other nodes in their vicinity when they are selected as a lexical item. We show how the configuration of such a lattice can be optimized tractably, and our evaluation using annotations of sampled $n$-grams indicates that it is consistently outperforms alternatives by at least 0.05 f-score across several corpora and languages.
+
+
 \end{abstract}
+
 
 \section{Introduction}
 
+Despite over 25 years of research in computational linguistics aimed at acquiring multiword lexicons using corpora statistics, and growing evidence that speakers both produce and process language primarily in terms of memorized sequences \cite{Wray08}, the individual word nonetheless stubbornly remains the \textit{de facto} standard unit for most research in modern NLP. The potential of multiword knowledge to improve both the automatic processing of language as well as offer new understanding of human acquisition and usage of language is the primary motivator of this work. We present a effective, expandable, and above all tractable new approach in comprehensive multiword lexicon acquisition that aims to find a middle ground between standard MWE acquisition approaches based on association measures \cite{Ramisch14}, and more sophisticated statistical models \cite{Newman12} which fail to scale to the large corpora which are now the main sources of the distributional information which are central to lexical knowledge in modern NLP systems.
+
+Our model involves competition among a large set of contiguous and non-contiguous $n$-gram types---connected to each other based on subsumption and overlap relations in a lattice-shaped graph---to be selected as the best (\ie most parsimonious) explanation for statistical irregularities due to lexical (and not syntactic) affinity. We test our model across 4 large corpora in 3 languages, including 2 relatively free-word-order languages (Croatian and Japanese), and find that this approach consistency outperforms recently proposed alternatives, offering both scalability and many avenues for future enhancement.
+
 \section{Background and Related Work}
 
-In this paper we will refer to the targets of lexicon creation efforts as \termdef{formulaic sequences}, following the terminology of Wray \shortcite{Wray02,Wray08}, wherein a formulaic sequence (FS) is defined as ``a sequence, continuous or discontinuous, of words or other elements, which is, or appears to be, prefabricated: that is, stored and retrieved whole from memory at the time of use, rather than being subject to generation or analysis by the language grammar.'' In other words, a formulaic sequence shows signs of being part of a mental lexicon. Though by this definition single individuals or small groups may have their own FS, in this paper, we are only interested in FS that are shared by a recognizable language community. In computational linguistics, the most common term used to describe multiword lexical units is \emph{multiword expression} or ``MWE'' \cite{Sag02,Baldwin10}, but here we wish to make a principled distinction between at least somewhat non-compositional, strongly lexicalized MWEs and FS, a near superset which includes most MWEs but also (apparently) compositional linguistic formulas. This distinction is not a new one; it exists, for example, in the original paper of \newcite{Sag02} in the distinction between lexicalized and institutionalized phrases, and also to some extent in the MWE annotation of \newcite{Schneider14a}, who distinguish between weak (collocational)\footnote{Here we avoid the term \emph{collocation} entirely due to even more confusion with respect to in its interpretation. Though in some contexts it has been used in way that is similar to our definition of FS, it can be applied to any words that show a statistical tendency to appear in the vicinity of one another for any reason: for instance, the pair of words \ex{doctor/nurse} might be considered a collocation \cite{Ramisch14}}  and strong (non-compositional) MWEs. It is our contention, however, that separate, precise terminology is useful for research targeted at either class: we need not strain the concept of MWE to include items which do not require special semantics, nor are we inclined to disregard the larger formulaticity of language simply because it is not the dominant focus of MWE research. Many MWE researchers would defensibly balk at including in their MWE lexicons and corpus annotations (English) formulaic sequences such as \ex{there is something going on}, \ex{it is more important than ever to \dotts}, \ex{\dotts do not know what it is like to \dotts}, \ex{there is no shortage of\dotts}, \ex{the rise and fall of\dotts}, \ex{now is not the time to\dotts}, \etc as well as tens of thousands of other such phrases which, along with less compositional MWEs like \ex{be worth \gap weight in gold}, fall under the FS umbrella. Another reason to consider a different terminology is that there are classes of what is typically considered MWE that don't fit well into an FS framework, for instance novel compound nouns whose semantics are accessible by analogy (\eg \ex{plastic house}). Also, we exclude from the definition of both FS and MWE those named entities which refer to people or places which are little-known and/or whose surface form appears derived (\eg \ex{Mrs. Barbara W. Smith} or \ex{Smith Garden Supplies Ltd}). \figref{fig:terminology} show the conception of the relationship between FS, MWE and (multiword) named entities that we assume for this paper.
+In this paper we will refer to the targets of our lexicon creation efforts as \termdef{formulaic sequences}, following the terminology of Wray \shortcite{Wray02,Wray08}, wherein a formulaic sequence (FS) is defined as ``a sequence, continuous or discontinuous, of words or other elements, which is, or appears to be, prefabricated: that is, stored and retrieved whole from memory at the time of use, rather than being subject to generation or analysis by the language grammar.'' In other words, a formulaic sequence shows signs of being part of a mental lexicon. Though by this definition single individuals or small groups may have their own FS, in this paper, we are only interested in FS that are shared by a recognizable language community. In computational linguistics, the most common term used to describe multiword lexical units is \emph{multiword expression} or ``MWE'' \cite{Sag02,Baldwin10}, but here we wish to make a principled distinction between at least somewhat non-compositional, strongly lexicalized MWEs and FS, a near superset which includes most MWEs but also (apparently) compositional linguistic formulas. This distinction is not a new one; it exists, for example, in the original paper of \newcite{Sag02} in the distinction between lexicalized and institutionalized phrases, and also to some extent in the MWE annotation of \newcite{Schneider14a}, who distinguish between weak (collocational)\footnote{Here we avoid the term \emph{collocation} entirely due to even more confusion with respect to in its interpretation. Though in some contexts it has been used in way that is similar to our definition of FS, it can be applied to any words that show a statistical tendency to appear in the vicinity of one another for any reason: for instance, the pair of words \ex{doctor/nurse} might be considered a collocation \cite{Ramisch14}}  and strong (non-compositional) MWEs. It is our contention, however, that separate, precise terminology is useful for research targeted at either class: we need not strain the concept of MWE to include items which do not require special semantics, nor are we inclined to disregard the larger formulaticity of language simply because it is not the dominant focus of MWE research. Many MWE researchers would defensibly balk at including in their MWE lexicons and corpus annotations (English) formulaic sequences such as \ex{there is something going on}, \ex{it is more important than ever to \dotts}, \ex{\dotts do not know what it is like to \dotts}, \ex{there is no shortage of\dotts}, \ex{the rise and fall of\dotts}, \ex{now is not the time to\dotts}, \etc as well as tens of thousands of other such phrases which, along with less compositional MWEs like \ex{be worth \gap weight in gold}, fall under the FS umbrella. Another reason to consider a different terminology is that there are classes of what is typically considered MWE that don't fit well into an FS framework, for instance novel compound nouns whose semantics are accessible by analogy (\eg \ex{plastic house}). Also, we exclude from the definition of both FS and MWE those named entities which refer to people or places which are little-known and/or whose surface form appears derived (\eg \ex{Mrs. Barbara W. Smith} or \ex{Smith Garden Supplies Ltd}). \figref{fig:terminology} show the conception of the relationship between FS, MWE and (multiword) named entities that we assume for this paper.
 
 
 \begin{figure}[!t]
@@ -97,7 +106,7 @@ In this paper we will refer to the targets of lexicon creation efforts as \termd
 
 Regardless of the terminology used to describe them, the starting point for multiword lexicon creation has been typically lexical association measures \cite{Church90,Dunning93,Schone01,Evert04,Pecina10,DeAraujo11,Kulkarni11,Ramisch14}; when these methods are used to build a lexicon, particular syntactic patterns and thresholds for the metrics are typically chosen. Only some of these measures generalize tractably beyond two words, for example PMI \cite{Church90}, the log ratio of the joint probability to the product of the marginal probabilities of the individual words. Other measures specifically designed to address sequences of larger than two words include the $c$-value \cite{Frantzi00}, a metric designed for term extraction which weights term frequency by the log length of the $n$-gram while penalizing $n$-grams that appear in frequent larger ones, and mutual expectation \cite{Dias99}, which produces a normalized statistic that reflects how much a candidate phrase resists the omission of any particular word. Similarly, the lexical predictability ratio (LPR) of Brooke et \al \cite{Brooke15b} is a association measure intended for any possible syntactic pattern which is calculated by discounting syntactic predictability (as provided by part-of-speech information) from the overall conditional probability for each word given the other words in the phrase. Though most association measures involve only usage statistics of the phrase and its subparts, the DRUID measure is an exception which uses distributional semantics around the phrase to identify how easily $n$-gram could be replaced by a single word \cite{Riedl15}.
 
-Typically multiword lexicons are created by ranking $n$-grams according to an association measure and applying a threshold. The algorithm of da Silva and Lopes \shortcite{daSilva99} is somewhat more sophisticated, in that it identifies the local maxima of association measures across subsuming $n$-grams within a sentence to identify MWEs of unrestricted length; its effectiveness beyond noun phrases, however, appears limited \cite{Ramisch12}. Brooke et \al \shortcite{Brooke14a,Brooke15b} developed a heuristic method intended for general FS extraction in larger corpora, first using conditional probably statistics to do an initial (single pass) coarse-grained segmentation of the corpus, followed by a pass through the resulting vocabulary, breaking larger units into smaller ones based on tradeoff between marginal and conditional statistics (\ie LPR). Beyond association measures, other general unsupervised approaches to the multiword unit identification include that of Newman et \al \shortcite{Newman12}, who used a generative Dirichlet Process model which jointly creates a linear segmentation of the corpus and a multiword vocabulary of keyphrases. Gimpel and Smith \shortcite{Gimpel11} focus specifically on deriving word sequences with gaps using a generative model, with the intent of improving machine translation. A general drawback to these generative methods, relative to approaching involving association metrics, is scalability and lack of determinacy.
+Typically multiword lexicons are created by ranking $n$-grams according to an association measure and applying a threshold. The algorithm of Silva and Lopes \shortcite{Silva99} is somewhat more sophisticated, in that it identifies the local maxima of association measures across subsuming $n$-grams within a sentence to identify MWEs of unrestricted length; its effectiveness beyond noun phrases, however, appears limited \cite{Ramisch12}. Brooke et \al \shortcite{Brooke14a,Brooke15b} developed a heuristic method intended for general FS extraction in larger corpora, first using conditional probably statistics to do an initial (single pass) coarse-grained segmentation of the corpus, followed by a pass through the resulting vocabulary, breaking larger units into smaller ones based on tradeoff between marginal and conditional statistics (\ie LPR). Beyond association measures, other general unsupervised approaches to the multiword unit identification include that of Newman et \al \shortcite{Newman12}, who used a generative Dirichlet Process model which jointly creates a linear segmentation of the corpus and a multiword vocabulary of keyphrases. Gimpel and Smith \shortcite{Gimpel11} focus specifically on deriving word sequences with gaps using a generative model, with the intent of improving machine translation. A general drawback to these generative methods, relative to approaching involving association metrics, is scalability and lack of determinacy.
 
 Other research in MWEs has tended to be rather focused on particular syntactic patterns, looking at, for instance, just verb/noun combinations \cite{Fazly09}. The work of Schneider et \al \shortcite{Schneider14b} is a rare example of a comprehensive token-level MWE identification system which distinguishes a full range of MWE sequences in the English Web Treebank, including those involving gaps, using a supervised sequence tagging model; like other models in this space, Schneider et \al make use of existing manual lexical resources and they note that an (unsupervised) automatic lexical resource could be useful addition to the model, though attempts to do so have had mixed results \cite{Riedl16}. 
 
@@ -165,14 +174,14 @@ C_0(t) = minLPR(t)^{d_0(t)}
 \end{displaymath}
 \noident
 
-And $C_1$ is the cost parameter $C$ taken to the power of an analogous function $d_1$
+And $C_1$ is the cost parameter $C$ taken to the power of an analogous function $d_1$:
 
 \begin{displaymath}
 C_1(t) = C^{d_1(t)}
 \end{displaymath}
 \noident
 
-$d_0$ and $d_1$ are dependent on the context of the node in the lattice, but are both 1 when a node is not being influenced by other nodes. They are also restricted to always being positive: as such, the lower bound on both costs is 1.
+The values of $d_0$ and $d_1$ are dependent on the context of the node in the lattice, but are both 1 when a node is not being influenced by other nodes. They are also restricted to always being positive: as such, the lower bound on both costs is 1.
 
 
 %LPR is a association measure based on conditional probability, and therefore tends to underestimate the importance of marginal probability, missing common expression formed using high frequency words. As such, it is common for more complex association measures to include multiplication by the count, or logarithm of the count. In the context of this model, multiplying our cost by even the logarithm of the count would be far too extreme, but we can give apply a more restricted increase to $C_0$, forcing the model to give more weight to relatively common expressions, as follows: Let $c(\dot)$ be the count function, and $c(min)$ and $c(max)$ refer to the lowest and highest count $n$-gram in the lattice (not including unigrams). 
@@ -215,7 +224,7 @@ In general, covering prefers turning on longer, covering $n$-grams since doing s
 \begin{displaymath}
 C_{0}'(t) = max(1, C_{0}(t) \frac{minLPR(t)}{\prod{minLPR(s_i)})}
 \end{displaymath}
-where $s_i$ is the $i$th clearing node. We refer to this mechanism as clearing because it tends to clear away a variety of trivial uses of common FS which many have higher LPR due to the lexical and syntactic specificity of the FS. To give an example of its effect, if the node \ex{keep \gap under wraps} in \figref{fig:example} is turned on and has a minLPR of 8, then, if the minLPR of a node such as\ex{keep \gap under wraps for} is 4, the $C_{0}$ will be lowered to 2 ($4/(8/4)$) by clearing. This dissuades (but does not prevent) the model from turning on these nodes. Note that the effect of both covering and clearing is to lower the cost function for covered/clears nodes, which encourages the model to turn an $n$-gram like \ex{keep \gap under wraps} on, even supposing its minLPR were relatively low.
+where $s_i$ is the $i$th clearing node. We refer to this mechanism as clearing because it tends to clear away a variety of trivial uses of common FS which many have higher LPR due to the lexical and syntactic specificity of the FS. To give an example of its effect, if the node \ex{keep \gap under wraps} in \figref{fig:example} is turned on and has a minLPR of 8, then, if the minLPR of a node such as \ex{keep \gap under wraps for} is 4, the $C_{0}$ will be lowered to 2 ($4/(8/4)$) by clearing. This dissuades (but does not prevent) the model from turning on these nodes. Note that the effect of both covering and clearing is to lower the cost function for covered/clears nodes, which encourages the model to turn an $n$-gram like \ex{keep \gap under wraps} on, even supposing its minLPR were relatively low.
 
 \subsubsection{Overlap}
 
@@ -255,7 +264,7 @@ In practice, we apply the following restrictions which significantly reduce the 
 			& Contiguous FS & Contiguous non-FS & Gapped FS & Gapped non-FS & Fleiss Kappa\\
 			 \hline
 			ICWSM & 169 & 702 & 29 & 916& 0.84 \\
-			BNC & 33 & 395 & 7 & 474 & 0.75 \\
+			BNC & 49 & 403 & 8 & 475 & 0.84 \\
 			Croatian & 64 & 382 & 11 & 456 & 0.87 \\
 			Japanese & 124 & 286 & 36 & 341 & 0.81\\
        \hline
@@ -277,18 +286,10 @@ Other than the inclusion of new languages, our test sets differ from Brooke et \
 
 
 
-% For these test sets, we report (in Table 1) inter-annotator agreement in terms of average $f$-score across annotators, which is appropriate for highly-imbalanced class situations such as this (formulaic is considered the positive class for this and other calculations), and also provides a human upper bound. 
-
-%In addition, we also test the ICWSM-derived lexicon against the ``MWE'' test set from Brooke et \al \shortcite{Brooke15b} whose $n$-gram annotations (both gappy and non-gappy) are derived from the MWE annotation of Schneider \shortcite{Schneider14b}.
-
-Our primary comparison is with the heuristic LPR model from Brooke et \al \shortcite{Brooke15b}. For the BNC, we also compare, separately, the DP-seg model from Newman et \al \shortcite{Newman12}: because the latter only handles sequential output, we use only the sequential part of the BNC test set. Both these models have been compared against a wide range of association measures;\footnote{One popular association measure which is theoretically extensible to $n$-grams of any length but which has not been addressed in the context of unrestricted MWE/FS identification is the (log-)likelihood ratio \cite{Dunning93}. Calculating a likelihood ratio in the general case involves considering all possible ways an $n$-gram could have been generated statistically from its component words: that is, whereas minLPR only considers the addition of one word to each $n-1$-gram, likelihood ratios must consider all combinations of all component $n-1,2,3\ldots$-grams, including, in our case, not only contiguous but also non-contiguous components. The corresponding exponential increase in complexity renders it and other such methods impractical for unrestricted FS identification.} we do not repeat all these comparisons here, but we do consider a lexicon built from ranking $n$-grams according to the measure used in our lattice (minLPR) as well as PMI. For each of these two association measures we build a lexicon equal to the size of the lexicon produced by our model. All comparisons here are subject to the same $n$-gram frequency threshold as the main model, since the content of our test sets are also linked to this threshold.
-
-We created small development sets for each corpus and used them to do a thorough testing of parameter settings and other options, many of which we have excluded from our discussion here. Although it is generally possible to increase precision by increasing $C$, we found that across corpora we were always obtained near-optimal results using a $C$ of 4, so to demonstrate the usefulness of the lattice technique as an entirely off-the-shelf tool, we present the results using identical settings for all 4 corpora. We treat covering as a fundamental part of the Lattice model, but to investigate the efficacy of other node interactions within the model we present results with each of overlap and clearing node interactions turned off.
-
  \begin{table*}[!bt]
  
  \begin{center}
-  \caption{ Results of formulaic sequence identification in various test sets; PMIrank = lexicon created by ranking pointwise mutual information, minLPRrank = lexicon created by ranking minLPR, LPRseg = lexicon created by method of Brooke at \al (2015), -cl = no clearing, -ovr = no penalization of overlaps, P = Precision, R = Recall, F = F-score. Bold is best in column.}
+  \caption{ Results of formulaic sequence identification in various test sets; PMIrank = lexicon created by ranking pointwise mutual information, minLPRrank = lexicon created by ranking by minLPR, LPRseg = lexicon created by method of Brooke at \al (2015), -cl = no clearing, -ovr = no penalization of overlaps, P = Precision, R = Recall, F = F-score. Bold is best in column.}
 	 \label{tab:main}
  \begin{tabular}{lcccccccccccccccc}
 
@@ -302,17 +303,17 @@ We created small development sets for each corpus and used them to do a thorough
             \hline
            \hline     
            
-PMIrank & 0.24& 0.15& 0.18 & & 0.12 & 0.24 & 0.16 & & 0.21 &0.32 & 0.26 & & 0.23& 0.09 & 0.15 \\ 
-minLPRrank & 0.49& 0.31 & 0.39 & & 0.25& 0.45 & 0.32 & & 0.36 & 0.45 & 0.40 &  & 0.51 & 0.14 & 0.22 \\ 
+PMIrank & 0.24& 0.15& 0.18 & & 0.12 & 0.25 & 0.16 & & 0.21 &0.32 & 0.26 & & 0.23& 0.09 & 0.15 \\ 
+minLPRrank & 0.49& 0.31 & 0.39 & & 0.25& 0.44 & 0.32 & & 0.36 & 0.45 & 0.40 &  & 0.51 & 0.14 & 0.22 \\ 
 
-LPR-seg  &0.53 & 0.42 & 0.47 && 0.38 & 0.44 & 0.41 & & 0.41 & 0.47  & 0.43 &  & 0.77 & 0.34 & 0.47 \\ 
+LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 0.77 & 0.34 & 0.47 \\ 
   \hline 
 
-	Lattice \emph{-cl} & 0.57& 0.42 & 0.49 & & 0.34& 0.59 & 0.43 & & 0.39 & 0.56 & 0.46 & & 0.74 & 0.39 & 0.51 \\  	 
+	Lattice \emph{-cl} & 0.57& 0.42 & 0.49 & & 0.33& 0.58 & 0.42 & & 0.39 & 0.56 & 0.46 & & 0.74 & 0.39 & 0.51 \\  	 
 			
-	Lattice \emph{-ovr} & 0.52& \bf{0.53} & 0.53 & & 0.34& \bf{0.60} & 0.43& & 0.35 & \bf{0.65} & 0.45 & & 0.69 & \bf{0.51} & \bf{0.59} \\  
+	Lattice \emph{-ovr} & 0.52& \bf{0.53} & 0.53 & & 0.33& \bf{0.60} & 0.43& & 0.35 & \bf{0.65} & 0.45 & & 0.69 & \bf{0.51} & \bf{0.59} \\  
 			
-				Lattice & \bf{0.67} & 0.45 & \bf{0.54} & & \bf{0.39}& 0.59 & \bf{0.47} & &\bf{0.42} & 0.57 & \bf{0.48} & & \bf{0.86} & 0.39 & 0.54 \\ 
+				Lattice & \bf{0.67} & 0.45 & \bf{0.54} & & \bf{0.41}& 0.56 & \bf{0.47} & &\bf{0.42} & 0.57 & \bf{0.48} & & \bf{0.86} & 0.39 & 0.54 \\ 
             \hline
            \hline                  
 
@@ -327,7 +328,7 @@ LPR-seg  &0.53 & 0.42 & 0.47 && 0.38 & 0.44 & 0.41 & & 0.41 & 0.47  & 0.43 &  & 
  \begin{table}[!bt]
  
  \begin{center}
-  \caption{ Results of formulaic sequence identification in sequential BNC test set; DP-seg = method of Newman et \al (2012)}
+  \caption{ Results of formulaic sequence identification in sequential BNC test set; LocalMaxs = method of Silva and Lopes (1999); DP-seg = method of Newman et \al (2012)}
 	\label{tab:BNC}
 	
 	 \begin{tabular}{lccc}
@@ -335,44 +336,58 @@ LPR-seg  &0.53 & 0.42 & 0.47 && 0.38 & 0.44 & 0.41 & & 0.41 & 0.47  & 0.43 &  & 
        \hline
 			& P & R & F\\
 			 \hline
+			LocalMaxs & \bf{0.58} & 0.14 & 0.23 \\
 			minLPRrank & 0.34 & 0.45 & 0.39 \\
 			LPR-seg & 0.42 & 0.45 & 0.43 \\
-			DP-seg & 0.34 & 0.71 & 0.46 \\
-			Lattice & 0.46 & 0.61 & 0.53 \\
+			DP-seg & 0.35 & \bf{0.71} & 0.47 \\
+			Lattice & 0.46 & 0.61 & \bf{0.53} \\
        \hline
  \end{tabular}
 
  \end{center}
 
- \end{table}			
+ \end{table}	
+
+
+
+% For these test sets, we report (in Table 1) inter-annotator agreement in terms of average $f$-score across annotators, which is appropriate for highly-imbalanced class situations such as this (formulaic is considered the positive class for this and other calculations), and also provides a human upper bound. 
+
+%In addition, we also test the ICWSM-derived lexicon against the ``MWE'' test set from Brooke et \al \shortcite{Brooke15b} whose $n$-gram annotations (both gappy and non-gappy) are derived from the MWE annotation of Schneider \shortcite{Schneider14b}.
+
+Our primary comparison is with the heuristic LPR model from Brooke et \al \shortcite{Brooke15b}. For the BNC, we also compare, separately, the DP-seg model from Newman et \al \shortcite{Newman12}, and the LocalMaxs algorithm of Silva and Lopes \shortcite{Silva99}; because these other approaches only generate sequential multiword units, we use only the sequential part of the BNC test set. All these approaches have been compared against a wide range of association measures;\footnote{One popular association measure which is theoretically extensible to $n$-grams of any length but which has not been addressed in the context of unrestricted MWE/FS identification is the (log-)likelihood ratio \cite{Dunning93}. Calculating a likelihood ratio in the general case involves considering all possible ways an $n$-gram could have been generated statistically from its component words: that is, whereas minLPR only considers the addition of one word to each $n-1$-gram, likelihood ratios must consider all combinations of all component $n-1,2,3\ldots$-grams, including, in our case, not only contiguous but also non-contiguous components. The corresponding exponential increase in complexity renders it and other such methods impractical for unrestricted FS identification.} we do not repeat all these comparisons here, but we do consider a lexicon built from ranking $n$-grams according to the measure used in our lattice (minLPR) as well as PMI. For each of these two association measures we build a lexicon equal to the size of the lexicon produced by our model. All comparisons here are subject to the same $n$-gram frequency threshold as the main model, since the content of our test sets are also linked to this threshold.
+
+We created small development sets for each corpus and used them to do a thorough testing of parameter settings. Although it is generally possible to increase precision by increasing $C$, we found that across corpora we were always obtained near-optimal results using a $C$ of 4, so to demonstrate the usefulness of the lattice technique as an entirely off-the-shelf tool, we present the results using identical settings for all 4 corpora. We treat covering as a fundamental part of the Lattice model, but to investigate the efficacy of other node interactions within the model we present results with each of overlap and clearing node interactions turned off.
+		
 
 \section{Results}
 
-The main results for FS acquisition across all four corpora are shown in \tabref{tab:main}. As noted in previous work, simple statistical association measures like PMI do fairly poorly when faced with unrestricted $n$-grams of variable length: minLPR is clearly a much better statistic for this purpose. The LPRseg method of Brooke et \al \shortcite{Brooke15b} consistently outperforms simple ranking, and the lattice method proposed here does better still, with a margin that is fairly consistently across languages, though the margin is slightly larger for English corpora. Generally, using clearing and overlap node interactions offer an relatively large increase in precision at the cost of a smaller drop in recall, though the change is fairly symmetrical with in Croatian, and in Japanese precision is already high enough relative to recall that the f-score is not improved. The ICWSM corpus also has relatively high precision, whereas both the BNC and Croatian corpus have low precision and high recall.
+The main results for FS acquisition across all four corpora are shown in \tabref{tab:main}. As noted in previous work, simple statistical association measures like PMI do fairly poorly when faced with unrestricted $n$-grams of variable length: minLPR is clearly a much better statistic for this purpose. The LPRseg method of Brooke et \al \shortcite{Brooke15b} consistently outperforms simple ranking, and the lattice method proposed here does better still, with a margin that is fairly consistent across languages. Generally, using clearing and overlap node interactions offer an relatively large increase in precision at the cost of a smaller drop in recall, though the change is fairly symmetrical with in Croatian. The ICWSM corpus also has relatively high precision, whereas both the BNC and Croatian corpus have low precision and high recall.
 
-In the continuous FS test set for the BNC (\tabref{tab:BNC}), we found that the DP-seg method of Newman \cite{Newman12} was also able to beat our baseline methods, but with regards to F-score, it was inferior to our Lattice method. Some of that difference seems attributable to a severe precision/recall imbalance, though it was one we unable to improve by changing the parameters of the model from recommended settings.
+In the continuous FS test set for the BNC (\tabref{tab:BNC}), we found that the LocalMaxs algorithm did fairly poorly, whereas the DP-seg method of Newman \cite{Newman12} was also able to beat our baseline methods, but with regards to F-score, it was inferior to our Lattice method. Some of that difference seems attributable to a severe precision/recall imbalance, though it was one we unable to improve by changing the parameters of the model from recommended settings.
 
 
 			
 \section{Discussion} \label{sec:discussion}
 
-Though the results across the four corpora are reasonably similar with respect to overall f-score, there are a significant discrepancies. By using the UniDict morpheme representation for Japanese, the model is, in essence, doing an extra layer of FS identification, one which is provided by word boundaries in the other languages. The result is that there are many more FS for Japanese. Precision is very high, and recall is relatively low. Under these conditions, methods which tend to increase precision at the cost of recall will be less desirable with respect to f-score, which explains why the full model is not the best in that case.  Importantly, the initial $n$-gram statistics derived from corpus reflect that Japanese is different: the number of $n$-gram types over length 4 is almost twice the number in the ICWSM, or almost 14\% of all $n$-gram types. One idea for future work is to automatically adapt to the particular properties of the input language/corpus, though it might also be worth considering whether f-score is the most appropriate metric, given that high precision seems particularly desirable in a lexical resource.
+Though the results across the four corpora are reasonably similar with respect to overall f-score, there are a significant discrepancies. By using the UniDict morpheme representation as the starting unit for Japanese, the model is, in essence, doing an extra layer of FS identification, one which is provided by word boundaries in the other languages. The result is that there are many more FS for Japanese. Precision is very high, and recall is relatively low. Under these conditions, methods which tend to increase precision at the cost of recall will be less desirable with respect to f-score, which explains why the full model is not the best in that one case.  Importantly, the initial $n$-gram statistics derived from corpus reflect that Japanese is different: the number of $n$-gram types, over length 4, for instance, is almost twice the number in the ICWSM, or almost 14\% of all $n$-gram types. One idea for future work is to automatically adapt to the particular properties of the input language/corpus, though it might also be worth considering whether f-score is the most appropriate metric for evaluation, given that high precision seems particularly desirable in a lexical resource.
 
 At the opposite end of the precision/recall curve, the low precision of the BNC is almost certainly at least somewhat a reflection of its relatively low size: whereas the $n$-gram threshold we have used here results in a minimum counts of in the order of about 100 for the other three corpora used here, the BNC statistics includes $n$-grams which appear less than 10 times. This might be resolved, of course, by increasing the $n$-gram threshold, or simply avoiding small corpora altogether, but it may be useful to focus effort on how to building comprehensive FS lexicons even in relatively low resource situations. One idea we are actively pursing is modifying the calculation of the LPR metric to integrating uncertainty due to low counts.
 
-There is one another more general explanation for the precision/recall imbalances we see across the four corpora: Both the BNC and the Croatian corpus are composed primarily (though not exclusively) of published texts written by professional writers, in particularly newswire. The ICWSM and the Japanese corpus, on the other hand, are mostly blogs and other internet genres. Though all genres have FS, there is much more diversity in less controlled genres: many English gapped expressions, in particular, are used almost exclusively in relatively informal genres. The fact that last than 20\% of the FS derived from the BNC appear in the lexicon for the ICWSM is fairly telling of how important genre differences are to the range of FS that will be seen in a particular corpus.
+There is one another more general explanation for the precision/recall imbalances we see across the four corpora: Both the BNC and the Croatian corpus are composed primarily (though not exclusively) of published texts written by professional writers, in particularly newswire. The ICWSM and the Japanese corpus, on the other hand, are mostly blogs. Though all genres have FS, there is much more diversity in less controlled genres: many English gapped expressions, in particular, are used almost exclusively in relatively informal genres. The fact that last than 20\% of the FS derived from the BNC appear in the lexicon for the ICWSM is fairly telling of how important genre differences are to the range of FS that will be seen in a particular corpus.
 
-We were interested in addressing Croatian and Japanese in part because of their tendency towards relatively free word order, and whether allowing gaps in our FS would help with these languages. We discovered however, that free word order actually results in \emph{more} of a tendancy towards contiguous FS rather than less. Strikingly rare in Croatian (and to a lesser extent, Japanese), are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is the relatively fixed-order of English that sometimes keeps elements of an FS distant from each other in order to satisfy fixed-word-order constraints. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena actually highlights a problem with the model, in that gapped and contiguous version of the same $n$-gram sequence are, at present, considered entirely independently. Alternatives for dealing with this range from collapsing statistics to create a single node, or linking contiguous and gapped versions of the same $n$-grams sequence in the lattice model, encouraging them to have the same FS labels.
+We were interested in addressing Croatian and Japanese in part because of their tendency towards relatively free word order, and whether allowing gaps in our FS would help with these languages. We discovered, however, that free word order actually results in \emph{more} of a tendency towards contiguous FS rather than less. Strikingly rare in Croatian (and to a lesser extent, Japanese), are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is the relatively fixed-order of English that more often keeps elements of an FS distant from each other in order to satisfy fixed-word-order constraints. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena actually highlights a problem with the current model, in that gapped and contiguous version of the same $n$-gram sequence are, at present, considered entirely independently. Alternatives for dealing with this range from collapsing statistics to create a single node in the lattice, or linking contiguous and gapped versions of the same $n$-grams sequence in the lattice model, encouraging them to have the same FS labels.
 
-A third, more ambitious option would be to switch to a dependency representation. This option actually requires very little change to the model presented here, since all the basic relationships in the lattice as well as the LPR metric could be straightforwardly defined in terms of subgraphs instead of strings. One clear negative is the need for a dependency parser for the language and domain of interest, and that there is no potential for the use of FS to improve parsing. A most subtle issue is that switching to a dependency representation does not entirely eliminate the need for syntactic gaps in order to represent a full range of FS: there are a small category of gappy FS where the gap term actually forms the syntactic connection between the two parts of the expression, \ie \ex{no amount of * can}.
+A third, more ambitious option would be to switch to a dependency representation. This option actually requires very little change to the structure of the model presented here, since all the basic relationships in the lattice as well as the minLPR measure could be straightforwardly defined in terms of subgraphs instead of strings. One clear negative is the need for a dependency parser for the language and domain of interest, and that there is then no potential for using of FS to improve parsing. A most subtle issue is that switching to a dependency representation does not entirely eliminate the need for gaps in order to represent a full range of FS: there are gappy FS where the gap term actually forms the syntactic connection between the two parts of the expression, \ie \ex{no amount of * can}.
 
-As it stands, connections in the lattice are based entirely on explicit $n$-gram subsumption and overlap relations. Another connection could be based on identical or similar syntactic patterns (\eg POS sequences), which could serve to encourage the model to make generalizations: in English, for instance, learning that verb-particle constructions are generally likely to be FS. Our investigations thus far suggest that it may be difficult to apply this idea without merely amplifying existing biases in the LPR measure. Bringing in other information, for instance some simple distributional statistics which might help us identify which $n$-grams have non-compositional semantics, would, could, in combination with the existing lattice competition, help us focus the model on detecting MWEs, which could then serve as a reliable basis for generalizing to $n$-gram for which the raw LPR statistics are an unreliable indicator.
+As it stands, connections in the lattice are based entirely on explicit $n$-gram subsumption and overlap relations. One of the major benefits of this model as compared to alternatives is the relative ease at which additional kinds of interactions between nodes could be implemented. Another connection we have considered is based on identical or similar syntactic patterns (\eg POS sequences), which could serve to encourage the model to make generalizations: in English, for instance, learning that verb-particle combinations are generally likely to be FS, whereas verb-determiner combinations are not. Our initial investigations suggest, however, it may be difficult to apply this idea without merely amplifying existing undesirable biases in the LPR measure. Bringing in other information, for instance some simple distributional statistics which might help the model identify non-compositional semantics, would, could, in combination with the existing lattice competition, focus the model on detecting MWEs, which could in turn serve as a reliable basis for generalizing to $n$-grams for which the raw LPR statistics are an unreliable indicator of formulaiticity.
 
-Finally, though in general using the sampling methodology to build test sets has significant benefits in terms of providing a robust, replicable evaluation, since precision and recall are both dependent on the number of positive examples, f-scores are unreliable when there are few positive examples. To do a independent evaluation of FS with gaps, we would want many more examples than can be produced with straightforward sampling. One option we could consider is a adding additional filtering to the sampling processes (\eg using the LPR metric to exclude large numbers of extremely poor $n$-grams), though it is difficult to do this without hopelessly biasing the evaluation, both in terms of the specific $n$-grams evaluated as well as the ratio between positive and negative examples. 
+Given our interest in methods which work well on large corpora, the speed of the model is worth mentioning. Although considered as an individual process, optimizing the lattice is several orders of magnitude more time consuming than the decomposition heuristics of Brooke et \al \shortcite{Brooke15a}, we found that the time needed to build and optimize the lattice was still only a fraction of the time required to collect all the statistics necessary for to calculate LPR, a necessary first step for both methods: therefore, considered as end-to-end process, the effect of adding the lattice optimization is fairly minimal. We note that for all corpora, the lattice optimization algorithm converged within 10 iterations, and only the first two iterations require looking at majority of the nodes, since there is no need to revisit a node if nothing has changed in its vicinity.
 
+Finally, though in general using the sampling methodology to build test sets has significant benefits in terms of providing a robust, replicable evaluation, the fact that precision and recall are both dependent on the number of positive examples means that f-scores become unreliable when there are very few positive examples. To do a independent evaluation of FS with gaps, we would want many more examples than can be produced with straightforward sampling. Rather than brute force annotation, one option we could consider is a adding additional filtering to the sampling processes (\eg using the LPR metric to exclude large numbers of extremely poor $n$-grams), though it is difficult to do this without significantly biasing the evaluation.
 
+\section{Conclusion}
 
-
+We have presented here a new methodology for acquiring unrestricted multiword lexicons from large corpora, using competition in an $n$-gram lattice. Our evaluation using annotations of sampled $n$-grams shows that it is consistently outperforms alternatives across several corpora and languages. A tool which implements the method as well as the acquired lexicons and test sets are available here.\footnote{removed for anonymity} 
 
 %Otherwise, gaps in MWEs have generally addressed by using full syntactic representations \cite{Seretan11}.
 %One more restriction is necessary to make the use of overlaps feasible: without any restrictions, the number of connections resulting from overlaps is too large. We resolved this problem by excluding as possible active nodes. 
@@ -390,7 +405,7 @@ Finally, though in general using the sampling methodology to build test sets has
 
 % For our main evaluation in English, our corpus is a 890 million version of the tier 1 texts in the ICWSM 2009 blog corpus \cite{ICWSM} which has been filtered to remove duplicates and near duplicates.
 \bibliography{mybib}
-\bibliographystyle{eacl2017}
+\bibliographystyle{acl2012}
 
 
 \end{document}

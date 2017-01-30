@@ -165,11 +165,11 @@ E_1(t) = C^{-d_1(t)}
 The values of $d_0$ and $d_1$ are dependent on the context of the node in the lattice as discussed in the next section, but are both 1 when a node is not influenced by other nodes.
 
 
-\begin{figure*}[!tb]
-\center{\includegraphics[width=0.8\textwidth]{FS_diagram_2.pdf}}
+\begin{figure}[!tb]
+\center{\includegraphics[width=0.5\textwidth]{FS_diagram_2.pdf}}
 \caption{A portion of an $n$-gram lattice. Solid lines indicate subsumption, dotted lines overlaps}
 \label{fig:example}
-\end{figure*}
+\end{figure}
 
 \subsection{Node interactions}
 
@@ -250,6 +250,7 @@ In practice, we apply the following restrictions, which significantly reduce the
  \end{table*}
 
 \section{Evaluation}
+\label{sec:evaluation}
 
 We evaluate our approach across three different languages including evaluation sets derived from four different corpora. In English, we follow \newcite{Brooke15b} in using a 890M token filtered portion of the ICWSM social media corpus \cite{ICWSM} tagged with the Tree Tagger \cite{Schmid95}. To facilitate a comparison with \newcite{Newman12}, which does not scale up to a corpus as large as the ICWSM, we also build a lexicon using the 100M token British National Corpus \cite{BNC}, using the standard CLAWS-derived POS tags for the corpus. Lemmatization included removing all inflectional marking from both words and POS tags. For English, gaps are identified using the same POS regex used in \newcite{Brooke15b}, which includes simple nouns and portions thereof, up to a maximum length of 4 words.
 

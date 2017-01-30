@@ -17,6 +17,7 @@
 \usepackage{url}
 \usepackage{xspace}
 \usepackage{paralist}
+\usepackage{booktabs}
 \usepackage[pdftex]{graphicx}
 \makeatletter
 \newcommand{\@BIBLABEL}{\@emptybiblabel}
@@ -79,7 +80,7 @@ We present a new model for acquiring comprehensive multiword lexicons from large
 
 \section{Introduction}
 
-Despite over 25 years of research in computational linguistics aimed at acquiring multiword lexicons using corpora statistics, and growing evidence that speakers process language primarily in terms of memorized sequences \cite{Wray08}, the individual word nonetheless stubbornly remains the \textit{de facto} standard processing unit for most research in modern NLP. The potential of multiword knowledge to improve both the automatic processing of language as well as offer new understanding of human acquisition and usage of language is the primary motivator of this work. We present a effective, expandable, and above all tractable new approach to comprehensive multiword lexicon acquisition that aims to find a middle ground between standard MWE acquisition approaches based on association measures \cite{Ramisch14}, and more sophisticated statistical models \cite{Newman12} which fail to scale to the large corpora which are the main sources of the distributional information in modern NLP systems.
+Despite over 25 years of research in computational linguistics aimed at acquiring multiword lexicons using corpora statistics, and growing evidence that speakers process language primarily in terms of memorized sequences \cite{Wray08}, the individual word nonetheless stubbornly remains the \textit{de facto} standard processing unit for most research in modern NLP. The potential of multiword knowledge to improve both the automatic processing of language as well as offer new understanding of human acquisition and usage of language is the primary motivator of this work. We present an effective, expandable, and above all tractable new approach to comprehensive multiword lexicon acquisition that aims to find a middle ground between standard MWE acquisition approaches based on association measures \cite{Ramisch14}, and more sophisticated statistical models \cite{Newman12} which fail to scale to the large corpora which are the main sources of the distributional information in modern NLP systems.
 
 
 %Methods based on association measures tend to assume a small, fixed set of part-of-speech (``POS'') combinations with higher productivity \cite{Evert:Krenn:2001,Pecina10} as a means of reducing overgeneration, with the obvious disadvantage of impeding the generation of a broad-coverage multiword lexicon. This is the central challenge addressed in this paper: how to avoid redundancy/computational intractability when selecting a lexicon from a huge collection of $n$-grams, many of which show basic statistical irregularities only as a result of their syntactic properties or because of partial correspondence with a true multiword lexical item. Our solution to this challenge takes the form of an iterative model, where $n$-gram types compete with each other in a lattice to generate a compact, parsimonious vocabulary which best explains the statistics extracted from the corpus. 
@@ -97,8 +98,8 @@ In computational linguistics, the most common term used to describe multiword le
 
 
 \begin{figure}[!t]
-\caption{Multiword Terminology}
 \center{\includegraphics[width=0.3\textwidth]{FS_diagram_1.pdf}}
+\caption{Multiword Terminology}
 \label{fig:terminology}
 \end{figure}
 
@@ -158,8 +159,8 @@ where $d_0$ and $d_1$ are a non-negative functions which capture the lattice con
 
 
 \begin{figure}[!tb]
-\caption{A portion of an $n$-gram lattice. Solid lines indicate subsumption, dotted lines overlaps}
 \center{\includegraphics[width=0.5\textwidth]{FS_diagram_2.pdf}}
+\caption{A portion of an $n$-gram lattice. Solid lines indicate subsumption, dotted lines overlaps}
 \label{fig:example}
 \end{figure}
 
@@ -169,7 +170,7 @@ The $n$-gram nodes in the lattice are directionally connected to nodes consistin
 
 
 \subsubsection{Covering}
-The most important node interaction is \termdef{covering}, which corresponds to discounting or entirely excluding a node due to a node higher in the lattice. Our model includes two types of covering: hard and soft. \termdef{Hard covering} is based on the idea that, due to very similar counts, we can reasonably conclude that the presence of an $n$-gram in our statistics is a direct result of the other. In \figref{fig:example}, \eg, if we have 143 counts of \ex{keep \gap under wraps} and 152 counts of \ex{under wraps}, the presence of \ex{keep \gap under wraps} almost completely explains \ex{under wraps}, and we should consider these two $n$-grams as one. We do this by permanently disabling any hard covered node, and setting the minLPR of the covering node to the maximum minLPR among all the nodes it covers (including itself); this means that longer $n$-grams with function words (which often have lower minLPR) can benefit from the strong statistical relationships between open-class lexical features in $n$-grams that they cover. This is done as a preprocessing step, and greatly improves the tractability of the iterative optimization of the lattice. Of course, a threshold for hard covering must be chosen: empirically, we have found that a ratio of $2/3$ (corresponding to a significant majority of the counts of a lower node corresponding to the higher node) works well.  We also use the concept of hard covering to address the issue of pronouns: due to pragmatic biases, pronouns often have higher than desirable LPR values \cite{Brooke15b}. In the lattice, $n$-grams with pronouns are considered covered (inactive) unless they cover at least one other node which does not have a pronoun, which allows us to limit FS with pronouns without excluding them entirely: they are included only in cases where they are definitively formulaic. 
+The most important node interaction is \termdef{covering}, which corresponds to discounting or entirely excluding a node due to a node higher in the lattice. Our model includes two types of covering: hard and soft. \termdef{Hard covering} is based on the idea that, due to very similar counts, we can reasonably conclude that the presence of an $n$-gram in our statistics is a direct result of the other. In \figref{fig:example}, \eg if we have 143 counts of \ex{keep \gap under wraps} and 152 counts of \ex{under wraps}, the presence of \ex{keep \gap under wraps} almost completely explains \ex{under wraps}, and we should consider these two $n$-grams as one. We do this by permanently disabling any hard covered node, and setting the minLPR of the covering node to the maximum minLPR among all the nodes it covers (including itself); this means that longer $n$-grams with function words (which often have lower minLPR) can benefit from the strong statistical relationships between open-class lexical features in $n$-grams that they cover. This is done as a preprocessing step, and greatly improves the tractability of the iterative optimization of the lattice. Of course, a threshold for hard covering must be chosen: empirically, we have found that a ratio of $2/3$ (corresponding to a significant majority of the counts of a lower node corresponding to the higher node) works well.  We also use the concept of hard covering to address the issue of pronouns: due to pragmatic biases, pronouns often have higher than desirable LPR values \cite{Brooke15b}. In the lattice, $n$-grams with pronouns are considered covered (inactive) unless they cover at least one other node which does not have a pronoun, which allows us to limit FS with pronouns without excluding them entirely: they are included only in cases where they are definitively formulaic. 
 
 \termdef{Soft covering} is used in cases when a single $n$-gram does not entirely account for another, but a turned-on $n$-gram to some extent may explain some of the statistical irregularity of one lower in the lattice. For instance, in \figref{fig:example} \ex{keep \gap under} is not hard-covered by \ex{keep \gap under wraps} (since there are FS such as \ex{keep \gap under surveillance}, \ex{keep it under your hat}, \etc), but if \ex{keep \gap under wraps} is tagged as an FS, we nevertheless want to discount the portion of the \ex{keep \gap under} counts that correspond to occurrences of \ex{keep \gap under wraps}. This is accomplished by increasing the turned-off explainedness of \ex{keep \gap under} (and thus making turning on less desirable) in the following manner: let $c(\cdot)$ be the count function, and $s_1\dotts s_m$ be any turned-on nodes which are above $t$ in the lattice (covering nodes). Then, the $\cover(t)$ score for a covered node $t$ is:
 \begin{displaymath}
@@ -179,7 +180,7 @@ This is intended as a simple, quick-to-calculate approximation of the result of 
 
 \subsubsection{Clearing}
 
-In general, covering prefers turning on longer, covering $n$-grams since doing so explains nodes lower in the lattice. Not surprisingly, it is generally desirable to have a mechanism working in opposition, \ie one which views shorter FS as helping to explain the presence of longer $n$-grams which contain them, beyond the FS-neutral syntactic explanation provided by minLPR. \termdef{Clearing} does this by changing the $E_0$ of nodes higher in the lattice when a lower node is turned-on. The basic mechanism is similar to covering, except that counts cannot be made use of in the same way -- whereas it makes sense to explain covered nodes in proportion to the counts of their covering nodes (since the counts of the covered $n$-grams are from the covering $n$-gram), in the reverse direction this logic fails. 
+In general, covering prefers turning on longer, covering $n$-grams since doing so explains nodes lower in the lattice. Not surprisingly, it is generally desirable to have a mechanism working in opposition, \ie one which views shorter FS as helping to explain the presence of longer $n$-grams which contain them, beyond the FS-neutral syntactic explanation provided by minLPR. \termdef{Clearing} does this by changing the $E_0$ of nodes higher in the lattice when a lower node is turned-on. The basic mechanism is similar to covering, except that counts cannot be made use of in the same way---whereas it makes sense to explain covered nodes in proportion to the counts of their covering nodes (since the counts of the covered $n$-grams are from the covering $n$-gram), in the reverse direction this logic fails. 
 
 A simple but effective solution which avoids introducing extra hyperparameters is to make use of the minLPR values of the relevant nodes. In the most common two-node situation, we increase $E_{0}$ of the higher node based on the ratio of the minLPR of two nodes, though only if the minLPR of the lower node is higher. Generalized to the (rare) case of multiple clearing nodes, we define $\clear(t)$ as:
 %in this paper, we consider two options: a hard clearing where any turned-on node will clear (set $C_{0}$ to 0 for) any node higher in the lattice which has a minLPR that is lower than it; and a soft 
@@ -197,7 +198,7 @@ Note that the effect of both covering and clearing is to increase explainedness 
 
 \subsubsection{Overlap}
 
-The third mechanism of node interaction involves $n$-grams which overlap in the corpus. In general, independent formulaic sequences do not predictably overlap. For example, given that \ex{be keep \gap under} and \ex{keep \gap under wraps} often appear together (overlapping on the tokens \ex{keep \gap under}), we do not want both being selected as an FS, even in the case that both have high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than increasing the explainedness of turned-off nodes, we decrease the explainedness of the overlapping turned-on nodes, a penalty rather than an incentive which expresses the model's confusion at having overlapping FS. Let $\mathit{oc}(x,y)$ refer to number of times the $n$-grams corresponding to nodes $x$ and $y$ overlapped in the corpus, and $o_1,\dotts,o_m$ refer to turned-on nodes which overlap with our target node $t$. We define $d_1(t)$, the exponential term for $E_1(t)$, as:
+The third mechanism of node interaction involves $n$-grams which overlap in the corpus. In general, independent formulaic sequences do not predictably overlap. For example, given that \ex{be keep \gap under} and \ex{keep \gap under wraps} often appear together (overlapping on the tokens \ex{keep \gap under}), we do not want both being selected as an FS, even in the case that both have high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than increasing the explainedness of turned-off nodes, we decrease the explainedness of the overlapping turned-on nodes---a penalty rather than an incentive which expresses the model's confusion at having overlapping FS. Let $\mathit{oc}(x,y)$ refer to number of times the $n$-grams corresponding to nodes $x$ and $y$ overlapped in the corpus, and $o_1,\dotts,o_m$ refer to turned-on nodes which overlap with our target node $t$. We define $d_1(t)$, the exponential term for $E_1(t)$, as:
 \begin{displaymath}
 	d_{1}(t) = \frac{c(t)}{c(t) - \sum_{i=1}^{m}{\mathit{oc}(o_i)}}
 \end{displaymath}
@@ -226,27 +227,30 @@ We evaluate our approach across three different languages including evaluation s
 \begin{table}[!bt]
  
  \begin{center}
-  \caption{ Statistics for test sets (``Cont'' = contiguous; ``Gap'' = gapped)}
 	 \label{tab:stats}
-	 \begin{tabular}{lc@{\,\,\,}c@{\,\,\,}c@{\,\,\,}c@{\,\,\,}c}
+	 %\begin{tabular}{lc@{\,\,\,}c@{\,\,\,}c@{\,\,\,}c@{\,\,\,}c}
+	 \begin{tabular}{lrrrrr}
 
-       \hline
-			& Cont & Cont & Gap & Gap & \multirow{2}{*}{$\kappa$}\\
-			& FS & non-FS & FS & non-FS & \\
-			 \hline
+       \toprule
+       & \multicolumn{2}{c}{Contiguous} & \multicolumn{2}{c}{Gapped} & \\
+       \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+			& FS & non-FS & FS & non-FS & $\kappa$ \\
+			 \midrule
 			ICWSM & 169 & 702 & 29 & 916& 0.84 \\
 			BNC & 49 & 403 & 8 & 475 & 0.84 \\
 			Croatian & 64 & 382 & 11 & 456 & 0.87 \\
 			Japanese & 124 & 286 & 36 & 341 & 0.81\\
-       \hline
+       \bottomrule
  \end{tabular}
+  %\caption{ Statistics for test sets (``Cont'' = contiguous; ``Gap'' = gapped)}
+  \caption{ Statistics for test sets }
 
  \end{center}
 
  \end{table}
 
 
-The other two languages we include in our evaluation are Croatian and Japanese. Relative to English, both languages have freer word order: we were interested in probing the challenges associated with using an $n$-gram approach to FS identification in such languages. For Croatian, we used the fhrWaC corpus \cite{snajder2013building}, a filtered version of the Croatian web corpus hrWaC \cite{ljubesic2014bs}, which is POS-tagged and lemmatized using the tools of \newcite{agic2013lemmatization}. Similar to English, the POS regex for Croatian includes simple nouns, adjectives and pronouns, but also other elements that regularly appear inside FS, including both adverbs and copulas. For Japanese, we used a subset of the 100M-page web corpus of \newcite{Shinzato+:2008} which was roughly the same size (in terms of token count) as the English corpus. We segmented and POS-tagged the corpus with MeCab \cite{Kudo:2008} using the UNIDIC morphological dictionary \cite{Den:2007}. The POS regex for Japanese covers the same basic nominal structures as English, but also includes case markers and adverbials. Though our processing of Japanese includes basic lemmatization related to superficial elements like the choice of writing script and politeness markers, many elements (such as case marking) which are removed by lemmatization in Croatian are segmented into independent morphological units in the MeCab output, making the task somewhat different for the two languages.
+The other two languages we include in our evaluation are Croatian and Japanese. Relative to English, both languages have freer word order: we were interested in probing the challenges associated with using an $n$-gram approach to FS identification in such languages. For Croatian, we used the fhrWaC corpus \cite{snajder2013building}, a filtered version of the Croatian web corpus hrWaC \cite{ljubesic2014bs}, which is POS-tagged and lemmatized using the tools of \newcite{agic2013lemmatization}. Similar to English, the POS regex for Croatian includes simple nouns, adjectives and pronouns, but also other elements that regularly appear inside FS, including both adverbs and copulas. For Japanese, we used a subset of the 100M-page web corpus of \newcite{Shinzato+:2008}, which was roughly the same size (in terms of token count) as the English corpus. We segmented and POS-tagged the corpus with MeCab \cite{Kudo:2008} using the UNIDIC morphological dictionary \cite{Den:2007}. The POS regex for Japanese covers the same basic nominal structures as English, but also includes case markers and adverbials. Though our processing of Japanese includes basic lemmatization related to superficial elements like the choice of writing script and politeness markers, many elements (such as case marking) which are removed by lemmatization in Croatian are segmented into independent morphological units in the MeCab output, making the task somewhat different for the two languages.
 
 \newcite{Brooke15b} introduced a method for evaluating formulaic sequence extraction without a reference lexicon or direct annotation of the output of a model. Instead, $n$-grams are sampled after applying the frequency threshold and annotated as being either an FS or not, allowing for calculation of a true F-score for any model. We use the annotation of 2000 $n$-grams in the ICWSM corpus from that earlier work, and applied the same annotation methodology to the other corpora discussed above: after training and based on written guidelines derived from the definitions of \newcite{Wray08}, three native-speaker, educated annotators judged 500 contiguous $n$-grams and another 500 gapped $n$-grams for each of the new corpora. 
 
@@ -261,35 +265,31 @@ Other than the inclusion of new languages, our test sets differ from \newcite{Br
  \begin{table*}[!bt]
  
  \begin{center}
-  \caption{ Results of formulaic sequence identification in various test sets; PMIrank = lexicon created by ranking pointwise mutual information, minLPRrank = lexicon created by ranking by minLPR, LPRseg = lexicon created by method of Brooke at \al (2015), -cl = no clearing, -ovr = no penalization of overlaps, P = Precision, R = Recall, F = F-score. Bold is best in column.}
-	 \label{tab:main}
  \begin{tabular}{lcccccccccccccccc}
 
-       \hline
-        \hline
-				& \multicolumn{7}{c}{\bf{English}} & & \multicolumn{3}{c}{\bf{Croatian}} & & \multicolumn{3}{c}{\bf{Japanese}} \\
-       \cline{2-9}			
-       & \multicolumn{3}{c}{\bf{ICWSM}} & &  \multicolumn{3}{c}{\bf{BNC}} & & &&&  && & \\
-       \cline{2-4} \cline{6-8} \cline{10-12} \cline{14-16}
+       \toprule
+				& \multicolumn{7}{c}{\bf{English}} \\
+       \cmidrule(lr){2-8}			
+       & \multicolumn{3}{c}{\bf{ICWSM}} & &  \multicolumn{3}{c}{\bf{BNC}} & & \multicolumn{3}{c}{\bf{Croatian}}  && \multicolumn{3}{c}{\bf{Japanese}} \\
+       \cmidrule(lr){2-4} \cmidrule(lr){6-8} \cmidrule(lr){10-12} \cmidrule(lr){14-16}
            \multicolumn{1}{c}{\bf{Source}}    & P & R & F &   & P & R & F &   & P & R & F &  & P & R & F \\
-            \hline
-           \hline     
-           
+          \midrule 
 PMIrank & 0.24& 0.15& 0.18 & & 0.12 & 0.25 & 0.16 & & 0.21 &0.32 & 0.26 & & 0.23& 0.09 & 0.15 \\ 
 minLPRrank & 0.49& 0.31 & 0.39 & & 0.25& 0.44 & 0.32 & & 0.36 & 0.45 & 0.40 &  & 0.51 & 0.14 & 0.22 \\ 
 
 LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 0.77 & 0.34 & 0.47 \\ 
-  \hline 
+  \midrule
 
 	Lattice \emph{$-$cl} & 0.57& 0.42 & 0.49 & & 0.33& 0.58 & 0.42 & & 0.39 & 0.56 & 0.46 & & 0.74 & 0.39 & 0.51 \\  	 
 			
 	Lattice \emph{$-$ovr} & 0.52& \bf{0.51} & 0.51 & & 0.34& \bf{0.60} & 0.44& & 0.36 & \bf{0.67} & 0.47 & & 0.69 & \bf{0.51} & \bf{0.58} \\  
 			
 				Lattice & \bf{0.67} & 0.43 & \bf{0.52} & & \bf{0.40}& 0.60 & \bf{0.48} & &\bf{0.44} & 0.56 & \bf{0.49} & & \bf{0.87} & 0.39 & 0.53 \\ 
-            \hline
-           \hline                  
+            \bottomrule
 
  \end{tabular}
+  \caption{ Results of formulaic sequence identification in various test sets; PMIrank = lexicon created by ranking pointwise mutual information, minLPRrank = lexicon created by ranking by minLPR, LPRseg = lexicon created by method of Brooke at \al (2015), -cl = no clearing, -ovr = no penalization of overlaps, P = Precision, R = Recall, F = F-score. Bold is best in column.}
+	 \label{tab:main}
 
  \end{center}
 
@@ -300,22 +300,22 @@ LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 
  \begin{table}[!bt]
  
  \begin{center}
-  \caption{ Results of formulaic sequence identification in contiguous BNC test set; LocalMaxs = method of Silva and Lopes (1999); DP-seg = method of Newman et \al (2012)}
-	\label{tab:BNC}
 	
 	 \begin{tabular}{lccc}
 
-       \hline
+       \toprule
 			& P & R & F\\
-			 \hline
+			 \midrule
 			PMIrank & 0.20 & 0.29 & 0.23 \\
 			minLPRrank & 0.34 & 0.45 & 0.39 \\
 			LPR-seg & 0.42 & 0.45 & 0.43 \\
 			LocalMaxs & \bf{0.56} & 0.39 & 0.46 \\
 			DP-seg & 0.35 & \bf{0.71} & 0.47 \\
 			Lattice & 0.47 & 0.63 & \bf{0.54} \\
-       \hline
+       \bottomrule
  \end{tabular}
+  \caption{ Results of formulaic sequence identification in contiguous BNC test set; LocalMaxs = method of Silva and Lopes (1999); DP-seg = method of Newman et \al (2012)}
+	\label{tab:BNC}
 
  \end{center}
 
@@ -336,7 +336,7 @@ We created small development sets for each corpus and used them to do a thorough
 
 The main results for FS acquisition across all four corpora are shown in \tabref{tab:main}. As noted in previous work, simple statistical association measures like PMI do fairly poorly when faced with syntactically-unrestricted $n$-grams of variable length: minLPR is clearly a much better statistic for this purpose. The LPRseg method of \newcite{Brooke15b} consistently outperforms simple ranking, and the lattice method proposed here does better still, with a margin that is fairly consistent across languages. Generally, using clearing and overlap node interactions offer an relatively large increase in precision at the cost of a smaller drop in recall, though the change is fairly symmetrical in Croatian. The Japanese and ICWSM corpus had relatively high precision and low recall, whereas both the BNC and Croatian corpus have low precision and high recall.
 
-In the contiguous FS test set for the BNC (\tabref{tab:BNC}), we found that both the LocalMaxs algorithm and the DP-seg method of Newman \cite{Newman12} were able to beat our other baseline methods with roughly similar f-scores, though both are well below our Lattice method. Some of the difference seems attributable to fairly severe precision/recall imbalance, though we unable to improve the f-score by changing the parameters from recommended settings for either model.
+In the contiguous FS test set for the BNC (\tabref{tab:BNC}), we found that both the LocalMaxs algorithm and the DP-seg method of Newman \cite{Newman12} were able to beat our other baseline methods with roughly similar F-scores, though both are well below our Lattice method. Some of the difference seems attributable to fairly severe precision/recall imbalance, though we unable to improve the F-score by changing the parameters from recommended settings for either model.
 
 
 \section{Discussion} \label{sec:discussion}
@@ -349,11 +349,11 @@ There is one other more general explanation for the precision/recall imbalances 
 
 %The fact that less than 20\% of the FS derived from the BNC appear in the lexicon for the ICWSM corpus is fairly telling of how important genre differences are to the range of FS that will be seen in a particular corpus.
 
-We were interested in addressing Croatian and Japanese in part because of their relatively free word order, and whether the potential gaps in FS would help with these languages. We discovered, however, that free word order actually results in \emph{more} of a tendency towards contiguous FS, not less. Strikingly rare in Croatian, in particular, are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is English whose fixed-word-order constraints often keep elements of an FS distant from each other. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena highlights a problem with the current model, in that gapped and contiguous versions  of the same $n$-gram sequence (\eg \ex{take away} and {take \gap away}) are, at present, considered entirely independently. Alternatives for dealing with this include collapsing statistics to create a single node in the lattice, creating a promoting link between contiguous and gapped versions of the same $n$-grams sequence in the lattice model, or switching to a dependency representation (which, we note, requires very little change to the basic model presented here, but would narrow its applicability). 
+We were interested in addressing Croatian and Japanese in part because of their relatively free word order, and whether the potential gaps in FS would help with these languages. We discovered, however, that free word order actually results in \emph{more} of a tendency towards contiguous FS, not less. Strikingly rare in Croatian, in particular, are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is English whose fixed-word-order constraints often keep elements of an FS distant from each other. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena highlights a problem with the current model, in that gapped and contiguous versions  of the same $n$-gram sequence (\eg \ex{take away} and \ex{take \gap away}) are, at present, considered entirely independently. Alternatives for dealing with this include collapsing statistics to create a single node in the lattice, creating a promoting link between contiguous and gapped versions of the same $n$-grams sequence in the lattice model, or switching to a dependency representation (which, we note, requires very little change to the basic model presented here, but would narrow its applicability). 
 
-As it stands, connections in the lattice are based entirely on explicit $n$-gram subsumption and overlap relations. One of the major benefits of this model as compared to alternatives is the relative ease with which additional kinds of interactions between nodes could be implemented. Another connection we have considered is based on identical or similar syntactic patterns (\eg POS sequences), which could serve to encourage the model to make generalizations: in English, \eg, learning that verb-particle combinations are generally likely to be FS, whereas verb-determiner combinations are not. Our initial investigations suggest, however, it may be difficult to apply this idea without merely amplifying existing undesirable biases in the LPR measure. Bringing in other information, for instance some simple distributional statistics which might help the model identify non-compositional semantics, would, in combination with the existing lattice competition, focus the model on detecting MWEs, which could in turn serve as a reliable basis for generalization when the raw LPR statistics are an unreliable indicator of formulaticity.
+As it stands, connections in the lattice are based entirely on explicit $n$-gram subsumption and overlap relations. One of the major benefits of this model as compared to alternatives is the relative ease with which additional kinds of interactions between nodes could be implemented. Another connection we have considered is based on identical or similar syntactic patterns (\eg POS sequences), which could serve to encourage the model to make generalizations: in English, \eg learning that verb-particle combinations are generally likely to be FS, whereas verb-determiner combinations are not. Our initial investigations suggest, however, it may be difficult to apply this idea without merely amplifying existing undesirable biases in the LPR measure. Bringing in other information, for instance some simple distributional statistics which might help the model identify non-compositional semantics, would, in combination with the existing lattice competition, focus the model on detecting MWEs, which could in turn serve as a reliable basis for generalization when the raw LPR statistics are an unreliable indicator of formulaticity.
 
-With respect to speed, although the optimization of the lattice is several orders of magnitude more time consuming than the decomposition heuristics of \newcite{Brooke15b}, the time needed to build and optimize the lattice was still only a fraction of the time required to collect the statistics necessary to calculate LPR, a necessary first step for both methods: therefore, the overall effect of adding the lattice optimization is fairly minimal. We note that for all 4 corpora, the lattice optimization algorithm converged within 10 iterations.
+With respect to speed, although the optimization of the lattice is several orders of magnitude more time consuming than the decomposition heuristics of \newcite{Brooke15b}, the time needed to build and optimize the lattice was still only a fraction of the time required to collect the statistics necessary to calculate LPR, a necessary first step for both methods: therefore, the overall effect of adding the lattice optimization is fairly minimal. We note that for all four corpora, the lattice optimization algorithm converged within 10 iterations.
 
 %, and only the first two iterations require looking at a majority of the nodes, since there is no need to revisit a node if nothing has changed in its vicinity.
 

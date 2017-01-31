@@ -28,16 +28,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.92923"
-     inkscape:cx="45.398493"
+     inkscape:zoom="1.742746"
+     inkscape:cx="8.6787619"
      inkscape:cy="64.634039"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1058"
-     inkscape:window-x="1358"
-     inkscape:window-y="-8"
+     inkscape:window-width="1200"
+     inkscape:window-height="1896"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -194,8 +194,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="39.986645"
-       y="150.81073"
+       x="80.879036"
+       y="150.70018"
        id="text4220-7"
        sodipodi:linespacing="125%"
        inkscape:export-xdpi="90"
@@ -203,7 +203,8 @@
        inkscape:export-filename="FS_diagram_1.png"><tspan
          sodipodi:role="line"
          id="tspan4222-3"
-         x="39.986645"
-         y="150.81073">Named Entitites</tspan></text>
+         x="80.879036"
+         y="150.70018"
+         style="text-align:center;text-anchor:middle">Named Entities</tspan></text>
   </g>
 </svg>

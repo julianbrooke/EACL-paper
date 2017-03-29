@@ -47,7 +47,7 @@
 \newcommand{\minLPR}{\ensuremath{\text{minLPR}}}
 \newcommand{\cover}{\ensuremath{\text{cover}}\xspace}
 \newcommand{\clear}{\ensuremath{\text{clear}}\xspace}
-
+\newcommand{\overlap}{\ensuremath{\text{overlap}}\xspace}
 
 \newcommand{\figref}[2][]{Figure#1~\ref{#2}\xspace}
 \newcommand{\tabref}[2][]{Table#1~\ref{#2}\xspace}
@@ -140,26 +140,6 @@ In the segmentation approach of \newcite{Brooke15b}, LPR for an entire span is c
 Here, minLPR for a particular $n$-gram does not reflect the \emph{overall} degree to which it holds together, but rather focuses on the word which is its weakest link. For example, in the case of \ex{be keep \gap under}, a general statistical metric might assign it a high score due to the strong association between \ex{keep} and \ex{under}, but minLPR is focused on the weaker relationship between \ex{be} and \ex{keep \gap under}.
 
 
-
-
-\subsection{Node explainedness functions}
-
-The central process of the model is to decide which nodes in an $n$-gram lattice correspond to an FS, based on the objective of maximizing the overall explanatory power of the lattice. Like probabilities, explainedness of individual nodes will vary between 0 and 1, with 1 corresponding to a node which is fully explained. We define the explainedness of a node in terms of two functions, capturing the impact on surrounding nodes of a node being either off or on. When a node is off, it is generally desirable (or at least not undesirable) that connected nodes in the lattice are on, since they may serve to partially or entirely explain its existence. When a node is on, however, the presence of other turned-on nodes nearby suggests redundancy, and is not to be encouraged. 
-
-Let $E_{1}$ be the explainedness of a node when it is on (corresponding to an $n$-gram which has been identified as an FS), and $E_{0}$ be the explainedness of a node when it is off. We calculate $E_{0}$ based on the inverse of minLPR: 
-\begin{displaymath}
-E_0(t) = \minLPR(t)^{-d_0(t)}
-\end{displaymath}
-and $E_{1}$ based on the inverse of a cost parameter $C$:
-\begin{displaymath}
-E_1(t) = C^{-d_1(t)}
-\end{displaymath}
-where $d_0$ and $d_1$ are non-negative functions which capture the lattice context (when there is no context, both default to 1), as detailed in the next section. When the minLPR metric is 1 (corresponding to the case of the syntactic content predicting one of the words of the $n$-gram as well or better than the lexical context), $E_{0}=1$. $E_1$ is equivalent to the initial threshold for building a vocabulary using the minLPR association measure for nodes not influenced by one of the other factors discussed below: all else being equal, when $\minLPR(t) > C$, a node will be selected as an FS. There is no upper bound on $C$, but empirically, we have found a value in the range $[3,6]$ gives reasonable results for the languages presented in this paper.% we note here that there is a fairly small range of good choices for $C$; we have found that setting it too high ($>6$, corresponding to minimum of six times more likely than predicted by POS context alone) will restrict the model primarily to sequences with only open-class words, while setting it too low ($<3$) results in too much random noise.
-
-
-% The values of $d_0$ and $d_1$ are dependent on the context of the node in the lattice as discussed in the next section, but are both 1 when a node is not influenced by other nodes.
-
-
 \begin{figure}[!tb]
 \center{\includegraphics[width=0.5\textwidth]{FS_diagram_2.pdf}}
 \caption{A portion of an $n$-gram lattice. Solid lines indicate subsumption, dotted lines overlaps}
@@ -180,34 +160,64 @@ The most important node interaction is \termdef{covering}, which corresponds to 
 \begin{displaymath}
 \cover(t) = \max\Big(0,\frac{c(t) - \sum_{i=1}^{m}{c(s_i)}}{c(t)}\Big)
 \end{displaymath}
-This is intended as a simple, quick-to-calculate approximation of the result of recalculating minLPR with the counts corresponding to the covering nodes actually removed.
+This is intended as a simple, quick-to-calculate approximation of the result of recalculating minLPR with the counts corresponding to the covering nodes actually removed. \cover takes on values in the range 0 to 1, with 1 being the default when no covering is occurring.
 
 \subsubsection{Clearing}
 
 In general, covering prefers turning on longer, covering $n$-grams since doing so explains nodes lower in the lattice. Not surprisingly, it is generally desirable to have a mechanism working in opposition, \ie one which views shorter FS as helping to explain the presence of longer $n$-grams which contain them, beyond the FS-neutral syntactic explanation provided by minLPR. \termdef{Clearing} does this by changing the $E_0$ of nodes higher in the lattice when a lower node is turned-on. The basic mechanism is similar to covering, except that counts cannot be made use of in the same way---whereas it makes sense to explain covered nodes in proportion to the counts of their covering nodes (since the counts of the covered $n$-grams are from the covering $n$-gram), in the reverse direction this logic fails. 
 
-A simple but effective solution which avoids introducing extra hyperparameters is to make use of the minLPR values of the relevant nodes. In the most common two-node situation, we increase $E_{0}$ of the higher node based on the ratio of the minLPR of two nodes, though only if the minLPR of the lower node is higher. Generalized to the (rare) case of multiple clearing nodes, we define $\clear(t)$ as:
+A simple but effective solution which avoids introducing extra hyperparameters is to make use of the minLPR values of the relevant nodes. In the most common two-node situation, we increase the explainedness of the cleared node based on the ratio of the minLPR of two nodes, though only if the minLPR of the lower node is higher. Generalized to the (rare) case of multiple clearing nodes, we define $\clear(t)$ as:
 %in this paper, we consider two options: a hard clearing where any turned-on node will clear (set $C_{0}$ to 0 for) any node higher in the lattice which has a minLPR that is lower than it; and a soft 
 \begin{displaymath}
 \clear(t) = \prod_{i=1}^{m}{\min\Big(1,\frac{\minLPR(t)}{\minLPR(u_i)}\Big)}
 \end{displaymath}
-where $u_i$ is the $i$th clearing node of $t$. We refer to this mechanism as ``clearing'' because it tends to clear away a variety of trivial uses of common FS which may have higher LPR due to the lexical and syntactic specificity of the FS. For instance, in \figref{fig:example} if the node \ex{keep \gap under wraps}  is turned on and has a minLPR of 8, then, if the minLPR of a node such as \ex{keep \gap under wraps for} is 4, $\clear(t)$ will be 0.5. 
+where $u_i$ is the $i$th clearing node of $t$, \ie turned-on nodes below $t$ in the lattice. We refer to this mechanism as ``clearing'' because it tends to clear away a variety of trivial uses of common FS which may have higher LPR due to the lexical and syntactic specificity of the FS. For instance, in \figref{fig:example} if the node \ex{keep \gap under wraps}  is turned on and has a minLPR of 8, then, if the minLPR of a node such as \ex{keep \gap under wraps for} is 4, $\clear(t)$ will be 0.5. Like \cover, \clear takes on values in the range 0 to 1, with 1 being the default when no clearing occurs. 
 
-We can now define $d_{0}(t)$ as:
-\begin{displaymath}
-d_0(t) = \cover(t) \cdot \clear(t)
-\end{displaymath}
-Note that the effect of both covering and clearing is to increase explainedness for covered/cleared nodes, which indirectly encourages the model to turn an $n$-gram like \ex{keep \gap under wraps} on in order to explain nodes in its vicinity, even supposing its minLPR were relatively low.
+%We can now define $d_{0}(t)$ as:
+%\begin{displaymath}
+%d_0(t) = \cover(t) \cdot \clear(t)
+%\end{displaymath}
+%Note that the effect of both covering and clearing is to increase explainedness for covered/cleared nodes, which indirectly encourages the model to turn an $n$-gram like \ex{keep \gap under wraps} on in order to explain nodes in its vicinity, even supposing its minLPR were relatively low.
 
 
 \subsubsection{Overlap}
 
-The third mechanism of node interaction involves $n$-grams which overlap in the corpus. In general, independent FS do not consistently overlap. For example, given that \ex{be keep \gap under} and \ex{keep \gap under wraps} often appear together (overlapping on the tokens \ex{keep \gap under}), we do not want both being selected as an FS, even in the case that both have high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than increasing the explainedness of turned-off nodes, we decrease the explainedness of the overlapping turned-on nodes---a penalty rather than an incentive which expresses the model's confusion at having overlapping FS. Let $\mathit{oc}(x,y)$ refer to number of times the $n$-grams corresponding to nodes $x$ and $y$ overlapped in the corpus, and $o_1,\dotts,o_m$ refer to turned-on nodes which overlap with our target node $t$. We define $d_1(t)$, the exponential term for $E_1(t)$, as:
+The third mechanism of node interaction involves $n$-grams which overlap in the corpus. In general, independent FS do not consistently overlap. For example, given that \ex{be keep \gap under} and \ex{keep \gap under wraps} often appear together (overlapping on the tokens \ex{keep \gap under}), we do not want both being selected as an FS, even in the case that both have high minLPR. To address this problem, we use a mechanism somewhat different than above: rather than increasing the explainedness of turned-off nodes, we decrease the explainedness of the overlapping turned-on nodes---a penalty rather than an incentive which expresses the model's confusion at having overlapping FS. Let $\mathit{oc}(x,y)$ refer to number of times the $n$-grams corresponding to nodes $x$ and $y$ overlapped in the corpus, and $o_1,\dotts,o_m$ refer to overlapping nodes, \ie turned-on nodes which overlap with our target node $t$in the corpus. We define \overlap(t) as:
 \begin{displaymath}
-	d_{1}(t) = \frac{c(t)}{c(t) - \sum_{i=1}^{m}{\mathit{oc}(o_i)}}
+	\overlap(t) = \frac{c(t)}{c(t) - \sum_{i=1}^{m}{\mathit{oc}(t,o_i)}}
 \end{displaymath}
 
-The effect of overlaps on the explainedness is hyperbolic: small amounts of overlap have little effect, but with significant overlap it becomes prohibitive, effectively forcing one of the nodes to turn off. 
+Overlap takes on values in the range 1 to $+\infty$, also defaulting to 1 when no overlaps exist. The effect of overlap is hyperbolic: small amounts of overlap have little effect, but nodes with significant overlap will effectively be forced to turn off. 
+
+\subsection{Explainedness}
+
+In order to capture the current state of the model and provide an overall explainedness store, we introduce two indicator functions: $I_{on}(t)$ is 1 if $t$ is on and 0 if $t$ is off ; $I_{\mathit{off}}(t)$ is the reverse. The objective function maximized by the model is then the explainedness ($expl$) across all the nodes of the lattice, which can be defined in terms of minLPR and the node interaction functions:
+
+\begin{multline}
+expl(t_1,...,t_N) = \prod_{i=1}^{N}{I_{on}(t_i)  C^{-\overlap(t_1)}} \\ + I_{\mathit{off}}(t_i) minLPR(t_i)^{-\cover(t_i) \cdot \clear(t_i)}
+\end{multline}
+
+When a node is off, its explainedness is the inverse of its minLPR, except if there are covering or clearing nodes which explain it by pushing the exponent of minLPR towards zero. When the node is on, its explainedness is the inverse of a fixed cost hyperparameter C, though this cost is increased if it overlaps with other active nodes. 
+All else being equal, when $\minLPR(t) > C$, a node will be selected as an FS, and so, independent of the node interactions, C can be viewed as the threshold for the minLPR association measure under a traditional approach to MWE identification. There is no upper bound on $C$, but empirically, we have found values in the range $[3,6]$ give reasonable results for the languages presented in this paper.
+
+
+%\subsection{Node explainedness functions}
+
+%The central process of the model is to decide which nodes in an $n$-gram lattice correspond to an FS, based on the objective of maximizing the overall explanatory power of the lattice. Like probabilities, explainedness of individual nodes will vary between 0 and 1, with 1 corresponding to a node which is fully explained. We define the explainedness of a node in terms of two functions, capturing the impact on surrounding nodes of a node being either off or on. When a node is off, it is generally desirable (or at least not undesirable) that connected nodes in the lattice are on, since they may serve to partially or entirely explain its existence. When a node is on, however, the presence of other turned-on nodes nearby suggests redundancy, and is not to be encouraged. 
+
+%Let $E_{1}$ be the explainedness of a node when it is on (corresponding to an $n$-gram which has been identified as an FS), and $E_{0}$ be the explainedness of a node when it is off. We calculate $E_{0}$ based on the inverse of minLPR: 
+%\begin{displaymath}
+%E_0(t) = \minLPR(t)^{-d_0(t)}
+%\end{displaymath}
+%and $E_{1}$ based on the inverse of a cost parameter $C$:
+%\begin{displaymath}
+%E_1(t) = C^{-d_1(t)}
+%\end{displaymath}
+%where $d_0$ and $d_1$ are non-negative functions which capture the lattice context (when there is no context, both default to 1), as detailed in the next section. When the minLPR metric is 1 (corresponding to the case of the syntactic content predicting one of the words of the $n$-gram as well or better than the lexical context), $E_{0}=1$. $E_1$ is equivalent to the initial threshold for building a vocabulary using the minLPR association measure for nodes not influenced by one of the other factors discussed below: all else being equal, when $\minLPR(t) > C$, a node will be selected as an FS. There is no upper bound on $C$, but empirically, we have found a value in the range $[3,6]$ gives reasonable results for the languages presented in this paper.% we note here that there is a fairly small range of good choices for $C$; we have found that setting it too high ($>6$, corresponding to minimum of six times more likely than predicted by POS context alone) will restrict the model primarily to sequences with only open-class words, while setting it too low ($<3$) results in too much random noise.
+
+
+% The values of $d_0$ and $d_1$ are dependent on the context of the node in the lattice as discussed in the next section, but are both 1 when a node is not influenced by other nodes.
+
 
  
 \subsection{Optimization}

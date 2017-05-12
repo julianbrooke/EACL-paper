@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="56.792778mm"
+   height="36.535637mm"
+   viewBox="0 0 201.23425 129.45698"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="FS_diagram_1_2.svg"
+   inkscape:export-filename="C:\stuff\texdocs\FS_diagram_1_2.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.742746"
+     inkscape:cx="-77.105397"
+     inkscape:cy="64.634039"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="1358"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0.27037795,-38.259061)">
+    <path
+       style="fill:none"
+       id="path4140"
+       sodipodi:type="arc"
+       sodipodi:cx="75.256363"
+       sodipodi:cy="58.372101"
+       sodipodi:rx="15.657365"
+       sodipodi:ry="20.203051"
+       sodipodi:start="0"
+       sodipodi:end="0.049559387"
+       d="m 90.913728,58.372101 a 15.657365,20.203051 0 0 1 -0.01923,1.000841 l -15.63814,-1.000841 z"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png" />
+    <ellipse
+       style="fill:none"
+       id="path4171"
+       cx="30.809652"
+       cy="62.412712"
+       rx="27.779196"
+       ry="15.152288"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:'Times New Roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:'Times New Roman, ';font-stretch:normal;font-variant:normal;"
+       x="-84.852814"
+       y="37.158897"
+       id="text4192"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4194"
+         x="-84.852814"
+         y="37.158897" /></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4204"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:'Times New Roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:'Times New Roman, ';font-stretch:normal;font-variant:normal;"><flowRegion
+         id="flowRegion4206"><rect
+           id="rect4208"
+           width="118.18785"
+           height="48.487324"
+           x="-9.0913725"
+           y="-66.886818"
+           style="-inkscape-font-specification:'Times New Roman, ';font-family:'Times New Roman';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;" /></flowRegion><flowPara
+         id="flowPara4210" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4212"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:'Times New Roman';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-font-specification:'Times New Roman, ';font-stretch:normal;font-variant:normal;"><flowRegion
+         id="flowRegion4214"><rect
+           id="rect4216"
+           width="178.797"
+           height="44.446712"
+           x="-13.131983"
+           y="81.605606"
+           style="-inkscape-font-specification:'Times New Roman, ';font-family:'Times New Roman';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;" /></flowRegion><flowPara
+         id="flowPara4218" /></flowRoot>    <ellipse
+       style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.57373977px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path3336-7"
+       cx="85.897659"
+       cy="88.312134"
+       rx="89.356133"
+       ry="48.108273"
+       transform="matrix(0.9999175,-0.01284498,0.04532368,0.99897235,0,0)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="12.395889"
+       y="72.554848"
+       id="text4220"
+       sodipodi:linespacing="125%"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png"><tspan
+         sodipodi:role="line"
+         id="tspan4222"
+         x="12.395889"
+         y="72.554848">Formulaic </tspan><tspan
+         sodipodi:role="line"
+         x="12.395889"
+         y="88.179848"
+         id="tspan4184">Sequences</tspan></text>
+    <g
+       id="g4165">
+      <ellipse
+         inkscape:export-filename="FS_diagram_1.png"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         transform="matrix(0.99994872,-0.01012747,0.05745129,0.99834831,0,0)"
+         ry="27.780924"
+         rx="65.40519"
+         cy="109.23725"
+         cx="102.75926"
+         id="path3336-7-4"
+         style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.02315259px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <text
+         inkscape:export-filename="FS_diagram_1.png"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:linespacing="125%"
+         id="text4224"
+         y="97.206596"
+         x="109.11835"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
+           y="97.206596"
+           x="109.11835"
+           id="tspan4226"
+           sodipodi:role="line">Multiword</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
+           id="tspan4161"
+           y="112.8316"
+           x="109.11835"
+           sodipodi:role="line">Expressions</tspan></text>
+    </g>
+    <g
+       id="g4174"
+       transform="matrix(1.0007178,0,0,0.86215801,-0.05784177,23.072381)">
+      <ellipse
+         inkscape:export-filename="FS_diagram_1.png"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         ry="23.928762"
+         rx="68.249207"
+         cy="143.09865"
+         cx="80.579964"
+         id="path4228"
+         style="opacity:0.5;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.37725723;stroke-opacity:1" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="80.879036"
+       y="150.70018"
+       id="text4220-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="FS_diagram_1.png"><tspan
+         sodipodi:role="line"
+         id="tspan4222-3"
+         x="80.879036"
+         y="150.70018"
+         style="text-align:center;text-anchor:middle">Named Entities</tspan></text>
+    <g
+       transform="matrix(0.91756651,0,0,0.85728217,24.968931,-28.967511)"
+       id="g4165-8">
+      <ellipse
+         inkscape:export-filename="FS_diagram_1.png"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         transform="matrix(0.99994872,-0.01012747,0.05745129,0.99834831,0,0)"
+         ry="27.780924"
+         rx="65.40519"
+         cy="109.23725"
+         cx="102.75926"
+         id="path3336-7-4-1"
+         style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.02315259px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <text
+         inkscape:export-filename="FS_diagram_1.png"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         sodipodi:linespacing="125%"
+         id="text4224-9"
+         y="108.87138"
+         x="104.75899"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
+           id="tspan4161-6"
+           y="108.87138"
+           x="104.75899"
+           sodipodi:role="line">Constructions</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;text-anchor:middle"
+           y="124.49638"
+           x="104.75899"
+           sodipodi:role="line"
+           id="tspan4188" /></text>
+    </g>
+  </g>
+</svg>

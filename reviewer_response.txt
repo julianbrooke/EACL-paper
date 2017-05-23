@@ -1,4 +1,4 @@
-We would like to thank all of our reviewers for their detailed comments. We have tried to address the important points as best we can, but we were limited to provided with 3 extra pages (beyond the 10 pages of the original submission), and because all the reviews had numerous suggestions for improvement with only one obvious overlaps, we have had to pick and choose what we  could add. In cases where we did not change the paper, we have added a justification below.
+We would like to thank all of our reviewers for their detailed comments. We have tried to address the important points as best we can, but we were limited to provided with 3 extra pages (beyond the 10 pages of the original submission), and because all the reviews had numerous suggestions for improvement with only one obvious overlaps, we have had to pick and choose what we could add. In cases where we did not change the paper, threre is a justification below.
 
 We should mention one change that wasn't prompted by individual reviewer comments: there were clear misinterpretations by our Japanese annotators from the first round with led to overannotation of FS, and since the original submission of the paper we have done another round of annotation. The Japanese results have therefore changed somewhat, and are in fact more consistent with the other languages.
 
@@ -28,7 +28,7 @@ error analysis would help highligh these points, helping to clarify the
 advantages of the particular approach especially in relation to Brooke et
 al.
      
-We have added a new paragraph discussing in particular why our model does better than others, and an qualitative discussion which includes an error analysis.
+We have added a new paragraph contrasting our method to other algorithms, and an qualitative discussion which doubles as an error analysis.
 
 Note that we looked at Villavicencio et al. 2007, but it is very limited in scope (they only deal with trigrams) and doesn't provide any workable comparison in the context of unrestricted FS extraction beyond ranking with simple association measures, which, as we mention, have already been shown to be inferior to the more sophisticated models we are comparing against here.
 
@@ -61,7 +61,7 @@ for each of them for the different languages.
 
 We have reorganized the presentation of the model and are now providing an explicit objective function, at the same time getting rid of the confusing forward pointers and many of the extra symbols.
 
-In the discussion, we have added some additional explanation of why these particular interaction functions were used, alternatives we could consider, etc.
+We hope that the general purpose of each interaction in terms of the way that it inhibits other nodes is clear. We have added a bit more detail about the choice of the clearing function to both that section as well as the discussion. 
 
 
 >In terms of the methodology, a discussion is needed about the motivation for
@@ -86,7 +86,7 @@ would help clarify the advantages of the proposed approach in each language,
 particularly in relation to the error analysis. 
 
 
-As we note in the paper, adding the distinction between continguous and gapped simply isn't defensible given the lack of positive gapped examples across some of the datasets (since both precision and recall rely on primarily on true positives). We would very much like to present this distinction, but the scores depend primarily on a handful of examples for some of datasets and the results are erratic, they would confuse rather than elucidate, and would also be problematic with respect to statistic significance. However, we have added some additional discussion of gapped phrases to the Discussion section.
+As we note in the paper, adding the distinction between continguous and gapped simply isn't defensible given the lack of positive gapped examples across some of the datasets (since both precision and recall rely on primarily on true positives). We would very much like to present this distinction, but the scores depend primarily on a handful of examples for some of datasets and the results are erratic, they would confuse rather than elucidate, and would also be problematic with respect to statistic significance.
 
 >Additionally, for the
 contiguous n-grams in these languages a comparison with LocalMaxs could be
@@ -150,14 +150,12 @@ Process model which jointly creates a linear segmentation of the corpus and
 a multiword vocabulary" (page 3)
 There are also other instances, and these need to be rephrased.  
 
-We have rephrased the relevant parts of the literature review, though the
-basic content is unchanged.                                                     
+We have rephrased the relevant parts of the literature review, though the basic content is unchanged.                                                     
 
 > For the annotations, the text mentions 3 annotators, but doesn't specify
 whether they were different for each of the 3 languages.
 
-Yes, since they were native (first language) speakers of each of the relevant
-languages, it follows that they were different across languages.
+Yes, since they were native (first language) speakers of each of the relevant languages, it follows that they were different across languages.
 
 
 > When comparing the
@@ -181,8 +179,7 @@ Hopefully this is clearer in the new formulation
 * In section 3.2 can the authors explain how two valid but similar FSs would
 be treated  (e.g. keep * under wraps/surveillance)?
 
-The only kind of interaction between these nodes involves their shared
-n-gram subsequence (keep * under), as described in the example in the paper. We have expanded the example a bit. 
+The only kind of interaction between these nodes involves their shared n-gram subsequence (keep * under), as described in the example in the paper. We have expanded the example a bit. 
 
 * "We also use the concept of hard covering to ad- dress the issue of
 pronouns, based on the observation that pronouns often have high LPR
@@ -205,7 +202,7 @@ Yes, thanks.
 for them. How did they affect the overall performance? A table detailing the
 behavior with different values would be helpful.
   
-We've added a bit more detail, though not as much as you're asking for.
+We've added a bit more detail, though perhaps not as much as you're asking for.
 
 
 > * "which was roughly the same size (in terms of token count) as the English
@@ -271,7 +268,7 @@ expressions), and then later revisit the empirical ramifications of their
 decision -- for instance what happens when moving between typologically
 different languages.
 
-We have added a bit more to both the introduction of FS as well as the discussion that addresses this point, albeit briefly. Ultimately, in all three languages we are tokenizing and lemmatizing, and building our FS from the result: infected forms will map to one node in the lattice. However, this is not a theoretical choice, but a practical one. It is clear in that to understand characterize FS properly one must go beyond lemmatized words, for instance representing the that there is inflectional flexiblity in the verb "kick" in "kick the bucket" but not the noun "bucket"; we might like to be able to represent this in our model for English and Croatian, but considering mophological segmentation in these languages creates a blow up in complexity with marginal benefits, since a final FS lexicon with correct fixed forms or marking for variability could be derived post hoc based on corpus usage. With Japanese, however, due to the lack of word boundaries morphological segmentation is a more standard form of tokenization, and so we have taken advantage of this to bring Japanese somewhat closer to our theoretical ideal. Given that many of the case markers of Japanese correspond to prepositions in European languages (or the possesive marker in English), the actually difference in generated FS is fairly minor, except for the extra overhead of word segmentation in Japanese that is provided by word boundaries in English (in Wray's theory, words are FS by default)
+We have added a bit more to both the introduction of FS as well as a paragraph in the discussion that addresses this point. Ultimately, in all three languages we are tokenizing and lemmatizing using standards for each language, and building our FS from the result. However, this is not a theoretical choice, but a practical one.  With Japanese, due to the lack of word boundaries, morphological segmentation is a more standard form of tokenization, and so we have taken advantage of this to bring Japanese somewhat closer to our theoretical ideal. Given that many of the case markers of Japanese correspond to prepositions in European languages (or the possesive marker in English), the actual difference in generated FS is fairly minor, except for the extra overhead of word segmentation in Japanese that is provided by word boundaries in English (in Wray's theory, most words would be FS by default).
 
 >The author discuss at length the method, the construction of the lattice,
 and possible relation between arcs (covering clearing and overlapping) and
@@ -330,7 +327,7 @@ search to optimize explainedness of the nodes in the lattice, subject to
 various heuristics. Presenting a formal algorithm for the optimization may
 clarify things considerably.
 
-We have reorganized the method section and added an explicit objective function, which should help with some of your problems. In terms of the central optimization problem, the only variables are exactly the on/off status of each node, and, if we exclude the parameters used in the creation of the lattice (e.g. the n-gram frequency threshold) and those involved in the efficiency restrictions, the only (hyper)parameter in the optimization is C; we have tried to make this more clear. We have also included psuedocode for optimization algorithm. With regards to the ad hoc parts of the model, we have added a discussion separating the core aspects of the model from some of the more ad hoc choices made in the particular instantions of component functions (such as clearing), making it clear that we believe these can potentially be improved on (both in terms of performance as well as mathematical elegance), and that our primary purpose here is to show that overall architecture of the model is a promising one.
+We have reorganized the method section and added an explicit objective function, which should help with some of your problems. In terms of the central optimization problem, the only variables are exactly the on/off status of each node, and, if we exclude the parameters used in the creation of the lattice (e.g. the n-gram frequency threshold) and those involved in the efficiency restrictions, the only (hyper)parameter in the optimization is C; we have a included psuedocode for optimization algorithm. With regards to the ad hoc parts of the model, we have added a discussion separating the core aspects of the model from some of the more ad hoc choices made in the particular instantions of component functions (such as clearing), making it clear that we believe these can potentially be improved on (both in terms of performance as well as mathematical elegance), and that our primary purpose here is to show that overall architecture of the model is a promising one.
 
 > I think it would also be worth discussing how the lattice model relates back to the cognitive/psychological literature. Would you predict (or are you
 aware of any evidence) that node interactions such as covering, clearing,
@@ -338,7 +335,7 @@ and overlapping have an analogue in human language processing? Do any of the
 design decisions intentionally sacrifice cognitive plausibility for
 engineering reasons? 
 
-In general, we did not consider cognitive plausibility when creating the model, and we are certainly making no claims as such. For starters, our model makes use of more data than a human being could possibly read in a lifetime; it is clear we identify FS with far less evidence than our model requires. With space, we could discuss our model in the context of the more cognative aspects of the theory of formulaic sequences as proposed by Wray, but given that this wasn't a focus in the development of the model, we think it is really too much of a digression to justify.
+In general, we did not consider cognitive plausibility when creating the model, and we are certainly making no claims as such. For starters, our model makes use of more data than a human being could possibly read in a lifetime, it is clear humans identify FS with far less evidence than our model requires. With space, we could discuss our model in the context of the more cognative aspects of the theory of formulaic sequences as proposed by Wray, but given that this wasn't a focus in the development of the model, we think it is really too much of a digression to justify.
 
 > - After the equation for LPR, it would be good to give the intuition:
 choosing a context span such that w_i is more likely given its context words
@@ -358,15 +355,15 @@ kinds of expressions? Are high-frequency as well as low-frequency sequences
 detected? What is the distribution in terms of length? What kinds of gapped
 sequences are there? It would be nice to see some examples.
 
-In the discussion, we have added a thorough analysis of specific examples and some statistics, including most of the infromation you ask for.                       
+In the discussion, we have added a thorough analysis of specific examples and some statistics, including most of the information you ask for (implicitly if not explicitly).                       
 
 > - Related to the previous point: While noting the distinction between FS and
 MWEs, is it perhaps worth measuring recall against MWE datasets? Most MWEs
 apart from proper names should count as FS, right?
 
-Do you mean as a way of evaluating different systems built on the same corpus, or just to get a sense of coverage more generally? One central problem with using recall for evaluation is that in order to make it fair, there must be some control of the size of the lexicon. Neither our system nor our best performing competitors are ranking models, none of them offer an easy or fair way to simply take the best N words and look at recall. And even if they did, there's other kinds of biases that would come into play: for instance, PMI and similar metrics do well with rare terms that correspond well to the MWE lexicon of WordNet, for instance, which (at the type level) is dominated by certain kinds of terminology (biomedical terms, particularly) which are not really used outside a very specific community. This relates to a more fundamental problem with the idea of using recall in external lexicons as any kind of useful measure: we could not expect any particular corpus (even a very large one) to do justice to the full range of FS/MWE for a language, since most of which appear regularly only within specific genres. For example, we could not expect to build a good lexicon of English verb-particle constructions from a biomedical corpus, because many are too informal to be appropriate for that genre (e.g. "mess up"). We have added more discussion of the genre-specificity of FS to the paper, as part of the qualitative analysis
+Do you mean as a way of evaluating different systems built on the same corpus, or just to get a sense of coverage more generally? One central problem with using recall for evaluation is that in order to make it fair, there must be some control of the size of the lexicon. Neither our system nor our best performing competitors are ranking models, none of them offer an easy or fair way to simply take the best N words and look at recall. And even if they did, there's other kinds of biases that would come into play: for instance, PMI and similar metrics do well with rare terms that correspond well to the MWE lexicon of WordNet, for instance, which (at the type level) is dominated by certain kinds of terminology (biomedical terms, particularly) which are not really used outside a very specific community. This relates to a more fundamental problem with the idea of using recall in external lexicons as any kind of useful measure: we could not expect any particular corpus (even a very large one) to do justice to the full range of FS/MWE for a language, since most of which appear regularly only within specific genres. For example, we could not expect to build a good lexicon of English verb-particle constructions from a biomedical corpus, because many are too informal to be appropriate for that genre (e.g. "mess up"). We have added more discussion of the corpus-specificity of FS to the paper, as part of the qualitative analysis.
 
-Though it perhaps does not directly address your comment (since it doesn't involve an external MWE dataset), we were nonetheless inspired to include an analysis of the recall of MWE vs. non-MWE FS in the context of our existing test sets.
+Though it perhaps does not directly address your comment (since it doesn't involve an external MWE dataset), we were nonetheless inspired by your comment to include an analysis of the recall of MWE vs. non-MWE FS in the context of our existing test sets.
 
 >Typographical issues:
 

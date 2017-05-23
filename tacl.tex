@@ -21,6 +21,13 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{algorithm,algorithmicx}
 \usepackage[noend]{algpseudocode}
+%\usepackage{luatexja-fontspec}
+%\setmainjfont{MS Mincho} % \mcfamily
+%\setsansjfont{MS Gothic} % \gtfamily
+%\usepackage{xeCJK}
+%\setCJKmainfont{MS Mincho} % for \rmfamily
+%\setCJKsansfont{MS Gothic} % for \sffamily
+\usepackage{CJKutf8}
 \makeatletter
 \newcommand{\@BIBLABEL}{\@emptybiblabel}
 \newcommand{\@emptybiblabel}[1]{}
@@ -54,7 +61,7 @@
 \newcommand{\figref}[2][]{Figure#1~\ref{#2}\xspace}
 \newcommand{\tabref}[2][]{Table#1~\ref{#2}\xspace}
 \newcommand{\secref}[2][]{Section#1~\ref{#2}\xspace}
-\newcommand{\algref}[2][]{Algorithm#1~\ref{#2}\xspace}
+%\newcommand{\algref}[2][]{Algorithm#1~\ref{#2}\xspace}
 
 
 
@@ -174,7 +181,7 @@ A simple but effective solution which avoids introducing extra hyperparameters i
 \begin{displaymath}
 \clear(t) = \prod_{i=1}^{m}{\min\Big(1,\frac{\minLPR(t)}{\minLPR(u_i)}\Big)}
 \end{displaymath}
-where $u_i$ is the $i$th clearing node of $t$, \ie turned-on nodes below $t$ in the lattice. We refer to this mechanism as ``clearing'' because it tends to clear away a variety of trivial uses of common FS which may have higher LPR due to the lexical and syntactic specificity of the FS. For instance, in \figref{fig:example} if the node \ex{keep \gap under wraps}  is turned on and has a minLPR of 8, then, if the minLPR of a node such as \ex{keep \gap under wraps for} is 4, $\clear(t)$ will be 0.5. Like \cover, \clear takes on values in the range 0 to 1, with 1 being the default when no clearing occurs. 
+where $u_i$ is the $i$th clearing node of $t$, \ie turned-on nodes below $t$ in the lattice. We refer to this mechanism as ``clearing'' because it tends to clear away a variety of trivial uses of common FS which may have higher LPR due to the lexical and syntactic specificity of the FS. For instance, in \figref{fig:example} if the node \ex{keep \gap under wraps}  is turned on and has a minLPR of 8, then, if the minLPR of a node such as \ex{keep \gap under wraps for} is 4, $\clear(t)$ will be 0.5. Like \cover, \clear takes on values in the range 0 to 1, with 1 being the default when no clearing occurs. Note that one major advantage with this particular formulation of clearing is that low-LPR nodes will be unable to clear higher LPR nodes above them in the lattice; otherwise, bad FS like \ex{of the} might be selected as FS based purely to increase the explainedness of the many $n$-grams they appear in.
 
 %We can now define $d_{0}(t)$ as:
 %\begin{displaymath}
@@ -226,12 +233,12 @@ All else being equal, when $\minLPR(t) > C$, a node will be selected as an FS, a
 \subsection{Optimization}
 
 \begin{algorithm}
-	\caption{Optimization algorithm. $N$ is an ordered list of the nodes in the lattice. Nodes (designated by $n$) contain pointers to the nodes immediately linked to them the lattice. States (designated by $s$) indicate whether each node is $ON$ or $OFF$. Explainedness values are indicated by $e$.}
+	\caption{Optimization algorithm. $N$ is an ordered list of the nodes in the lattice. Nodes (designated by $n$) contain pointers to the nodes immediately linked to them in the lattice. States (designated by $s$) indicate whether each node is $ON$ or $OFF$. Explainedness values are indicated by $e$.}
 	\label{alg:opt}
 	\begin{algorithmic}
 	
 	\Function{LocalOpt}{$s_{start}, n, N_{rev}, N_{af\hspace{-0.1em}f}$}
-		\State $s_{start} \gets \Call{SetNode}{s, n, ON}$
+		\State $s_{start} \gets \Call{Set}{s, n, ON}$
 		\State $Q \gets \Call{EmptyQueue}{\null}$
 		\State $e_{best} \gets 0$
 		\State $s_{best} \gets NULL$
@@ -240,7 +247,7 @@ All else being equal, when $\minLPR(t) > C$, a node will be selected as an FS, a
 			\State $s_{curr} \gets \Call{Pop}{Q}$
 			\State $e_{curr} \gets \Call{CalcExpl}{s_{curr}, N_{af\hspace{-0.1em}f}}$
 			\For{$n_{rev} \textrm{ in } N_{rev}$}
-					\State $s_{new} \gets \Call{SetNode}{s_{curr}, OFF}$
+					\State $s_{new} \gets \Call{Set}{s_{curr},n_{rev}, OFF}$
 					\State $e_{new} \gets\Call{CalcExpl}{s_{new}, N_{af\hspace{-0.1em}f}}$
 					\If{$ e_{new} > e_{curr}$}
 				
@@ -269,16 +276,15 @@ All else being equal, when $\minLPR(t) > C$, a node will be selected as an FS, a
 		\EndIf
 		\EndFor
 \Until{$!Changed$}
-\State \Return $s$
 
 
 \end{algorithmic}
 
 \end{algorithm}
 
-The dependence of the explainedness of nodes on their neighbors effectively prohibits a global optimization of the lattice. Fortunately, though most of the nodes in the lattice are part of a single main connected component, most of the effects of nodes on each other are relatively local, and effective local optimizations can be made tractable by applying some simple restrictions. The main optimization loop consists of iterations over the lattice until complete convergence (no changes in the final iteration). For each iteration over the main loop, each potentially active node is examined in order to evaluate whether its current status is optimal given the current state of the lattice. The order that we perform this has an effect on the result: among the obvious options, good results are obtained through ordering nodes by frequency, which gives an implicit advantage to relatively common $n$-grams.
+The dependence of the explainedness of nodes on their neighbors effectively prohibits a global optimization of the lattice. Fortunately, though most of the nodes in the lattice are part of a single connected graph, most of the effects of nodes on each other are relatively local, and effective local optimizations can be made tractable by applying some simple restrictions. The main optimization loop consists of iterations over the lattice until complete convergence (no changes in the final iteration). For each iteration over the main loop, each potentially active node is examined in order to evaluate whether its current status is optimal given the current state of the lattice. The order that we perform this has an effect on the result: among the obvious options, good results are obtained through ordering nodes by frequency, which gives an implicit advantage to relatively common $n$-grams.
 
-Given the relationships between nodes, it is obviously not sufficient to consider switching only the present node. If, for instance, one or more of \ex{be keep \gap under wraps}, \ex{under wraps}, or \ex{be keep \gap under} has been turned on, the covering, clearing, or overlapping effects of these other nodes will likely prevent a competing node like \ex{keep \gap under wraps} from being correctly activated. Instead, the algorithm identifies a small set of ``relevant'' nodes which are the most important to the status of the node under consideration. Since turned-off nodes have no direct effect on each other, only turned-on nodes above, below, or overlapping with the current node in the Lattice need be considered.  Once the relevant nodes have been identified, all nodes (including turned-off nodes) whose explainedness is affected by one or more of the relevant nodes are identified. Next, a search is carried out for the optimal configuration of the relevant nodes, starting from an `all-on' state and then iteratively considering new states with one relevant node turned off; the search continues as long as there is an improvement in explainedness. Since the node interactions are roughly cumulative in their effects, this approach will generally identify the optimal state without the need for an exhaustive search. The details of the algorithm are given as Algorithm 1.%\algref{alg:opt}.
+Given the relationships between nodes, it is obviously not sufficient to consider switching only the present node. If, for instance, one or more of \ex{be keep \gap under wraps}, \ex{under wraps}, or \ex{be keep \gap under} has been turned on, the covering, clearing, or overlapping effects of these other nodes will likely prevent a competing node like \ex{keep \gap under wraps} from being correctly activated. Instead, the algorithm identifies a small set of ``relevant'' nodes which are the most important to the status of the node under consideration. Since turned-off nodes have no direct effect on each other, only turned-on nodes above, below, or overlapping with the current node in the lattice need be considered.  Once the relevant nodes have been identified, all nodes (including turned-off nodes) whose explainedness is affected by one or more of the relevant nodes are identified. Next, a search is carried out for the optimal configuration of the relevant nodes, starting from an `all-on' state and then iteratively considering new states with one relevant node turned off; the search continues as long as there is an improvement in explainedness. Since the node interactions are roughly cumulative in their effects, this approach will generally identify the optimal state without the need for an exhaustive search. The details of the algorithm are given as Algorithm 1.%\algref{alg:opt}.
 
 Omitted from Algorithm 1 for clarity are various low-level efficiencies which prevent the algorithm from reconsidering states already checked or from recalculating the explainedness of nodes when unnecessary. We also apply the following efficiency restrictions, which significantly reduce the runtime of the algorithm. In each case, more extreme (less efficient) values were individually tested using a development set and found to provide no benefit in terms of the quality of the output lexicon:
 \begin{compactitem}
@@ -347,11 +353,11 @@ minLPRrank & 0.49& 0.31 & 0.39 & & 0.25& 0.44 & 0.32 & & 0.36 & 0.45 & 0.40 &  &
 LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 0.69 & 0.43 & 0.53 \\ 
   \midrule
 
-	Lattice \emph{$-$cl$-$ovr} & 0.47& \bf{0.53} & 0.50 & & 0.31& \bf{0.60} & 0.41 & & 0.32 & 0.66 & 0.43 & & 0.49 & 0.61 & 0.54 \\ 
+	Lattice\emph{$-$cl,ovr} & 0.47& \bf{0.53} & 0.50 & & 0.31& \bf{0.60} & 0.41 & & 0.32 & 0.66 & 0.43 & & 0.49 & 0.61 & 0.54 \\ 
 
-	Lattice \emph{$-$cl} & 0.57& 0.42 & 0.49 & & 0.33& 0.58 & 0.42 & & 0.39 & 0.56 & 0.46 & & 0.63 & 0.49 & 0.55 \\  	 
+	Lattice\emph{$-$cl} & 0.57& 0.42 & 0.49 & & 0.33& 0.58 & 0.42 & & 0.39 & 0.56 & 0.46 & & 0.63 & 0.49 & 0.55 \\  	 
 			
-	Lattice \emph{$-$ovr} & 0.52& 0.51 & 0.51 & & 0.34& \bf{0.60} & 0.44& & 0.36 & \bf{0.67} & 0.47 & & 0.53 & \bf{0.62} & 0.58 \\  
+	Lattice\emph{$-$ovr} & 0.52& 0.51 & 0.51 & & 0.34& \bf{0.60} & 0.44& & 0.36 & \bf{0.67} & 0.47 & & 0.53 & \bf{0.62} & 0.58 \\  
 			
 				Lattice & \bf{0.67} & 0.43 & \bf{0.52} & & \bf{0.40}& \bf{0.60} & \bf{0.48} & &\bf{0.44} & 0.56 & \bf{0.49} & & \bf{0.76} & 0.49 & \bf{0.59} \\ 
             \bottomrule
@@ -404,32 +410,87 @@ We created small development sets for each corpus and used them to do a thorough
 
 \section{Results}
 
-The main results for FS acquisition across all four corpora are shown in \tabref{tab:main}. As noted in previous work, simple statistical association measures like PMI do fairly poorly when faced with syntactically-unrestricted $n$-grams of variable length: minLPR is clearly a much better statistic for this purpose. The LPRseg method of \newcite{Brooke15b} consistently outperforms simple ranking, and the lattice method proposed here does better still, with a margin that is fairly consistent across languages. Generally, clearing and overlap node interactions provide a relatively large increase in precision at the cost of a smaller drop in recall, though the change is fairly symmetrical in Croatian. The Japanese and ICWSM corpus had relatively high precision and low recall, whereas both the BNC and Croatian corpus have low precision and high recall.
+The main results for FS acquisition across all four corpora are shown in \tabref{tab:main}. As noted in previous work, simple statistical association measures like PMI do fairly poorly when faced with syntactically-unrestricted $n$-grams of variable length: minLPR is clearly a much better statistic for this purpose. The LPRseg method of \newcite{Brooke15b} consistently outperforms simple ranking, and the lattice method proposed here does better still, with a margin that is fairly consistent across languages. Generally, clearing and overlap node interactions provide a relatively large increase in precision at the cost of a smaller drop in recall, though the change is fairly symmetrical in Croatian.  When only covering is used, the results are very similar to \newcite{Brooke15b}, which is unsurprising given the extent to which decomposition and covering are related. The Japanese and ICWSM corpus had relatively high precision and low recall, whereas both the BNC and Croatian corpus have low precision and high recall.
 
 In the contiguous FS test set for the BNC (\tabref{tab:BNC}), we found that both the LocalMaxs algorithm and the DP-seg method of Newman \cite{Newman12} were able to beat our other baseline methods with roughly similar F-scores, though both are well below our Lattice method. Some of the difference seems attributable to fairly severe precision/recall imbalance, though we were unable to improve the F-score by changing the parameters from recommended settings for either model.
 
 
 \section{Discussion} \label{sec:discussion}
 
-Though the results across the four corpora are reasonably similar with respect to overall F-score, there are significant discrepancies. By using the UNIDIC morpheme representation as the base unit for Japanese, the model is doing an extra layer of FS identification, one which is provided by word boundaries in the other languages. The result is that there are many more FS for Japanese: precision is high, and recall is relatively low.  Importantly, the initial $n$-gram statistics derived from corpus reflect that Japanese is different: the number of $n$-gram types over length 4 is almost twice the number in the ICWSM corpus. One idea for future work is to automatically adapt to the input language/corpus in order to ensure a good balance between precision and recall.
 
-At the opposite extreme, the low precision of the BNC is almost certainly at least somewhat a reflection of its relatively small size: whereas the $n$-gram threshold we have used here results in minimum counts of roughly 100 for the other three corpora used here, the BNC statistics includes $n$-grams with counts less than 10. This might be resolved by increasing the $n$-gram threshold, or simply avoiding small corpora, but for some applications it may be useful to build comprehensive FS lexicons even in relatively low resource situations. One idea we are pursing is modifying the calculation of the LPR metric to integrate uncertainty due to low counts.
+\begin{table*}[!bt]
+ 
+ \begin{center}
+ \begin{tabular}{lccccccc}
+\hline
+& & & & \multicolumn{4}{c}{\bf{By Length (\%) }} \\
+       \cmidrule(lr){5-8}	
+\bf{Lexicon} & \bf{Size} & \bf{POS types} & \bf{Gapped} (\%) & \bf{2} & \bf{3} & \bf{4}  & \bf{5+} \\ 
+\hline
+English ICWSM & 202k & 16.8k & 18.3 & 46.7 & 30.1 & 15.0 & 7.5  \\
+English BNC & 374k &  30.0k& 26.1& 38.8 & 36.6 & 18.1 & 7.7 \\
+Croatian & 172k & 6.7k & 7.9& 55.0& 31.4 & 10.3 & 3.2 \\
+Japanese & 218k &  29.4k &7.9& 39.5 & 31.1& 16.8 & 12.6 \\
+\hline
+\end{tabular}
+  \caption{Statistics for the lexicons created by our lattice method}
+	 \label{tab:lexstats}
 
-There is one other more general explanation for the precision/recall imbalances we see across the four corpora: both the BNC and the Croatian corpus are composed primarily of published texts written by professional writers, particularly news. The ICWSM corpus and the Japanese corpus, on the other hand, are mostly blogs and web pages. Though all genres have FS, it is our observation that there is much more diversity in less controlled genres: many English gapped expressions, in particular, appear almost exclusively in relatively informal genres. 
+ \end{center}
+
+
+ \end{table*}
+
+Though the results across the four corpora are reasonably similar with respect to overall F-score, there are some discrepancies. By using the standard UNIDIC morpheme representation as the base unit for Japanese, the model ends up doing an extra layer of FS identification, one which is provided by word boundaries in the other languages. The result is that there are relatively more FS for Japanese: precision is high, and recall is comparably low.  Importantly, the initial $n$-gram statistics derived from corpus actually reflect that Japanese is different: the number of $n$-gram types over length 4 is almost twice the number in the ICWSM corpus. One idea for future work is to automatically adapt to the input language/corpus in order to ensure a good balance between precision and recall.
+
+At the opposite extreme, the low precision of the BNC is almost certainly at least somewhat a reflection of the relatively small size of the corpus: whereas the $n$-gram threshold we have used here results in minimum counts of roughly 100 for the other three corpora used here, the BNC statistics includes $n$-grams with counts less than 10. At such low counts, LPR is less reliable and more noise gets into the lexicon: the first column of \tabref{tab:lexstats} shows that the BNC is noticeably larger then the other lexicons, and the higher numbers in columns 2 and 3 (number of POS types and percentage of gapped expressions) are also indicative of increased noise.  This problem could be resolved by increasing the $n$-gram threshold. It might also make sense to simply avoid smaller corpora, though for some applications it may be useful to build comprehensive FS lexicons even in relatively low resource situations. One idea we are pursing is modifying the calculation of the LPR metric by using a more conservative estimate for probability than maximum likelihood in the case of low counts.
+
+We were interested in addressing Croatian and Japanese in part because of their relatively free word order, and whether the handling of gaps would help with identifying FS in these languages. We discovered, however, that free word order actually results in \emph{more} of a tendency towards contiguous FS, not less, a fact that is reflected in our test sets (\tabref{tab:stats}) as well as the lexicons themselves (\tabref{tab:lexstats}). Strikingly rare in Croatian, in particular, are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is English whose fixed-word-order constraints often keep elements of an FS distant from each other. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena highlights a problem with the current model, in that gapped and contiguous versions of the same $n$-gram sequence (\eg \ex{take away} and \ex{take \gap away}) are, at present, considered entirely independently. Alternatives for dealing with this include collapsing statistics to create a single node in the lattice, creating a promoting link between contiguous and gapped versions of the same $n$-grams sequence in the lattice model, or switching to a dependency representation (which, we note, requires very little change to the basic model presented here, but would narrow its applicability). 
+
+
+The statistics in \tabref{tab:lexstats} otherwise reflect the quantity and diversity of FS across the corpora, particularly in terms of the number of POS patterns represented in the lexicon. Looking at the most common POS patterns across languages, only noun-noun and adjective-noun combinations ever account for more than 5\% of all word types in any of the lexicons. Though some of the diversity can of course be attributed to noise, it is safe to say that most FS do not fall into the standard two-word syntactic categories used in MWE work, and therefore identifying them requires a much more general approach like the one presented here.
+
+\begin{table*}[!bt]
+ 
+ \begin{center}
+ \begin{tabular}{|p{2.8cm}|p{12cm}|}
+\hline
+English ICWSM & \ex{heart ache}, \ex{so \gap have some time}, \ex{part of the blame}, \ex{via slashdot}, \ex{any more questions}, \ex{protein expression}, \ex{work in \gap bank}, \ex{al-qaeda terrorist}, \ex{continue discussions}, \ex{I know a lot of people who}\\
+\hline
+English BNC & \ex{go into decline}, \ex{Maureen says}, \ex{primarily as \gap and}, \ex{Peggy Sue}, \ex{square \gap shoulder}, \ex{delivery system for}, \ex{this \gap also includes}, \ex{license endorsed}, \ex{point \gap finger}, \ex{highly \gap asset}\\
+\hline
+Croatian & \ex{negativno utjecati na} (negatively affects on), \ex{jedan od dobrih poznavatelja} (one of the best connoisseurs of), \ex{jasno \gap je da} (it is clear \gap that), \ex{promet teretnih vozila} (good vehicle traffic), \ex{odvratiti pozornost} (divert attention), \ex{biti general poslije bitke} (be the general after the battle), \ex{popularni internetski} (popular internet), \ex{izazvati kaos} (cause chaos), \ex{austrijski investitor} (Austrian investor), \ex{ideja o gradnji} (the idea of building) \\
+\hline
+Japanese & \begin{CJK*}{UTF8}{min} \ex{高速\ 道路\ 整備} (highway construction),\ex{年次\ 後期} (the second half of the fiscal year), \ex{労働\ 者\ 派遣\ 事業} {temporary labor agency), \ex{こう\ 言う\ \gap\ が\ 続く} (repeat occurrences of \gap like this),  \ex{風邪\ っ\ 匹} (cold sufferer), \ex{ＤＨＣＰ\ サーバー} (DHCP server), \ex{前期\ 比} (first half comparison), \ex{経営\ 事項\ 審査 } (examination of administrative affairs), \ex{自分\ の\ 文章} (own writing), \ex{深い\ 味わい} (deep flavor) \end{CJK*} \\
+\hline
+\end{tabular}
+  \caption{ 10 randomly selected examples from the final FS lexicon from each corpus. Lemmas have been converted to inflected forms when appropriate for readability.}
+	 \label{tab:sample}
+
+ \end{center}
+
+\end{table*}
+
 
 %The fact that less than 20\% of the FS derived from the BNC appear in the lexicon for the ICWSM corpus is fairly telling of how important genre differences are to the range of FS that will be seen in a particular corpus.
+\tabref{tab:sample} contains 10 randomly selected examples from each of the corpora. Among the English examples, most of the clear errors are bigrams that reflect particular biases of their respective corpora: The phrase \ex{via slashdot} comes from boilerplate text identifying the source of a article, where as \ex{Maureen} (from \ex{Maureen says}) is a character in one of the novels included in the BNC. The longer FS mostly seem sensible, in that they are plausible lexicalized constructions, though \ex{primarily as \gap and} from the BNC is implausible as an FS and likely the result of noise. Some FS are dialectal variants, for instance \ex{license endorsed} refers to the British traffic violations.
 
-We were interested in addressing Croatian and Japanese in part because of their relatively free word order, and whether the handling of gaps would help with identifying FS in these languages. We discovered, however, that free word order actually results in \emph{more} of a tendency towards contiguous FS, not less, a fact that is reflected in our test sets (the ratio between gapped and ungapped FS) as well as the content of the lexicon. Strikingly rare in Croatian, in particular, are expressions where the content of a gap is an argument which must be filled to syntactically complete an expression: it is English whose fixed-word-order constraints often keep elements of an FS distant from each other. The gaps that do happen in Croatian are mostly prosody-driven insertions of other elements into already complete FS. This phenomena highlights a problem with the current model, in that gapped and contiguous versions of the same $n$-gram sequence (\eg \ex{take away} and \ex{take \gap away}) are, at present, considered entirely independently. Alternatives for dealing with this include collapsing statistics to create a single node in the lattice, creating a promoting link between contiguous and gapped versions of the same $n$-grams sequence in the lattice model, or switching to a dependency representation (which, we note, requires very little change to the basic model presented here, but would narrow its applicability). 
+What is perhaps most striking is the non-English examples is how poorly some FS translate: many good FS in these languages become extremely awkward when translated into English. This is expected of course for idioms like \ex{biti general poslije bitke} (be the general after the battle, \ie hindsight is 20/20), but it extends to other relatively compositional  constructions like \begin{CJK*}{UTF8}{min} \ex{こう\ 言う\ \gap\ が\ 続く} \end{CJK*} (repeat occurrences of \gap like this). This highlights the importance of focusing on FS when learning a language, since many FS do not translate well (though some short ones do, particularly between the European languages). Though some of the errors seem to be the result of extra material added to an good FS, for instance \ex{promet teretnih vozila} (good vehicle traffic), most, again, are somewhat inexplicable artifacts of the corpus they were built from collected, like \ex{austrijski investitor} (Austrian investor).
 
-As it stands, connections in the lattice are based entirely on explicit $n$-gram subsumption and overlap relations. One of the major benefits of this model as compared to alternatives is the relative ease with which additional kinds of interactions between nodes could be implemented. Another connection we have considered is based on identical or similar syntactic patterns (\eg POS sequences), which could serve to encourage the model to make generalizations: in English, \eg learning that verb-particle combinations are generally likely to be FS, whereas verb-determiner combinations are not. Our initial investigations suggest, however, it may be difficult to apply this idea without merely amplifying existing undesirable biases in the LPR measure. Bringing in other information such as simple distributional statistics might help the model identify non-compositional semantics, and could, in combination with the existing lattice competition, focus the model on detecting MWEs, which could in turn serve as a reliable basis for generalization when the raw LPR statistics alone are an unreliable indicator of formulaticity.
+Though we have demonstrated here that the idea of competition within a lattice is a powerful one for the production of FS lexicons, its usefulness derives less from the specific choices we have made in this instantation of the model, but rather the flexiblity that such a model provides for future research. Not only do alternatives like DP-seg and LocalMaxs fail to scale up, there are few obvious ways to improve on their simple underlying algorithms without destroying the elegance of the solution they provide. Fast and functional, the LPR decomp approach is nevertheless algorithmically ungainly, involving multiple layers of heuristic filtering. Our lattice method is aimed at something between these extremes: a practical, optimizable model, but with various component heuristics that can be improved upon. Though the current version of the clearing function is effective and has practical advantages relative to the other simple options that we tested, we think that function could be enhanced by more careful investigation of the statistical properties of FS, identifying to what extent the LPR of words around FS is likely to be inflated.
 
-With respect to speed, although the optimization of the lattice is several orders of magnitude more time consuming than the decomposition heuristics of \newcite{Brooke15b}, the time needed to build and optimize the lattice was still only a fraction of the time required to collect the statistics necessary to calculate LPR, a necessary first step for both methods: therefore, the overall effect of adding the lattice optimization is fairly minimal. We note that for all four corpora, the lattice optimization algorithm converged within 10 iterations.
+We can also consider adding new terms to the exponents of the two terms of our objective function, analagous to the cover, clear, and overlap functions, based on other relationships between nodes in the lattice. One which we have considered is creating new connections between identical or similar syntactic patterns, which could serve to encourage the model to make generalizations. In English, for instance, it might learn that verb-particle combinations are generally likely to be FS, whereas verb-determiner combinations are not. Our initial investigations suggest, however, it may be difficult to apply this idea without merely amplifying existing undesirable biases in the LPR measure. Bringing in other information such as simple distributional statistics might help the model identify non-compositional semantics, and could, in combination with the existing lattice competition, focus the model on detecting MWEs, which could in turn serve as a reliable basis for generalization when the raw LPR statistics alone are an unreliable indicator of formulaticity.
+
+With respect to speed, although the optimization of the lattice is several orders of magnitude more time consuming than the decomposition heuristics of \newcite{Brooke15b}, the time needed to build and optimize the lattice is still only a fraction of the time required to collect the statistics necessary to calculate LPR, a necessary first step for both methods: therefore, the overall effect on runtime of the lattice optimization step is fairly minimal. In the BNC, the end-to-end lattice algorithm is several times faster than LocalMaxs (with a fraction of its memory usage), and an order of magnitude faster than DP-Seg. We note that for all four corpora, the lattice optimization algorithm converged within 10 iterations. 
 
 %, and only the first two iterations require looking at a majority of the nodes, since there is no need to revisit a node if nothing has changed in its vicinity.
 
-Finally, though in general using the sampling methodology to build test sets has significant benefits in terms of providing a robust, replicable evaluation, F-scores become unreliable when there are very few positive examples, such as with most of our gapped $n$-gram test sets. To do a reliable, focused evaluation of FS with gaps, we would need many more examples than can be produced with straightforward sampling. One option we might consider is adding additional filtering to the sampling processes, for instance using the LPR metric to exclude large numbers of unpromising $n$-grams.
+Though in general using the sampling methodology to build test sets has significant benefits in terms of providing a robust, replicable evaluation, F-scores become unreliable when there are very few positive examples, such as with most of our gapped $n$-gram test sets. To do a reliable, focused evaluation of FS with gaps, we would need many more examples than can be produced with straightforward sampling. One option we might consider is adding additional filtering to the sampling processes, for instance using the LPR metric to exclude large numbers of unpromising $n$-grams.
 
-Though the model presented here was designed specifically for FS extraction, we note that it could be useful for similar tasks such as unsupervised creation of morphological lexicons for agglutinative languages. In particular, character or phoneme $n$-grams could compete in an identically structured lattice (though without gapped $n$-grams) to be chosen as the best morphemes for the language, and we could straightforwardly adapt LPR to use, as the denominator of the ratio, phonological predictably (\ie based on vowel/consonant ``tags'') instead of syntactic predictability. It is likely, though, that further modifications would be necessary to target morphological phenomena, and we leave this for future work.
+Due to the lack of spaces between words and an agglutinative morphology, the standard approach to tokenization and lemmatization in Japanese involves morphological rather than word segmentation. In terms of the content of the resulting lexicon we believe the effect of this difference is modest, since much of what is extra in Japanese would simply be individual words in other languages (which could be viewed as being trivially part of the FS lexicon). However, from a theoretical perspective we might very much prefer to build FS for all languages starting from morphemes rather than words. Such a framework could, for instance, capture inflectional flexibilty versus fixedness directly in the model, with fixed inflectional morphemes included as an distinct element of the FS and flexible morphemes becoming gaps. However, for many languages this would result in a huge blow up in complexity with only modest increases in the scope of FS identification. Though it is indisputable that inflectional fixedness is part of the lexical information contained in an FS, in practice this sort of information can be efficiently derived post hoc using corpus statistics.
+
+
+Though the model presented here was designed specifically for FS extraction, we note that it could be useful for similar tasks such as unsupervised creation of morphological lexicons, particularly for agglutinative languages. Character or phoneme $n$-grams could compete in an identically structured lattice (though presumably without gapped $n$-grams) to be chosen as the best morphemes for the language, and we could straightforwardly adapt LPR to use phonological predictably (\ie based on vowel/consonant ``tags'') instead of syntactic predictability. It is likely, though, that further modifications would be necessary to target morphological phenomena well, and we leave this for future work.
 
 \section{Conclusion}
 

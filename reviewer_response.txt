@@ -104,7 +104,7 @@ We have added statistical significance information.
 only the cover function (Lattice-cl-ovr), to determine how much the other
 functions contribute. 
  
-Added.
+Thank you for the suggestion. This has been added to the revised version.
 
 >A figure with the top/bottom candidates proposed by
 the approach be helpful.
@@ -134,7 +134,7 @@ models (Newman et al., 2012) which fail to scale to the large corpora which
 are the main sources of the distributional information in modern NLP
 systems.').
 
-We have split up some of the longer sentences.
+Thank you for your suggestion. We have split up some of the longer sentences, hopefully improving the readability.
   
 > Moreover, some passages are copied from Brooke et al. (2015), but lack the
 citation, such as:
@@ -155,7 +155,7 @@ We have rephrased the relevant parts of the literature review, though the basic 
 > For the annotations, the text mentions 3 annotators, but doesn't specify
 whether they were different for each of the 3 languages.
 
-Yes, since they were native (first language) speakers of each of the relevant languages, it follows that they were different across languages.
+Yes, they were different for each of the 3 languages. Since they were native (first language) speakers of each of the relevant languages, we believe this implies that they were different across languages.
 
 
 > When comparing the
@@ -174,7 +174,7 @@ We have made the analogy explicit.
 * “define the explainedness of a node in terms of two functions” Which
 two functions?
 
-Hopefully this is clearer in the new formulation
+Hopefully this is clearer in the new formulation.
 
 * In section 3.2 can the authors explain how two valid but similar FSs would
 be treated  (e.g. keep * under wraps/surveillance)?
@@ -286,7 +286,7 @@ two many forward references in the text, IMO, which hinder
 understandability. Example "where d1 and d2 are ... as detailed in the next
 section". I would prefer the details closer to where they are relevant.
 
-We have reorganized the expanation of the method to remove forward references, and have provided an explict objective function and algorithm. We decided, though, that a full example of the optimization algorithm involved too much overhead with only modest explanatory benefits.
+Thank you for your suggestions. We have reorganized the expanation of the method to remove forward references, and have provided an explict objective function and algorithm. We decided, though, that a full example of the optimization algorithm involved too much overhead with only modest explanatory benefits.
 
 By "text", you mean corpus, right? It is hopefully clear that the algorithm 
 works at the level of all n-grams for the corpus, and not texts within the
@@ -327,7 +327,7 @@ search to optimize explainedness of the nodes in the lattice, subject to
 various heuristics. Presenting a formal algorithm for the optimization may
 clarify things considerably.
 
-We have reorganized the method section and added an explicit objective function, which should help with some of your problems. In terms of the central optimization problem, the only variables are exactly the on/off status of each node, and, if we exclude the parameters used in the creation of the lattice (e.g. the n-gram frequency threshold) and those involved in the efficiency restrictions, the only (hyper)parameter in the optimization is C; we have a included psuedocode for optimization algorithm. With regards to the ad hoc parts of the model, we have added a discussion separating the core aspects of the model from some of the more ad hoc choices made in the particular instantions of component functions (such as clearing), making it clear that we believe these can potentially be improved on (both in terms of performance as well as mathematical elegance), and that our primary purpose here is to show that overall architecture of the model is a promising one.
+We have reorganized the method section and added an explicit objective function, which should help with some of the problems you identified. In terms of the central optimization problem, the only variables are exactly the on/off status of each node, and, if we exclude the parameters used in the creation of the lattice (e.g. the n-gram frequency threshold) and those involved in the efficiency restrictions, the only (hyper)parameter in the optimization is C; we have a included psuedocode for optimization algorithm. With regards to the ad hoc parts of the model, we have added a discussion separating the core aspects of the model from some of the more ad hoc choices made in the particular instantions of component functions (such as clearing), making it clear that we believe these can potentially be improved on (both in terms of performance as well as mathematical elegance), and that our primary purpose here is to show that overall architecture of the model is a promising one.
 
 > I think it would also be worth discussing how the lattice model relates back to the cognitive/psychological literature. Would you predict (or are you
 aware of any evidence) that node interactions such as covering, clearing,

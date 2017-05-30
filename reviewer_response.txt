@@ -1,3 +1,6 @@
+Submission # 1137
+Action Editor: Noah Smith
+
 We would like to thank all of our reviewers for their detailed comments. We
 have tried to address the important points as best we can, but were limited to
 3 extra pages (beyond the 10 pages of the original submission). As all the
@@ -5,12 +8,11 @@ reviews had numerous suggestions for improvement, with only one obvious area
 of overlap, we have had to pick and choose what we could add. In cases where
 we did not change the paper, we provide a justification below.
 
-We should mention one change that wasn't prompted by individual reviewer
-comments: there were clear misinterpretations by our Japanese annotators from
-the first round with led to overannotation of FS, leading us to to another
-round of annotation and since the original submission. The Japanese results
-have therefore changed somewhat, and are in fact more consistent with the
-other languages.
+We should mention one major change that wasn't prompted by individual reviewer
+comments: there were clear misinterpretations by our original Japanese annotators
+which led to overannotation of FS, leading us to do another round of annotation 
+since the original submission. The Japanese results have therefore changed, and
+are in fact more consistent with the other languages.
 
 
 
@@ -136,7 +138,7 @@ have added a mention of this fact in the paper.
 > results in tables 2 and 3 as the approaches often differ only in the second
 > decimal place.
 
-We have added statistical significance information.
+We have added some statistical significance information.
 
 
 > In Table 2, it would be helpful to have also the results for only the cover
@@ -186,7 +188,8 @@ especially given our cross-linguistic interest.
 > are the main sources of the distributional information in modern NLP
 > systems.').
 
-Thank you for your suggestion. We have split up some of the longer sentences, hopefully improving the readability.
+Thank you for your suggestion. We have split up some of the longer sentences, 
+hopefully improving the readability.
   
 
 > Moreover, some passages are copied from Brooke et al. (2015), but lack the
@@ -237,7 +240,9 @@ Hopefully this is clearer in the new formulation.
 > * In section 3.2 can the authors explain how two valid but similar FSs would
 > be treated (e.g. keep * under wraps/surveillance)?
 
-The only kind of interaction between these nodes involves their shared n-gram subsequence (keep * under), as described in the example in the paper. We have expanded the example a bit. 
+The only kind of interaction between these nodes involves their shared n-gram 
+subsequence (keep * under), as described in the example in the paper. We have 
+expanded the example a bit. 
 
 
 > * "We also use the concept of hard covering to ad- dress the issue of
@@ -296,7 +301,8 @@ REVIEWER B
 > author could comment on the applicability of the technical solution in other
 > domains (if there is any).
 
-This is interesting, and so we've added a discussion of the morphology idea to the paper (The short answer is yes).
+This is interesting, and so we've added a discussion of the morphology idea to
+the paper (The short answer is yes).
 
 
 > In the case of syntax, much research in theoretical linguistics and in
@@ -496,7 +502,7 @@ This was removed from an earlier draft due to space, and we've added back in.
 > - Inter-annotator agreement is surprisingly high. Could you elaborate on
 > Wray’s criteria for FS that were applied by annotators?
 
-Your surprise about the the Kappa being high is based on a misunderstanding:
+Your surprise about the Kappa being high is based on a misunderstanding:
 the kappa number reported in the table is after filtering to remove borderline
 cases (i.e. it is the kappa for the final test set, not the original
 sampling). To avoid confusion, we've added the original kappa score which is
@@ -543,7 +549,7 @@ most of which appear regularly only within specific genres. For example, we
 could not expect to build a good lexicon of English verb-particle
 constructions from a biomedical corpus, because many are too informal to be
 appropriate for that genre (e.g. "mess up"). With the qualitative analysis we
-have added, the genre-specificity of the FS we extra is hopefully more clear.
+have added, the genre-specificity of the FS we extract is hopefully more clear.
 
 Though it perhaps does not directly address your comment (since it doesn't
 involve an external MWE lexicon), we were nonetheless inspired by your

@@ -1,0 +1,137 @@
+
+Reviewer A
+
+>*The annotation guidelines are needed to ensure replicability. Add them as
+appendix material.
+
+We've added them, though we note the guidelines are not really a contribution of this work, much of its content was created as part of Brooke et al. 2015 (though there was some editing, additions, and consolidations, and well as translations into other languages and adaptions to language specific phenomena).
+
+> *In table 5 these examples include a lot of noise. Can the authors comments
+how to decide on the criteria for rejecting something as FS.
+
+There is of course some noise, but based on our analysis the noise is fairly consistent with the precision numbers in our evaluation (i.e. most of the ICWSM examples are good FS, whereas about half of the BNC are). Hopefully including the guidelines helps with this, since we don't feel its possible to give succinct explanation of how to decide whether something is an FS: though there are several tests which can help (e.g., can elements be switched out, can the phrase be paraphrased without becoming awkward), at the core we are always reliant on native speaker intuition about whether a sequence of words is produced as a unit, i.e. Wray's definition as given at the beginning Section 2.
+
+Reviewer B
+
+> - For readers familiar with machine learning notation, it would be more
+intuitive to use y throughout for the variables to be predicted, namely the
+binary activation states of n-gram nodes. It may also be more intuitive to
+use x instead of t for each "input" (n-gram node). Then covering could be
+defined more explicitly as max{0, (c(x)-\sum_{i \in parents(x)} y_i *
+c(x_i))/c(x)}, and likewise for other equations. The optimization problem
+could be stated formally by wrapping argmax_{y,C} around eq. (1).
+ 
+We have integrated the y suggestion, though not quite to the extent you have
+suggested, since it creates other issues with the presentation.                                                                                        
+
+>- I was a bit confused about the definition of "overlap" at the type vs.
+token level: at first I thought the graph was constructed with each node
+having its own corpus frequency information, but there are mentions of
+counting overlaps in a corpus, and these counts are presumably associated
+with edges between type-overlapping nodes. Showing frequency counts in
+figure 2 may help clarify this. From figure 2, I assume at a type level, two
+nodes overlap if at least one word is shared between the two n-grams, but
+neither set of words is a superset of the other (which would be
+subsumption), and a gap counts as a special word for determining subsumption
+vs. overlap ("keep everything under wraps" and "keep * under wraps" merely
+overlap), but two n-grams must share more than a gap to count as
+overlapping. Is the ordering of tokens significant for determining overlap?
+
+We've added some clarification of this point. Overlap at the type level consists
+exactly of the count of token overlaps in the corpus. Two n-grams types might 
+share words at the type level, but are considered overlapping only when there 
+is at least one token in the corpus which belong to an instance of each type.
+
+Related to this, we realized that we had left out the important point that 
+subsumed n-grams are considered to trivially overlap with subsuming n-grams 
+for the purposes of counting their overlap score when both are on (in addition 
+to covering and clearing effects which occur when one of the two nodes is off). 
+The reverse, though, is not true, since that would basically prohibit any two 
+subsuming nodes from turning on (since the count of subsumed node is always larger
+than the subsuming one).                             
+
+Reviewer B
+
+> - In some place, the paper is not an easy read -- I found a few
+expressions that were fairly cryptic even for a seasoned reviewer in
+NLP, examples include: "the best (i.e., most parsimonious) explanation
+for statistical irregularities due to lexical affinity": what does
+"parsimonious explanation", "lexical affinity" (S.1), or "explainedness"
+of a node (S.3) mean? I would like to see a more formal definition right
+where this concepts are introduced.
+
+The word "parsimonious" is used here in its typical, non-technical sense to refer to explanations which cover the data and yet are as simple as possible. It's used in the introduction, and is just intended to give a sense to the reader of what is to come, in terms of the logic of the model. Since its not a term, nor doesn't pretend to be, we don't see the problem.
+
+We have excised the term "lexical affinity", which was intend to point at the predictability that remains after
+syntactic predictability is removed in the denominator of LPR, but is admittedly rather cryptic in the introduciton, and is never returned to.
+                                                                         
+"Explainedness" gets an informal explanation just after its introduction in Section 3, and then more formal definition
+later (3.3). An earlier draft had expainedness defined immediately, but this required forward pointers to node interaction functions, which the other reviewers disliked. There's a certain amount of interconnectedness here that
+makes it impossible to fully satisfy the need to define everything formally up front.
+
+
+> - Section 2: I found the discussion of formulaic sequence vs. multi-word
+generally interesting but could not understand how this distinction
+plays a role in the task you are trying to address and the model you
+present -- it is frustating for a reviewer to try to follow a one-page
+discussion on exact terminology and then jump to the presentation of
+related work by noticing that is not that important to understand it
+("Regardless of the terminology used..."). An evil reviewer could think
+that you try to account for FS because they are easier to handle in your
+model: what would be the results on a FS vs. MWE dataset?
+
+"Regardless of the terminology used..." is not intended to imply that the terminology is not
+important, just that basic methodologes used for multiword lexicon creation are somewhat
+independant of them. We have reworded this.
+
+The point of that section is to be clear about what we are doing, and how it relates to other work in NLP,
+where the default term for the targets of this sort of extraction is MWE. The fact that semantic 
+non-compositionality is not core to the definition of FS is in fact very important in terms of 
+the model we have built. The FS versus MWE distinction is quite important relevant to the motivation 
+discussed at the end of that section.
+
+In the discussion, we briefly consider exactly the FS versus MWE distinction you mention.
+The answer is that our model is quite good at identifying MWE (better than non-MWE FS),
+but it will of course identify some non-MWE FS, and so applying it directly to MWE dataset 
+would result in apparently low precision.
+
+
+>- Section 3: there are a plethora of lexical association measures from
+the literature, why using LPR? Also, why using the minimum LPR as
+opposed to the product (Brooke et al., 2015). I found your explanation
+in the paper rather tentative...
+
+There are a plethora of lexical associations measures, but as we already note the the backgound section,
+very few scale to gapped n-grams of unrestricted length (some have no formulation beyond two words, others do, but
+are exponential in the statistics that must be collected as n increases). Those that do scale do quite poorly at the general task, as shown here with raw counts and PMI; as we mention in the experiment section, other work which has compared our baseline models here with a wider range of such measures. LPR was specifically designed for FS identification and showed good results in earlier, and in the last paragraph of Section 3.1, we very talk explicitly about why minLPR is the correct measure for this particular use (i.e. the lattice), where each step up a layer of the lattice involves adding a single word, which is what the minLPR metric is focusing on.
+
+>- Section 3.2 why cherry-picking the threshold for hard covering to 2/3
+or $C$ in the range [3, 6] as opposed to tune on dev data? Same for the
+hyperparameter in the bullet list at the end of 3.4?
+
+"Cherry-picking" suggests we are just picking the best values for our test set, which is certainly not the case. All of the hyperparameters you mention were in fact subject to some early evaluation on development data and then fixed from that point on. We did not rigorously tune them in the machine learning sense, which is perhaps what you mean by "cherry picking"; we wanted to avoid supervision as much as possible, and tuning of that kind is supervision; we picked reasonable values, saw that they worked, and moved on. We've removed the reference to [3 ,6] since it seems to have lead to this misinterpretation: we did some post hoc evaluation of what values of C caused the model performance to drop drastically, but that was unrelated to the selection of 4 as our C value, which happened very early in development.
+
+>- Section 3.4: why not looking also at other node visiting strategies?
+E.g., random?
+
+We did test a few options on dev data (based on length and LPR; not random, though, because we wanted a deterministic model), and decided on count based sorting.
+
+>- Section 4: there exists a plethora of datasets for MWE, why not
+comparing with other datasets: how were the dataset chosen? Also, why
+not using corpora for the same language of different sizes (cf. e.g.,
+Riedl and Biemann)?
+
+By datasets, do you mean MWE vocabularies? MWE corpora like the STREUSLE? We don't see what you mean, since no corpus annotated with MWE could possibly have the quanitity of data required to build an unsupervised model like this. In terms of evaluation, the main reason not to use existing MWE datasets is exactly that we are not doing MWE extraction, but rather FS extraction; the existing MWE datasets have at best very inconsistent treatment of nonMWE FS, generally. Though it is possible to use MWE datasets for FS evaluation, see Brooke et al. (2015) who derived a test set from STREUSLE, it requires some hackiness that we felt was indefensible for our main evaluation: we did include a small, targeted evaluation of recall using STREUSLE.  Anyway, we addressed this issue rather thoroughly in the previous reviewer response.
+
+It is worth mentioning (and we've added a small note to the paper) that we do prefer social media and mixed genre corpora, which represent a much more interesting range of FS pheonomena. Since you mention Reidl and Bieman, one criticim we have of that work was that it was focused on extremely specific, technical corpora, and not particularly representative of general FS phenomena across the language as whole. 
+
+We in fact do have corpora of different sizes for English, namely the ICWSM and BNC. Perhaps you mean taking smaller
+version of the same corpus and seeing the effect of data size? This would be interesting, but it's not a trivial addition, since our test sets are sampled from the corpus; subsampling the corpus would require creating new test sets for those corpus.
+
+- Section 6: When discussing "the time needed to build and optimize the
+lattice" it would be good to add exact run-time figures
+
+This is a reasonable idea, but we don't feel entirely confident reporting exactly runtime features due to difficulty in creating a controlled environment (i.e. DP-seg takes over 10 days to run on the BNC, and we can't ensure that our server stays otherwise unused) as well as the fact we can't control for the implementation of the comparison techniques. Instead, we've hedged our discussion a bit.
+
+
+

@@ -1,0 +1,65 @@
+
+
+
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage{CJKutf8}
+
+\title{Formulaic sequence annotation guidelines, Japanese supplement}
+\author{Tim Baldwin}
+\date{September 9, 2016}
+
+
+\begin{document}
+\maketitle
+
+\begin{CJK*}{UTF8}{min}
+アノテーションの対象は「Formulaic Sequence」（FS）ですが、大まかに説明すると一
+般的にネーティブ話者にとって聞き覚えがありそうな複数の形態素からなる表現です。
+複合表現（MWE）、すなわち何かしらの非合成ある表現がその一部で、「機械翻訳」、
+「出来上がる」、「腕を上げる」などが全部FSとなります。「named entity」（NE）は、
+一般的に知られているものであればFSとなります。例えば「東京オリンピック」、「代々
+木公園」、「村上春樹」などはFSで、「山田英彦」「宇佐美公園」などはFSにはなりま
+せん。それ以外では、「じゃあね」、「〜を傍らに」、「黒ごま」、「〜ざるを得ない」
+もFSになります。FSかどうかの判定の手がかりの一つとしては、英語などへの翻訳にお
+いて、英語には類似表現がないか、直訳ではおかしなものになるか、英訳も定形した表
+現になるか、のいずれかが見られがちです。
+\end{CJK*} 
+
+\begin{CJK*}{UTF8}{min}
+アノテーションのしかたとしては、FS候補をlemmaとUniDicによる複数の形態素として
+表示し、その下には、ランダムにサンプリングされた5つ程の例文を表示します。FSと
+して認定するためには、少なくとも5つの例文の中の1つが実際のFSの使われ方にならな
+くてはいけません。アノテーションは以下の4通りになります。
+\end{CJK*} 
+
+\begin{CJK*}{UTF8}{min}
+\begin{itemize}
+\item 「Is a canonical formulaic sequence」 \\
+　　　　FS候補がFSに完全一致した場合
+
+\item 「Recalls a formulaic sequence, but not canonical」 \\
+　　　　FS候補が部分的にFSに一致しているか、FSの一部になっている場合
+
+\item 「Is not formulaic sequence」 \\
+　　　　FS候補がFSあるいはFSの一部になっていない場合
+
+\item 「Encoding error」 \\
+　　　　FS候補が文字化けしているため、FSかどうかの判定が不可能な場合
+\end{CJK*} 
+
+\begin{CJK*}{UTF8}{min}
+FS候補が２種類ありますが、まず一つ目は「contiguous FS」（連続FS）で、普通の使
+われ方ではFSが連続して、一つにまとまったものです。２つ目は「gappy FS」で、FSの
+中には名詞句など含まれるものです。gappy FSの例としては「決して〜ない」、「総合～
+会議」が上げられます。それぞれのFSのアノテーションには個別にインタフェースを用
+意しています。
+\end{CJK*}
+
+\begin{CJK*}{UTF8}{min}
+FSの定義とアノテーションの過程を詳しく書いたものを次のように用意しましたが、英
+語のみになっているので、あらかじめご了承ください。
+\end{CJK*}
+
+
+\end{document}

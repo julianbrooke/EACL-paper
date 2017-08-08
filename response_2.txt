@@ -132,7 +132,7 @@ We in fact do have corpora of very different sizes for English, namely the ICWSM
 > - Section 6: When discussing "the time needed to build and optimize the
 > lattice" it would be good to add exact run-time figures
 
-This is a reasonable idea, but we don't feel entirely confident reporting exact runtime figures due to difficulty in creating a controlled environment sufficient (i.e. DP-seg takes over 10 days to run on the BNC, and we can't ensure that our server stays otherwise unused) as well as the fact we can't control for the implementation of the comparison techniques. More generally, to set up runtime comparisons properly requires more of a digression than we really want to make at that point in the paper. Instead, we've hedged our discussion of runtime a bit.
+This is a reasonable idea, but we don't feel entirely confident reporting exact runtime figures due to difficulty in creating a sufficiently controlled environment( i.e. DP-seg takes over 10 days to run on the BNC, and we can't ensure that our server stays otherwise unused) as well as the fact we can't control for the implementation of the comparison techniques. More generally, to set up runtime comparisons properly requires more of a digression than we really want to make at that point in the paper. Instead, we've hedged our discussion of runtime a bit.
 
 
 

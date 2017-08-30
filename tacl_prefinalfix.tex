@@ -363,9 +363,9 @@ LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 
 
 	Lattice \emph{$-$cl} & 0.57& 0.42 & 0.49 & & 0.33& 0.58 & 0.42 & & 0.39 & 0.56 & 0.46 & & 0.63 & 0.49 & 0.55 \\  	 
 			
-	Lattice \emph{$-$ovr} & 0.52& 0.51 & 0.51 & & 0.34& \bf{0.60} & 0.44& & 0.36 & \bf{0.67} & 0.47 & & 0.53 & \bf{0.60} & 0.56 \\  
+	Lattice \emph{$-$ovr} & 0.52& \bf{0.53} & 0.53 & & 0.34& \bf{0.60} & 0.44& & 0.36 & \bf{0.67} & 0.47 & & 0.53 & \bf{0.62} & 0.58 \\  
 			
-				Lattice & \bf{0.67} & 0.43 & \bf{0.52} & & \bf{0.40}& \bf{0.60} & \bf{0.48} & &\bf{0.44} & 0.56 & \bf{0.49} & & \bf{0.78} & 0.48 & \bf{0.59} \\ 
+				Lattice & \bf{0.67} & 0.45 & \bf{0.54} & & \bf{0.38}& 0.58 & \bf{0.46} & &\bf{0.44} & 0.56 & \bf{0.49} & & \bf{0.76} & 0.49 & \bf{0.59} \\ 
             \bottomrule
 
  \end{tabular}
@@ -393,7 +393,7 @@ LPR-seg  &0.53 & 0.42 & 0.47 && 0.37 & 0.44 & 0.40 & & 0.41 & 0.47  & 0.43 &  & 
 			LocalMaxs & \bf{0.56} & 0.39 & 0.46 \\
 			DP-seg & 0.35 & \bf{0.71} & 0.47 \\
   \midrule
-			Lattice & 0.47 & 0.63 & \bf{0.54} \\
+			Lattice & 0.46 & 0.61 & \bf{0.53} \\
        \bottomrule
  \end{tabular}
   \caption{ Results of FS identification in contiguous BNC test set; LocalMaxs = method of da Silva and Lopes (1999); DP-seg = method of Newman et \al (2012)}
@@ -433,10 +433,10 @@ In the contiguous FS test set for the BNC (\tabref{tab:BNC}), we found that both
        \cmidrule(lr){5-8}	
 \bf{Lexicon} & \bf{Word types} & \bf{POS types} & \bf{Gapped} (\%) & 2 & 3 & 4 & 5+ \\ 
 \midrule
-English ICWSM & 202k & 16.8k & 18.6 & 47.1 & 30.9 & 14.8 & \z7.2  \\
-English BNC & 367k &  29.9k& 26.2& 38.3 & 36.3 & 17.9 & \z7.5 \\
-Croatian & 169k & \z6.6k & \z8.1& 56.3& 30.8 & 9.9 & \z3.0 \\
-Japanese & 219k &  29.1k &\z7.9& 39.6 & 31.0& 16.9 & 12.5 \\
+English ICWSM & 202k & 16.8k & 18.3 & 46.7 & 30.7 & 15.0 & \z7.5  \\
+English BNC & 374k &  30.0k& 26.1& 37.7 & 36.3 & 18.1 & \z7.7 \\
+Croatian & 172k & \z6.7k & \z7.9& 55.0& 31.4 & 10.3 & \z3.2 \\
+Japanese & 218k &  29.4k &\z7.9& 39.5 & 31.1& 16.8 & 12.6 \\
 \bottomrule
 \end{tabular}
   \caption{Statistics for the lexicons created by our lattice method}
@@ -463,9 +463,9 @@ The statistics in \tabref{tab:lexstats} otherwise reflect the quantity and diver
  \begin{center}
  \begin{tabular}{p{1.5cm}p{14cm}}
 \toprule
-English (ICWSM) & \ex{heart ache}, \ex{so \gap have some time}, \ex{part of the blame}, \ex{via slashdot}, \ex{any more questions}, \ex{protein expression}, \ex{work in \gap bank}, \ex{al-qaeda terrorist}, \ex{continue discussions}, \ex{speak about * issue}\\
+English (ICWSM) & \ex{heart ache}, \ex{so \gap have some time}, \ex{part of the blame}, \ex{via slashdot}, \ex{any more questions}, \ex{protein expression}, \ex{work in \gap bank}, \ex{al-qaeda terrorist}, \ex{continue discussions}, \ex{I know a lot of people who}\\
 \midrule
-English (BNC) & \ex{go into decline}, \ex{Maureen says}, \ex{be open to all * in the}, \ex{Peggy Sue}, \ex{square \gap shoulders}, \ex{delivery system for}, \ex{this \gap also includes}, \ex{license endorsed}, \ex{point \gap finger}, \ex{highly \gap asset}\\
+English (BNC) & \ex{go into decline}, \ex{Maureen says}, \ex{primarily as \gap and}, \ex{Peggy Sue}, \ex{square \gap shoulders}, \ex{delivery system for}, \ex{this \gap also includes}, \ex{license endorsed}, \ex{point \gap finger}, \ex{highly \gap asset}\\
 \midrule
 Croatian & \ex{negativno utjecati na} \gl{negatively affects on},
 % TJB: awkard gloss
@@ -483,19 +483,19 @@ Japanese & \begin{CJK*}{UTF8}{min} \ex{高速\ 道路\ 整備} \gl{highway const
 
 
 %The fact that less than 20\% of the FS derived from the BNC appear in the lexicon for the ICWSM corpus is fairly telling of how important genre differences are to the range of FS that will be seen in a particular corpus.
-\tabref{tab:sample} contains 10 randomly selected examples from each of the lexicons produced by our method. Among the English examples, most of the clear errors are bigrams that reflect particular biases of their respective corpora: The phrase \ex{via slashdot} comes from boilerplate text identifying the source of an article, whereas \ex{Maureen} (from \ex{Maureen says}) is a character in one of the novels included in the BNC. The longer FS mostly seem sensible, in that they are plausible lexicalized constructions, though \ex{be open to all * in the} from the BNC seems too long and is likely the result of noise due to insufficient examples. Some FS are dialectal variants, for instance \ex{license endorsed} refers to British traffic violations. More generally, the FS lexicons created by these two corpora are quite distinct, sharing less than 50\% of their entries.
+\tabref{tab:sample} contains 10 randomly selected examples from each of the lexicons produced by our method. Among the English examples, most of the clear errors are bigrams that reflect particular biases of their respective corpora: The phrase \ex{via slashdot} comes from boilerplate text identifying the source of an article, whereas \ex{Maureen} (from \ex{Maureen says}) is a character in one of the novels included in the BNC. The longer FS mostly seem sensible, in that they are plausible lexicalized constructions, though \ex{primarily as \gap and} from the BNC is not obviously an FS and likely the result of noise. Some FS are dialectal variants, for instance \ex{license endorsed} refers to British traffic violations. More generally, the FS lexicons created by these two corpora are quite distinct, sharing less than 50\% of their entries.
 
 One striking thing about the non-English FS is how poorly they translate: many good FS in these languages become extremely awkward when translated into English. This is expected, of course, for idioms like \ex{biti general poslije bitke} \gl{be the general after the battle} (\ie \gl{hindsight is 20/20}), but it extends to other relatively compositional  constructions like 
 \begin{CJK*}{UTF8}{min} \ex{こう\ 言う\ \gap\ が\ 続く} \end{CJK*} \gl{repeat occurrences of \gap like this} and 
 \begin{CJK*}{UTF8}{min} \ex{前期\ 比} \end{CJK*} 
 \gl{first half comparison}. This highlights the potential importance of focusing on FS when learning a language. Though some of the errors seem to be the result of extra material added to an good FS, for instance \ex{promet teretnih vozila} \gl{good vehicle traffic}, most, again, are somewhat inexplicable artifacts of the corpus they were built from, like \ex{austrijski investitor} \gl{Austrian investor}.
 
-Since Zipfian frequency curves naturally extend to multiword vocabulary, our lexicons (and type-based evaluation of them) are of course dominated by rarer terms. This is not, we would argue, a serious drawback, since in practical terms there is very little value in focusing on common FS like \ex{of course} which manually-built lexicons already contain; most of the potential in automatic extraction comes from the long tail. However, we did investigate the other end of the Zipfian curve by extracting the 20 most common MWEs (including both strong and weak) from the \newcite{Schneider14a} corpus. In the ICWSM lexicon, our recall for these common terms was fairly high (0.7), with errors mostly resulting from longer phrases containing these terms ``winning out'' (in the lattice) over shorter phrases, which have relatively low LPR due to extremely common constituent words; for example, we missed \ex{on time}, but had 19 FS which contain it (e.g.\ \ex{right on time}, \ex{show up on time}, and \ex{start on time}). In one case which showed this same problem, \ex{waste * time}, the lexicon did have its ungapped version, highlighting the potential for improved handling of this issue. 
+Since Zipfian frequency curves naturally extend to multiword vocabulary, our lexicons (and type-based evaluation of them) are of course dominated by rarer terms. This is not, we would argue, a serious drawback, since in practical terms there is very little value in focusing on common FS like \ex{of course} which manually-built lexicons already contain; most of the potential in automatic extraction comes from the long tail. However, we did investigate the other end of the Zipfian curve by extracting the 20 most common MWEs (including both strong and weak) from the \newcite{Schneider14a} corpus. In the ICWSM lexicon, our recall for these common terms was fairly high (0.75), with errors mostly resulting from longer phrases containing these terms ``winning out'' (in the lattice) over shorter phrases, which have relatively low LPR due to extremely common constituent words; for example, we missed \ex{on time}, but had 19 FS which contain it (e.g.\ \ex{right on time}, \ex{show up on time}, and \ex{start on time}). In one case which showed this same problem, \ex{waste * time}, the lexicon did have its ungapped version, highlighting the potential for improved handling of this issue. 
 
 %\subsection{FS vs.\ MWE}
 
 
-In \secref{sec:background}, we noted that FS is generally a much broader category than MWE, which we take as referring to terms which carry significant non-compositional meaning. We decided to investigate the distinction at a practical level by annotating the positive examples in the ICWSM test set for being MWE or non-MWE FS.\footnote{The set was exhaustively annotated by two native-speaker annotators ($\kappa = 0.73$), and conflicts were resolved through discussion.} First, we note that only 28\% of our FS types were labeled MWE; this is in contrast to, for instance, the annotation of \newcite{Schneider14a} where ``weak'' MWE make up a small fraction of MWE types. Even without any explicit representation of compositionality, our model did much better at identifying MWE FS than non-MWE FS:  0.7 versus 0.32 recall. This may simply reflect, however, the fact that a disproportionate number of MWEs were noun-noun compounds, which are fairly easy for the model to identify.
+In \secref{sec:background}, we noted that FS is generally a much broader category than MWE, which we take as referring to terms which carry significant non-compositional meaning. We decided to investigate the distinction at a practical level by annotating the positive examples in the ICWSM test set for being MWE or non-MWE FS.\footnote{The set was exhaustively annotated by two native-speaker annotators ($\kappa = 0.73$), and conflicts were resolved through discussion.} First, we note that only 28\% of our FS types were labeled MWE; this is in contrast to, for instance, the annotation of \newcite{Schneider14a} where ``weak'' MWE make up a small fraction of MWE types. Even without any explicit representation of compositionality, our model did much better at identifying MWE FS than non-MWE FS:  0.71 versus 0.34 recall. This may simply reflect, however, the fact that a disproportionate number of MWEs were noun-noun compounds, which are fairly easy for the model to identify.
 
 Due to the lack of spaces between words and an agglutinative morphology, the standard approach to tokenization and lemmatization in Japanese involves morphological rather than word segmentation. In terms of the content of the resulting lexicon we believe the effect of this difference on FS extraction is modest, since much of the extra FS in Japanese would simply be single words in other languages (and considered trivially part of the FS lexicon). However, from a theoretical perspective we might very much prefer to build FS for all languages starting from morphemes rather than words. Such a framework could, for instance, capture inflectional flexibility versus fixedness directly in the model, with fixed inflectional morphemes included as a distinct element of the FS and flexible morphemes becoming gaps. However, for many languages this would result in a huge blow up in complexity with only modest increases in the scope of FS identification. Though it is indisputable that inflectional fixedness is part of the lexical information contained in an FS, in practice this sort of information can be efficiently derived post hoc from the corpus statistics.
 

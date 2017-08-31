@@ -17,8 +17,8 @@
    inkscape:version="0.91 r13725"
    sodipodi:docname="FS_diagram_1_2.svg"
    inkscape:export-filename="C:\stuff\texdocs\FS_diagram_1_2.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="901.06"
+   inkscape:export-ydpi="901.06">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -29,15 +29,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.742746"
-     inkscape:cx="-77.105397"
+     inkscape:cx="-197.89179"
      inkscape:cy="64.634039"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1058"
-     inkscape:window-x="1358"
-     inkscape:window-y="-8"
+     inkscape:window-width="3840"
+     inkscape:window-height="2127"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

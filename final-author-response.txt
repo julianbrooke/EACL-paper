@@ -1,0 +1,33 @@
+== page 1
+
+"which is" unchanged, as part of direct quote
+
+== page 2
+
+"distinguish" is unchanged as the subject is plural (Schneider et al.)
+
+== page 6
+
+"independent FS do not" -- "FS" is used as a shorthand for "formulaic
+sequences" (plural) throughout, so this is consistent with usage elsewhere;
+the same applies for another suggested edit later ("FS do", "FS ... seem")
+
+== page 8
+
+"hard covering" refers to a process, and is hence a generic noun, making "a"
+inappropriate; this usage is consistent throughout the paper
+
+The use of the past tense in "Lemmatization included" is consistent with the
+remainder of that paragraph, so unchanged
+
+"many elements ... are segmented into independent morphological units" --
+adding a comma before "are" creates an awkward discontinuity, so unchanged
+
+== page 9
+
+"three native-speaker, educated annotators" -- here "native-speaker" is a
+pre-modifier of "annotators" and thus singular
+
+"regards to annotation" -- "annotation" is a process here, so hence generic
+making "an" inappropriate; given this generic usage, "regards" sounds better
+than "regard" to our collective ear, so unchanged

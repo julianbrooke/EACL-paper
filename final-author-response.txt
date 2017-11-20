@@ -6,6 +6,11 @@
 
 "distinguish" is unchanged as the subject is plural (Schneider et al.)
 
+== page 3
+
+comma not inserted before "according to" as it creates the false impression of
+wide scope of the PP, which is confusing
+
 == page 6
 
 "independent FS do not" -- "FS" is used as a shorthand for "formulaic
